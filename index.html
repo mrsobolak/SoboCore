@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sobos Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      background: #030a18;
+      color: #ffffff;
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      opacity: 0;
+      animation: fadeIn 1.0s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page {
+      display: none;
+      padding: 40px 20px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* HOME PAGE CENTER */
+    #home.page.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 24px;
+      color: #7aa9ff;
+      text-align: center;
+    }
+
+    h2 {
+      color: #7aa9ff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    a.button,
+    button.back {
+      display: inline-block;
+      padding: 12px 22px;
+      margin: 8px;
+      border: 1px solid #7aa9ff;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      background: transparent;
+      transition: 0.22s;
+      text-decoration: none;
+    }
+
+    a.button:hover,
+    button.back:hover {
+      background: #7aa9ff;
+      color: #030a18;
+    }
+
+    .story-text,
+    .project-text {
+      max-width: 750px;
+      margin: 0 auto 30px auto;
+      text-align: left;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .project-box {
+      border: 1px solid #7aa9ff;
+      padding: 18px;
+      border-radius: 8px;
+      background: #061025;
+      margin-bottom: 20px;
+    }
+
+    .project-box h3 {
+      color: #7aa9ff;
+      margin: 0 0 10px 0;
+    }
+  </style>
+
+  <script>
+    function showPage(id) {
+      ["home", "projects", "story"].forEach(function(pid) {
+        document.getElementById(pid).classList.remove("active");
+      });
+      document.getElementById(id).classList.add("active");
+      window.scrollTo(0, 0);
+    }
+  </script>
+</head>
+<body>
+
+  <!-- HOME -->
+  <div id="home" class="page active">
+    <h1>Welcome to Sobos Page</h1>
+
+    <a class="button" href="#" onclick="showPage('projects')">My Projects</a>
+    <a class="button" href="#" onclick="showPage('story')">My Story</a>
+  </div>
+
+  <!-- PROJECTS -->
+  <div id="projects" class="page">
+    <h2>My Projects</h2>
+
+    <div class="project-text">
+      <div class="project-box">
+        <h3>SobolakCore RAWTools v1.1</h3>
+
+        <p>
+          SobolakCore RAWTools is a lightweight desktop utility for processing Sony .ARW RAW files.
+          It extracts JPEG previews, embeds XMP metadata, and includes a cleanup tool for RAW and XMP files.
+        </p>
+
+        <p>
+          Features:
+          <br>• JPEG preview extraction
+          <br>• XMP embedding
+          <br>• Batch processing
+          <br>• RAW and XMP cleaner
+          <br>• Modern dark-blue SobolakCore GUI
+        </p>
+
+        <!-- DOWNLOAD BUTTON WITH NEW LINK -->
+        <a class="button"
+           href="https://github.com/mrsobolak/-SobolakCore-RAWTools"
+           target="_blank">
+          Download RAWTools
+        </a>
+      </div>
+    </div>
+
+    <button class="back" onclick="showPage('home')">Back</button>
+  </div>
+
+  <!-- STORY -->
+  <div id="story" class="page">
+    <h2>My Story</h2>
+
+    <div class="story-text">
+      <p>
+        My name is Sobo. My life started simple and quiet with small moments that showed me what normal life 
+        could have been.
+      </p>
+
+      <p>
+        Over time the world around me shifted. People fell into addiction. Calm turned into conflict. Stability disappeared.
+      </p>
+
+      <p>
+        I saw things no kid should ever witness. I learned to survive mentally and emotionally long before I should have.
+      </p>
+
+      <p>
+        Through everything I learned how to build. Electronics repair, GPU recovery, coding, automation, project creation.
+        I rebuilt broken things because I grew up surrounded by things no one else knew how to fix.
+      </p>
+
+      <p>
+        Silence is not weakness. Silence is where vision takes shape.
+      </p>
+
+      <p>
+        Do not study me. Do not manage me. Do not analyze me. People try to fix me without understanding that I operate 
+        outside their frame. Let me work.
+      </p>
+
+      <p>
+        People spend their lives trying to fit into existing systems. I would rather build new systems. I would rather invent 
+        my place than inherit one.
+      </p>
+
+      <p>
+        I stepped out of the cycle I was born into. I built my future from nothing. I am Sobo. I build. I fix. I create.
+      </p>
+    </div>
+
+    <button class="back" onclick="showPage('home')">Back</button>
+  </div>
+
+</body>
+</html>
