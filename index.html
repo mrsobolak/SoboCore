@@ -14,6 +14,8 @@
       padding: 0;
       opacity: 0;
       animation: fadeIn 1.0s ease forwards;
+      overflow-x: hidden;
+      position: relative;
     }
 
     @keyframes fadeIn {
@@ -21,13 +23,42 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* Animation 1: subtle moving glow background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(122,169,255,0.18), transparent 55%),
+        radial-gradient(circle at 85% 80%, rgba(122,169,255,0.12), transparent 60%);
+      animation: glowMove 12s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes glowMove {
+      from { transform: translate3d(0,0,0); opacity: 0.65; }
+      to   { transform: translate3d(0,-18px,0); opacity: 0.9; }
+    }
+
     .page {
       display: none;
       padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
+    /* Animation 2: page transition (fade + slide) */
     .page.active {
       display: block;
+      animation: pageIn 0.35s ease forwards;
+    }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* HOME PAGE CENTER */
@@ -44,12 +75,14 @@
       margin-bottom: 24px;
       color: #7aa9ff;
       text-align: center;
+      text-shadow: 0 0 18px rgba(122,169,255,0.15);
     }
 
     h2 {
       color: #7aa9ff;
       text-align: center;
       margin-bottom: 20px;
+      text-shadow: 0 0 18px rgba(122,169,255,0.12);
     }
 
     a.button,
@@ -62,7 +95,7 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
-      background: transparent;
+      background: rgba(3,10,24,0.15);
       transition: 0.22s;
       text-decoration: none;
     }
@@ -71,6 +104,8 @@
     button.back:hover {
       background: #7aa9ff;
       color: #030a18;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
     }
 
     .story-text,
@@ -83,11 +118,17 @@
     }
 
     .project-box {
-      border: 1px solid #7aa9ff;
+      border: 1px solid rgba(122,169,255,0.9);
       padding: 18px;
-      border-radius: 8px;
-      background: #061025;
+      border-radius: 10px;
+      background: rgba(6,16,37,0.92);
       margin-bottom: 20px;
+      transition: 0.22s;
+    }
+
+    .project-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.45);
     }
 
     .project-box h3 {
@@ -101,8 +142,12 @@
       ["home", "projects", "story"].forEach(function(pid) {
         document.getElementById(pid).classList.remove("active");
       });
-      document.getElementById(id).classList.add("active");
-      window.scrollTo(0, 0);
+
+      // tiny delay ensures the pageIn animation always plays cleanly
+      setTimeout(function() {
+        document.getElementById(id).classList.add("active");
+        window.scrollTo(0, 0);
+      }, 0);
     }
   </script>
 </head>
@@ -171,6 +216,32 @@
           View SoboEncrypt on GitHub
         </a>
       </div>
+
+      <!-- PROJECT 3: SoboSuite -->
+      <div class="project-box">
+        <h3>SoboSuite v1</h3>
+
+        <p>
+          SoboSuite is a lightweight all in one desktop utility built in Python. It combines tasks, notes,
+          a focus timer, file organization, and a quick launcher into one clean app. Session based by design.
+          No file storage, no tracking, full control.
+        </p>
+
+        <p>
+          Modules:
+          <br>• Tasks
+          <br>• Notes with search
+          <br>• Focus timer (Pomodoro)
+          <br>• Auto organizer with preview mode
+          <br>• Quick launcher for apps files and folders
+        </p>
+
+        <a class="button"
+           href="https://github.com/mrsobolak/SoboSuite"
+           target="_blank">
+          View SoboSuite on GitHub
+        </a>
+      </div>
     </div>
 
     <button class="back" onclick="showPage('home')">Back</button>
@@ -182,7 +253,7 @@
 
     <div class="story-text">
       <p>
-        My name is Sobo. My life started simple and quiet with small moments that showed me what normal life 
+        My name is Sobo. My life started simple and quiet with small moments that showed me what normal life
         could have been.
       </p>
 
@@ -203,10 +274,8 @@
         Silence is not weakness. Silence is where vision takes shape.
       </p>
 
-      </p>
-
       <p>
-        People spend their lives trying to fit into existing systems. I would rather build new systems. I would rather invent 
+        People spend their lives trying to fit into existing systems. I would rather build new systems. I would rather invent
         my place than inherit one.
       </p>
 
@@ -220,4 +289,3 @@
 
 </body>
 </html>
-
