@@ -23,7 +23,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Animation 1: subtle moving glow background */
     body::before {
       content: "";
       position: fixed;
@@ -50,7 +49,6 @@
       transform: translateY(10px);
     }
 
-    /* Animation 2: page transition (fade + slide) */
     .page.active {
       display: block;
       animation: pageIn 0.35s ease forwards;
@@ -61,7 +59,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* HOME PAGE CENTER */
     #home.page.active {
       display: flex;
       flex-direction: column;
@@ -86,7 +83,8 @@
     }
 
     a.button,
-    button.back {
+    button.back,
+    button.small {
       display: inline-block;
       padding: 12px 22px;
       margin: 8px;
@@ -101,7 +99,8 @@
     }
 
     a.button:hover,
-    button.back:hover {
+    button.back:hover,
+    button.small:hover {
       background: #7aa9ff;
       color: #030a18;
       transform: translateY(-1px);
@@ -135,19 +134,162 @@
       color: #7aa9ff;
       margin: 0 0 10px 0;
     }
+
+    /* CMD TERMINAL PAGE */
+    #failed {
+      background: #000000;
+      color: #00ff00;
+      font-family: "Consolas", "Courier New", monospace;
+      min-height: 100vh;
+    }
+
+    #failed h2 {
+      color: #00ff00;
+      text-shadow: none;
+      font-family: "Consolas", "Courier New", monospace;
+      text-align: left;
+      margin: 0 0 14px 0;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    #failed .project-text {
+      max-width: 900px;
+      font-size: 14px;
+    }
+
+    #failed .cmd-block {
+      border: 1px solid #00ff00;
+      padding: 14px;
+      background: #000;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    #failed a.cmd-link {
+      color: #00ff00;
+      text-decoration: underline;
+    }
+
+    #failed a.cmd-link:hover {
+      color: #b6ffb6;
+    }
+
+    #failed button.back {
+      border: 1px solid #00ff00;
+      border-radius: 0;
+      background: #000;
+      color: #00ff00;
+      font-family: "Consolas", "Courier New", monospace;
+      box-shadow: none;
+      transform: none;
+    }
+
+    #failed button.back:hover {
+      background: #00ff00;
+      color: #000;
+    }
+
+    /* CMD WARNING PROMPT */
+    .warning-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+
+    .warning-overlay.active {
+      display: flex;
+    }
+
+    .warning-box {
+      width: 100%;
+      max-width: 720px;
+      border: 1px solid #00ff00;
+      border-radius: 0;
+      padding: 16px;
+      background: #000;
+      font-family: "Consolas", "Courier New", monospace;
+      color: #00ff00;
+    }
+
+    .warning-box pre {
+      margin: 0 0 14px 0;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .warning-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .warning-box button.small {
+      border: 1px solid #00ff00;
+      border-radius: 0;
+      background: #000;
+      color: #00ff00;
+      font-family: "Consolas", "Courier New", monospace;
+      padding: 8px 14px;
+      margin: 0;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .warning-box button.small:hover {
+      background: #00ff00;
+      color: #000;
+    }
   </style>
 
   <script>
+    let failedConfirmed = false;
+
     function showPage(id) {
-      ["home", "projects", "story"].forEach(function(pid) {
-        document.getElementById(pid).classList.remove("active");
+      ["home", "projects", "story", "failed"].forEach(function(pid) {
+        const el = document.getElementById(pid);
+        if (el) el.classList.remove("active");
       });
 
-      // tiny delay ensures the pageIn animation always plays cleanly
       setTimeout(function() {
-        document.getElementById(id).classList.add("active");
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        target.classList.add("active");
         window.scrollTo(0, 0);
+
+        if (id === "failed") {
+          if (!failedConfirmed) {
+            document.getElementById("failedContent").style.display = "none";
+            document.getElementById("failedWarning").classList.add("active");
+          } else {
+            document.getElementById("failedWarning").classList.remove("active");
+            document.getElementById("failedContent").style.display = "block";
+          }
+        } else {
+          document.getElementById("failedWarning").classList.remove("active");
+        }
       }, 0);
+    }
+
+    function failedContinue() {
+      failedConfirmed = true;
+      document.getElementById("failedWarning").classList.remove("active");
+      document.getElementById("failedContent").style.display = "block";
+      window.scrollTo(0, 0);
+    }
+
+    function failedBack() {
+      document.getElementById("failedWarning").classList.remove("active");
+      showPage("home");
     }
   </script>
 </head>
@@ -159,6 +301,7 @@
 
     <a class="button" href="#" onclick="showPage('projects')">My Projects</a>
     <a class="button" href="#" onclick="showPage('story')">My Story</a>
+    <a class="button" href="#" onclick="showPage('failed')">SoboCorp Failed Projects</a>
   </div>
 
   <!-- PROJECTS -->
@@ -166,10 +309,8 @@
     <h2>My Projects</h2>
 
     <div class="project-text">
-      <!-- PROJECT 1: RAWTools -->
       <div class="project-box">
         <h3>SobolakCore RAWTools v1.1</h3>
-
         <p>
           SobolakCore RAWTools is a lightweight desktop utility for processing Sony .ARW RAW files.
           It extracts JPEG previews, embeds XMP metadata, and includes a cleanup tool for RAW and XMP files.
@@ -191,10 +332,8 @@
         </a>
       </div>
 
-      <!-- PROJECT 2: SoboEncrypt -->
       <div class="project-box">
         <h3>SoboEncrypt v1</h3>
-
         <p>
           SoboEncrypt is a Python based file encryption utility by SoboCorp. It uses AES 256 encryption
           with a simple tabbed interface for encrypting and decrypting files. No installer, no telemetry,
@@ -217,10 +356,8 @@
         </a>
       </div>
 
-      <!-- PROJECT 3: SoboSuite -->
       <div class="project-box">
         <h3>SoboSuite v1</h3>
-
         <p>
           SoboSuite is a lightweight all in one desktop utility built in Python. It combines tasks, notes,
           a focus timer, file organization, and a quick launcher into one clean app. Session based by design.
@@ -285,6 +422,51 @@
     </div>
 
     <button class="back" onclick="showPage('home')">Back</button>
+  </div>
+
+  <!-- FAILED PROJECTS -->
+  <div id="failed" class="page">
+    <h2>C:\SOBOCORP\FAILED_PROJECTS&gt;</h2>
+
+    <div id="failedContent" class="project-text" style="display:none;">
+      <div class="cmd-block">
+C:\SOBOCORP\FAILED_PROJECTS> dir
+
+  03/16/2024  02:12 AM    &lt;DIR&gt;          .
+  03/16/2024  02:12 AM    &lt;DIR&gt;          ..
+  12/12/2025  01:00 AM               1,024  SOBOHELPER
+
+C:\SOBOCORP\FAILED_PROJECTS> type SOBOHELPER
+
+  name: SoboHelper
+  status: legacy / internal
+  note: not intended for public interaction
+  link: <a class="cmd-link" href="https://github.com/mrsobolak/SoboHelper" target="_blank">https://github.com/mrsobolak/SoboHelper</a>
+      </div>
+
+      <button class="back" onclick="showPage('home')">Back</button>
+    </div>
+  </div>
+
+  <!-- FAILED WARNING PROMPT -->
+  <div id="failedWarning" class="warning-overlay">
+    <div class="warning-box">
+      <pre>
+C:\SOBOCORP\FAILED_PROJECTS> access
+
+SOBOCORP NOTICE
+This directory contains internal legacy material.
+
+If you are not authorized, leave now.
+
+Continue?
+      </pre>
+
+      <div class="warning-actions">
+        <button class="small" onclick="failedBack()">Back</button>
+        <button class="small" onclick="failedContinue()">Continue</button>
+      </div>
+    </div>
   </div>
 
 </body>
