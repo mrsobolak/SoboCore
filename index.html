@@ -1,491 +1,397 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sobos Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sobolak Technologies | SoboAI</title>
+  <meta name="description" content="SoboAI is a privacy-first, local AI desktop app with a ChatGPT-like UI powered by Ollama. Lifetime license. No subscriptions." />
 
-  <style>
-    body {
-      background: #030a18;
-      color: #ffffff;
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      padding: 0;
-      opacity: 0;
-      animation: fadeIn 1.0s ease forwards;
-      overflow-x: hidden;
-      position: relative;
-    }
+  <meta property="og:title" content="Sobolak Technologies | SoboAI" />
+  <meta property="og:description" content="Privacy-first local AI assistant. Sick UI like GPT. Powered by Ollama. Lifetime license." />
+  <meta property="og:type" content="website" />
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(122,169,255,0.18), transparent 55%),
-        radial-gradient(circle at 85% 80%, rgba(122,169,255,0.12), transparent 60%);
-      animation: glowMove 12s ease-in-out infinite alternate;
-      z-index: 0;
-    }
-
-    @keyframes glowMove {
-      from { transform: translate3d(0,0,0); opacity: 0.65; }
-      to   { transform: translate3d(0,-18px,0); opacity: 0.9; }
-    }
-
-    .page {
-      display: none;
-      padding: 40px 20px;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .page.active {
-      display: block;
-      animation: pageIn 0.35s ease forwards;
-    }
-
-    @keyframes pageIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    #home.page.active {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 24px;
-      color: #7aa9ff;
-      text-align: center;
-      text-shadow: 0 0 18px rgba(122,169,255,0.15);
-    }
-
-    h2 {
-      color: #7aa9ff;
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 0 0 18px rgba(122,169,255,0.12);
-    }
-
-    a.button,
-    button.back,
-    button.small {
-      display: inline-block;
-      padding: 12px 22px;
-      margin: 8px;
-      border: 1px solid #7aa9ff;
-      border-radius: 6px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      background: rgba(3,10,24,0.15);
-      transition: 0.22s;
-      text-decoration: none;
-    }
-
-    a.button:hover,
-    button.back:hover,
-    button.small:hover {
-      background: #7aa9ff;
-      color: #030a18;
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-    }
-
-    .story-text,
-    .project-text {
-      max-width: 750px;
-      margin: 0 auto 30px auto;
-      text-align: left;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .project-box {
-      border: 1px solid rgba(122,169,255,0.9);
-      padding: 18px;
-      border-radius: 10px;
-      background: rgba(6,16,37,0.92);
-      margin-bottom: 20px;
-      transition: 0.22s;
-    }
-
-    .project-box:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.45);
-    }
-
-    .project-box h3 {
-      color: #7aa9ff;
-      margin: 0 0 10px 0;
-    }
-
-    /* CMD TERMINAL PAGE */
-    #failed {
-      background: #000000;
-      color: #00ff00;
-      font-family: "Consolas", "Courier New", monospace;
-      min-height: 100vh;
-    }
-
-    #failed h2 {
-      color: #00ff00;
-      text-shadow: none;
-      font-family: "Consolas", "Courier New", monospace;
-      text-align: left;
-      margin: 0 0 14px 0;
-      font-size: 18px;
-      font-weight: 400;
-    }
-
-    #failed .project-text {
-      max-width: 900px;
-      font-size: 14px;
-    }
-
-    #failed .cmd-block {
-      border: 1px solid #00ff00;
-      padding: 14px;
-      background: #000;
-      white-space: pre-wrap;
-      line-height: 1.5;
-    }
-
-    #failed a.cmd-link {
-      color: #00ff00;
-      text-decoration: underline;
-    }
-
-    #failed a.cmd-link:hover {
-      color: #b6ffb6;
-    }
-
-    #failed button.back {
-      border: 1px solid #00ff00;
-      border-radius: 0;
-      background: #000;
-      color: #00ff00;
-      font-family: "Consolas", "Courier New", monospace;
-      box-shadow: none;
-      transform: none;
-    }
-
-    #failed button.back:hover {
-      background: #00ff00;
-      color: #000;
-    }
-
-    /* CMD WARNING PROMPT */
-    .warning-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.96);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 18px;
-      box-sizing: border-box;
-    }
-
-    .warning-overlay.active {
-      display: flex;
-    }
-
-    .warning-box {
-      width: 100%;
-      max-width: 720px;
-      border: 1px solid #00ff00;
-      border-radius: 0;
-      padding: 16px;
-      background: #000;
-      font-family: "Consolas", "Courier New", monospace;
-      color: #00ff00;
-    }
-
-    .warning-box pre {
-      margin: 0 0 14px 0;
-      white-space: pre-wrap;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .warning-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-
-    .warning-box button.small {
-      border: 1px solid #00ff00;
-      border-radius: 0;
-      background: #000;
-      color: #00ff00;
-      font-family: "Consolas", "Courier New", monospace;
-      padding: 8px 14px;
-      margin: 0;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .warning-box button.small:hover {
-      background: #00ff00;
-      color: #000;
-    }
-  </style>
-
-  <script>
-    let failedConfirmed = false;
-
-    function showPage(id) {
-      ["home", "projects", "story", "failed"].forEach(function(pid) {
-        const el = document.getElementById(pid);
-        if (el) el.classList.remove("active");
-      });
-
-      setTimeout(function() {
-        const target = document.getElementById(id);
-        if (!target) return;
-
-        target.classList.add("active");
-        window.scrollTo(0, 0);
-
-        if (id === "failed") {
-          if (!failedConfirmed) {
-            document.getElementById("failedContent").style.display = "none";
-            document.getElementById("failedWarning").classList.add("active");
-          } else {
-            document.getElementById("failedWarning").classList.remove("active");
-            document.getElementById("failedContent").style.display = "block";
-          }
-        } else {
-          document.getElementById("failedWarning").classList.remove("active");
-        }
-      }, 0);
-    }
-
-    function failedContinue() {
-      failedConfirmed = true;
-      document.getElementById("failedWarning").classList.remove("active");
-      document.getElementById("failedContent").style.display = "block";
-      window.scrollTo(0, 0);
-    }
-
-    function failedBack() {
-      document.getElementById("failedWarning").classList.remove("active");
-      showPage("home");
-    }
-  </script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <!-- HOME -->
-  <div id="home" class="page active">
-    <h1>Welcome to Sobos Page</h1>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="Sobolak Technologies home">
+        <span class="logo" aria-hidden="true"></span>
+        <span class="brand-text">
+          <strong>Sobolak</strong><span class="muted"> Technologies</span>
+        </span>
+      </a>
 
-    <a class="button" href="#" onclick="showPage('projects')">My Projects</a>
-    <a class="button" href="#" onclick="showPage('story')">My Story</a>
-    <a class="button" href="#" onclick="showPage('failed')">SoboCorp Failed Projects</a>
-  </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#product">Product</a>
+        <a href="#features">Features</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#faq">FAQ</a>
+      </nav>
 
-  <!-- PROJECTS -->
-  <div id="projects" class="page">
-    <h2>My Projects</h2>
+      <div class="top-actions">
+        <button class="btn ghost" id="themeBtn" type="button" aria-label="Toggle theme">
+          <span id="themeIcon" aria-hidden="true">☾</span>
+        </button>
+        <a class="btn primary" href="#get">Get SoboAI</a>
 
-    <div class="project-text">
-      <div class="project-box">
-        <h3>SobolakCore RAWTools v1.1</h3>
-        <p>
-          SobolakCore RAWTools is a lightweight desktop utility for processing Sony .ARW RAW files.
-          It extracts JPEG previews, embeds XMP metadata, and includes a cleanup tool for RAW and XMP files.
-        </p>
-
-        <p>
-          Features:
-          <br>• JPEG preview extraction
-          <br>• XMP embedding
-          <br>• Batch processing
-          <br>• RAW and XMP cleaner
-          <br>• Modern dark-blue SobolakCore GUI
-        </p>
-
-        <a class="button"
-           href="https://github.com/mrsobolak/-SobolakCore-RAWTools"
-           target="_blank">
-          Download RAWTools
-        </a>
-      </div>
-
-      <div class="project-box">
-        <h3>SoboEncrypt v1</h3>
-        <p>
-          SoboEncrypt is a Python based file encryption utility by SoboCorp. It uses AES 256 encryption
-          with a simple tabbed interface for encrypting and decrypting files. No installer, no telemetry,
-          just a script you run when you need to lock something down.
-        </p>
-
-        <p>
-          Features:
-          <br>• AES 256 GCM encryption
-          <br>• Password based key derivation (PBKDF2)
-          <br>• Encrypt and decrypt tabs
-          <br>• Custom .sobo encrypted file format
-          <br>• Pure Python script, no EXE required
-        </p>
-
-        <a class="button"
-           href="https://github.com/mrsobolak/SoboEncrypt"
-           target="_blank">
-          View SoboEncrypt on GitHub
-        </a>
-      </div>
-
-      <div class="project-box">
-        <h3>SoboSuite v1</h3>
-        <p>
-          SoboSuite is a lightweight all in one desktop utility built in Python. It combines tasks, notes,
-          a focus timer, file organization, and a quick launcher into one clean app. Session based by design.
-          No file storage, no tracking, full control.
-        </p>
-
-        <p>
-          Modules:
-          <br>• Tasks
-          <br>• Notes with search
-          <br>• Focus timer (Pomodoro)
-          <br>• Auto organizer with preview mode
-          <br>• Quick launcher for apps files and folders
-        </p>
-
-        <a class="button"
-           href="https://github.com/mrsobolak/SoboSuite"
-           target="_blank">
-          View SoboSuite on GitHub
-        </a>
+        <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
 
-    <button class="back" onclick="showPage('home')">Back</button>
-  </div>
-
-  <!-- STORY -->
-  <div id="story" class="page">
-    <h2>My Story</h2>
-
-    <div class="story-text">
-      <p>
-        My name is Sobo. My life started simple and quiet with small moments that showed me what normal life
-        could have been.
-      </p>
-
-      <p>
-        Over time the world around me shifted. People fell into addiction. Calm turned into conflict. Stability disappeared.
-      </p>
-
-      <p>
-        I saw things no kid should ever witness. I learned to survive mentally and emotionally long before I should have.
-      </p>
-
-      <p>
-        Through everything I learned how to build. Electronics repair, GPU recovery, coding, automation, project creation.
-        I rebuilt broken things because I grew up surrounded by things no one else knew how to fix.
-      </p>
-
-      <p>
-        Silence is not weakness. Silence is where vision takes shape.
-      </p>
-
-      <p>
-        People spend their lives trying to fit into existing systems. I would rather build new systems. I would rather invent
-        my place than inherit one.
-      </p>
-
-      <p>
-        I stepped out of the cycle I was born into. I built my future from nothing. I am Sobo. I build. I fix. I create.
-      </p>
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <a href="#product">Product</a>
+      <a href="#features">Features</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn primary" href="#get">Get SoboAI</a>
     </div>
+  </header>
 
-    <button class="back" onclick="showPage('home')">Back</button>
-  </div>
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-left reveal">
+          <div class="pill">
+            <span class="dot"></span>
+            <span>SoboAI Desktop v1.02 launching February 2</span>
+          </div>
 
-  <!-- FAILED PROJECTS -->
-  <div id="failed" class="page">
-    <h2>C:\SOBOCORP\FAILED_PROJECTS&gt;</h2>
+          <h1>
+            Local AI assistant.
+            <span class="gradient">Sick UI like GPT.</span>
+            Powered by Ollama.
+          </h1>
 
-    <div id="failedContent" class="project-text" style="display:none;">
-      <div class="cmd-block">
-C:\SOBOCORP\FAILED_PROJECTS> dir
+          <p class="lead">
+            SoboAI is a privacy-first desktop app for Windows 10/11 that hosts local models through Ollama.
+            Unlimited chats, lifetime license, free updates forever.
+          </p>
 
-  03/16/2024  02:12 AM    &lt;DIR&gt;          .
-  03/16/2024  02:12 AM    &lt;DIR&gt;          ..
-  12/12/2025  01:00 AM               1,024  SOBOHELPER
-  12/12/2025  01:07 AM               2,048  SOBOPRESENCE
-  12/12/2025  01:12 AM               4,096  KEYHUNT
+          <div class="hero-cta">
+            <a class="btn primary" href="#get">Get SoboAI</a>
+            <a class="btn ghost" href="#roadmap">See roadmap</a>
+          </div>
 
-C:\SOBOCORP\FAILED_PROJECTS> type SOBOHELPER
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-num">100% Local</div>
+              <div class="stat-label">Your data stays on your PC</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">10+ Models</div>
+              <div class="stat-label">Pick the best for your hardware</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">Lifetime</div>
+              <div class="stat-label">No subscriptions ever</div>
+            </div>
+          </div>
+        </div>
 
-  name: SoboHelper
-  status: legacy / internal
-  note: not intended for public interaction
-  link: <a class="cmd-link" href="https://github.com/mrsobolak/SoboHelper" target="_blank">https://github.com/mrsobolak/SoboHelper</a>
+        <div class="hero-right reveal" style="--delay: 120ms">
+          <div class="mock">
+            <div class="mock-top">
+              <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div class="mock-title">SoboAI Chat</div>
+              <div class="mock-badge">Local</div>
+            </div>
 
-C:\SOBOCORP\FAILED_PROJECTS> type SOBOPRESENCE
+            <div class="mock-body">
+              <div class="chat">
+                <div class="msg user">
+                  <div class="bubble">Write a clean roadmap for Sobolak Technologies.</div>
+                </div>
+                <div class="msg ai">
+                  <div class="bubble">
+                    <div class="typing" aria-label="Streaming response">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="ai-text">
+                      Roadmap locked. February 2: Desktop v1.02 launch. April 2: partial 4B to 6B model release. Full model: 2027.
+                    </div>
 
-  name: SoboPresence
-  status: internal / anomaly
-  warning: persistent presence behavior observed
-  note: not designed for public deployment
-  link: <a class="cmd-link" href="https://github.com/mrsobolak/SoboPresence" target="_blank">https://github.com/mrsobolak/SoboPresence</a>
+                    <pre class="code">
+<code>• Streaming responses
+• Copy code button
+• Export chats (TXT/Markdown)</code>
+                      <button class="copy" type="button" data-copy="• Streaming responses
+• Copy code button
+• Export chats (TXT/Markdown)">Copy</button>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-C:\SOBOCORP\FAILED_PROJECTS> type KEYHUNT
+            <div class="mock-bottom">
+              <div class="inputbar" aria-hidden="true">
+                <span class="ghost-text">Message SoboAI...</span>
+                <span class="send">↵</span>
+              </div>
+              <div class="mini">
+                <span class="chip">Qwen 2.5</span>
+                <span class="chip">Llama 3.1</span>
+                <span class="chip">Mistral</span>
+                <span class="chip">Phi-3</span>
+              </div>
+            </div>
+          </div>
 
-  name: SoboCorp KeyHunt
-  status: terminated / unstable
-  warning: forced progression loop detected
-  note: exit routines intentionally removed
-  link: <a class="cmd-link" href="https://github.com/mrsobolak/SoboCorp-keyhunt" target="_blank">https://github.com/mrsobolak/SoboCorp-keyhunt</a>
+          <div class="glow" aria-hidden="true"></div>
+        </div>
       </div>
+    </section>
 
-      <button class="back" onclick="showPage('home')">Back</button>
-    </div>
-  </div>
+    <!-- PRODUCT -->
+    <section class="section" id="product">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>SoboAI Professional Edition</h2>
+          <p class="sub">Everything you listed, organized like a real product page.</p>
+        </div>
 
-  <!-- FAILED WARNING PROMPT -->
-  <div id="failedWarning" class="warning-overlay">
-    <div class="warning-box">
-      <pre>
-C:\SOBOCORP\FAILED_PROJECTS> access
+        <div class="grid cards">
+          <article class="card reveal">
+            <h3>What’s included</h3>
+            <ul class="check">
+              <li>SoboAI Desktop App (Windows 10/11)</li>
+              <li>Lifetime license, no subscriptions ever</li>
+              <li>Unlimited messages and conversations</li>
+              <li>Access to 10+ AI models</li>
+              <li>Free updates forever</li>
+            </ul>
+          </article>
 
-SOBOCORP NOTICE
-This directory contains internal legacy material.
+          <article class="card reveal" style="--delay: 80ms">
+            <h3>Multi-model support</h3>
+            <p class="muted">
+              Runs locally via Ollama. Choose based on your PC.
+            </p>
+            <div class="model-list">
+              <span class="model">Qwen 2.5 (7B, 3B)</span>
+              <span class="model">Llama 3.1 8B</span>
+              <span class="model">Mistral 7B</span>
+              <span class="model">Phi-3 Mini</span>
+              <span class="model">6+ more models</span>
+            </div>
+          </article>
 
-If you are not authorized, leave now.
+          <article class="card reveal" style="--delay: 160ms">
+            <h3>Privacy-first</h3>
+            <ul class="check">
+              <li>100% local, data never leaves your computer</li>
+              <li>No cloud storage</li>
+              <li>No tracking</li>
+              <li>No data collection</li>
+              <li>Offline capability</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
 
-Continue?
-      </pre>
+    <!-- FEATURES -->
+    <section class="section alt" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Features built for real use</h2>
+          <p class="sub">Fast, clean, and actually usable day to day.</p>
+        </div>
 
-      <div class="warning-actions">
-        <button class="small" onclick="failedBack()">Back</button>
-        <button class="small" onclick="failedContinue()">Continue</button>
+        <div class="grid feature-grid">
+          <article class="feature reveal">
+            <div class="icon">💬</div>
+            <h3>Professional chat UI</h3>
+            <p>Dark mode, streaming responses, editing, regeneration, and search history.</p>
+          </article>
+
+          <article class="feature reveal" style="--delay: 80ms">
+            <div class="icon">🧠</div>
+            <h3>Model recommendations</h3>
+            <p>Suggest models based on your hardware so you do not guess.</p>
+          </article>
+
+          <article class="feature reveal" style="--delay: 160ms">
+            <div class="icon">📄</div>
+            <h3>Code blocks and exports</h3>
+            <p>Syntax highlighting, copy buttons, export chats to TXT or Markdown.</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="icon">📎</div>
+            <h3>Attachments</h3>
+            <p>Drag and drop file attachments for better workflows.</p>
+          </article>
+
+          <article class="feature reveal" style="--delay: 80ms">
+            <div class="icon">⏹️</div>
+            <h3>Stop generation</h3>
+            <p>One click to stop responses mid-stream.</p>
+          </article>
+
+          <article class="feature reveal" style="--delay: 160ms">
+            <div class="icon">💾</div>
+            <h3>Session management</h3>
+            <p>Auto-save conversations and keep sessions organized.</p>
+          </article>
+        </div>
+
+        <div class="callout reveal" id="get">
+          <div class="callout-left">
+            <h3>Get SoboAI</h3>
+            <p class="muted">
+              Lifetime license, unlimited chats, and free updates forever.
+              Desktop app for Windows 10/11.
+            </p>
+          </div>
+          <div class="callout-right">
+            <a class="btn primary" href="#faq">Launch info</a>
+            <a class="btn ghost" href="#roadmap">Model roadmap</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="section" id="roadmap">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Roadmap</h2>
+          <p class="sub">Dates and goals exactly as you stated.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="t-item reveal">
+            <div class="t-date">February 2</div>
+            <div class="t-card">
+              <h3>SoboAI Desktop v1.02</h3>
+              <p class="muted">Ollama model hoster with a ChatGPT-style UI.</p>
+              <ul class="bullets">
+                <li>Streaming UI, code blocks, exports</li>
+                <li>Local-first privacy and offline support</li>
+                <li>Model downloads and recommendations</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="t-item reveal" style="--delay: 80ms">
+            <div class="t-date">April 2</div>
+            <div class="t-card">
+              <h3>Sobolak Model partial release</h3>
+              <p class="muted">Early model release, likely 4B to 6B size.</p>
+              <ul class="bullets">
+                <li>Testing and iteration</li>
+                <li>Community feedback cycle</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="t-item reveal" style="--delay: 160ms">
+            <div class="t-date">2027</div>
+            <div class="t-card">
+              <h3>Full Sobolak Model release</h3>
+              <p class="muted">Flagship model release target.</p>
+              <ul class="bullets">
+                <li>Full release milestone</li>
+                <li>Long-term support plan</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card reveal">
+            <h3>Cross-platform</h3>
+            <p class="muted">iOS app coming soon. Web interface in development.</p>
+          </div>
+          <div class="mini-card reveal" style="--delay: 80ms">
+            <h3>Brand goal</h3>
+            <p class="muted">Build the world’s best local AI assistant, without cloud drama.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section alt" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>FAQ</h2>
+          <p class="sub">Fast answers so people trust the product.</p>
+        </div>
+
+        <div class="faq">
+          <details class="reveal">
+            <summary>Is SoboAI cloud-based?</summary>
+            <p>No. It’s local-first. Your data stays on your computer, with offline capability.</p>
+          </details>
+
+          <details class="reveal" style="--delay: 80ms">
+            <summary>Does it require subscriptions?</summary>
+            <p>No subscriptions. It’s a lifetime license with free updates forever.</p>
+          </details>
+
+          <details class="reveal" style="--delay: 160ms">
+            <summary>What models does it support?</summary>
+            <p>Multiple local models via Ollama, including Qwen 2.5, Llama 3.1 8B, Mistral 7B, Phi-3 Mini, plus more.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>Can I export my chats?</summary>
+            <p>Yes. Export chats to TXT or Markdown.</p>
+          </details>
+
+          <details class="reveal" style="--delay: 80ms">
+            <summary>Will there be mobile and web versions?</summary>
+            <p>Yes. iOS is coming soon and a web interface is in development.</p>
+          </details>
+        </div>
+
+        <div class="footer-cta reveal">
+          <div>
+            <h3>Ready to launch Sobolak online?</h3>
+            <p class="muted">Host on GitHub Pages for free, then point your domain to it.</p>
+          </div>
+          <a class="btn primary" href="#top">Back to top</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="foot-left">
+        <div class="brand-mini">
+          <span class="logo" aria-hidden="true"></span>
+          <span><strong>Sobolak</strong> Technologies</span>
+        </div>
+        <p class="muted">Privacy-first local AI. Built to be fast, clean, and useful.</p>
+      </div>
+      <div class="foot-right">
+        <a href="#product">Product</a>
+        <a href="#features">Features</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#faq">FAQ</a>
       </div>
     </div>
-  </div>
+    <div class="container foot-bottom">
+      <span class="muted">© <span id="year"></span> Sobolak Technologies</span>
+      <span class="muted">Built with HTML, CSS, JS</span>
+    </div>
+  </footer>
 
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
