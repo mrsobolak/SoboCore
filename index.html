@@ -1,396 +1,393 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sobolak Technologies | SoboAI</title>
-  <meta name="description" content="SoboAI is a privacy-first, local AI desktop app with a ChatGPT-like UI powered by Ollama. Lifetime license. No subscriptions." />
-
-  <meta property="og:title" content="Sobolak Technologies | SoboAI" />
-  <meta property="og:description" content="Privacy-first local AI assistant. Sick UI like GPT. Powered by Ollama. Lifetime license." />
-  <meta property="og:type" content="website" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoboAI | Local AI Assistant</title>
+  <meta name="description" content="SoboAI is a privacy first local AI assistant for Windows. Run models on your PC, offline capable, fast, and clean UI." />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <div class="bg">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+    <div class="glow g3"></div>
+    <div class="gridNoise"></div>
+  </div>
 
   <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="#top" aria-label="Sobolak Technologies home">
-        <span class="logo" aria-hidden="true"></span>
-        <span class="brand-text">
-          <strong>Sobolak</strong><span class="muted"> Technologies</span>
-        </span>
+    <div class="wrap topbarInner">
+      <a class="brand" href="#top" aria-label="SoboAI home">
+        <span class="brandDot"></span>
+        <span class="brandText">SoboAI</span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
+      <nav class="nav" aria-label="Primary navigation">
         <a href="#product">Product</a>
         <a href="#features">Features</a>
+        <a href="#models">Models</a>
         <a href="#roadmap">Roadmap</a>
         <a href="#faq">FAQ</a>
       </nav>
 
-      <div class="top-actions">
-        <button class="btn ghost" id="themeBtn" type="button" aria-label="Toggle theme">
-          <span id="themeIcon" aria-hidden="true">☾</span>
+      <div class="topActions">
+        <button class="iconBtn" id="themeBtn" type="button" aria-label="Toggle theme">
+          <span class="iconSun">☀</span>
+          <span class="iconMoon">☾</span>
         </button>
         <a class="btn primary" href="#get">Get SoboAI</a>
-
-        <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="iconBtn mobileMenuBtn" id="menuBtn" type="button" aria-label="Open menu">☰</button>
       </div>
     </div>
 
-    <div class="mobile-nav" id="mobileNav" hidden>
-      <a href="#product">Product</a>
-      <a href="#features">Features</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#faq">FAQ</a>
-      <a class="btn primary" href="#get">Get SoboAI</a>
+    <div class="mobileMenu" id="mobileMenu" aria-hidden="true">
+      <div class="wrap mobileMenuInner">
+        <a href="#product" class="mLink">Product</a>
+        <a href="#features" class="mLink">Features</a>
+        <a href="#models" class="mLink">Models</a>
+        <a href="#roadmap" class="mLink">Roadmap</a>
+        <a href="#faq" class="mLink">FAQ</a>
+        <a class="btn primary full" href="#get">Get SoboAI</a>
+      </div>
     </div>
   </header>
 
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="container hero-grid">
-        <div class="hero-left reveal">
+  <main id="top">
+    <section class="hero">
+      <div class="wrap heroInner">
+        <div class="heroLeft">
           <div class="pill">
-            <span class="dot"></span>
-            <span>SoboAI Desktop v1.02 launching February 2</span>
+            <span class="pillDot"></span>
+            Local AI on Windows, privacy first
           </div>
 
-          <h1>
-            Local AI assistant.
-            <span class="gradient">Sick UI like GPT.</span>
-            Powered by Ollama.
+          <h1 class="heroTitle">
+            SoboAI
+            <span class="heroTitleSub">A clean local AI assistant built for real PCs</span>
           </h1>
 
-          <p class="lead">
-            SoboAI is a privacy-first desktop app for Windows 10/11 that hosts local models through Ollama.
-            Unlimited chats, lifetime license, free updates forever.
+          <p class="heroDesc">
+            Run models on your machine, keep your data offline, and get a fast UI that feels like a real app.
+            Streaming replies, exports, multi model support, and simple setup.
           </p>
 
-          <div class="hero-cta">
-            <a class="btn primary" href="#get">Get SoboAI</a>
-            <a class="btn ghost" href="#roadmap">See roadmap</a>
+          <div class="heroCtas">
+            <a class="btn primary" href="#get">Download</a>
+            <a class="btn ghost" href="#features">See features</a>
           </div>
 
-          <div class="hero-stats">
+          <div class="heroStats">
             <div class="stat">
-              <div class="stat-num">100% Local</div>
-              <div class="stat-label">Your data stays on your PC</div>
+              <div class="statTop">Local</div>
+              <div class="statBot">No cloud required</div>
             </div>
             <div class="stat">
-              <div class="stat-num">10+ Models</div>
-              <div class="stat-label">Pick the best for your hardware</div>
+              <div class="statTop">Fast UI</div>
+              <div class="statBot">Streaming replies</div>
             </div>
             <div class="stat">
-              <div class="stat-num">Lifetime</div>
-              <div class="stat-label">No subscriptions ever</div>
+              <div class="statTop">Export</div>
+              <div class="statBot">TXT or Markdown</div>
             </div>
           </div>
         </div>
 
-        <div class="hero-right reveal" style="--delay: 120ms">
-          <div class="mock">
-            <div class="mock-top">
-              <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
-              <div class="mock-title">SoboAI Chat</div>
-              <div class="mock-badge">Local</div>
+        <div class="heroRight">
+          <div class="appCard reveal">
+            <div class="appTop">
+              <div class="appTabs">
+                <span class="tab active">Chat</span>
+                <span class="tab">Settings</span>
+              </div>
+              <div class="appBadge">Local</div>
             </div>
 
-            <div class="mock-body">
-              <div class="chat">
-                <div class="msg user">
-                  <div class="bubble">Write a clean roadmap for Sobolak Technologies.</div>
+            <div class="appBody">
+              <div class="bubble ai">
+                <div class="bubbleHdr">
+                  <span class="bubbleName">SoboAI</span>
+                  <span class="bubbleTime">04:37</span>
                 </div>
-                <div class="msg ai">
-                  <div class="bubble">
-                    <div class="typing" aria-label="Streaming response">
-                      <span></span><span></span><span></span>
-                    </div>
-                    <div class="ai-text">
-                      Roadmap locked. February 2: Desktop v1.02 launch. April 2: partial 4B to 6B model release. Full model: 2027.
-                    </div>
-
-                    <pre class="code">
-<code>• Streaming responses
-• Copy code button
-• Export chats (TXT/Markdown)</code>
-                      <button class="copy" type="button" data-copy="• Streaming responses
-• Copy code button
-• Export chats (TXT/Markdown)">Copy</button>
-                    </pre>
-                  </div>
+                <p>
+                  Tell me what you want to do and I’ll recommend a model based on your hardware.
+                  I can also export this chat when you’re done.
+                </p>
+                <div class="miniList">
+                  <div class="miniItem">Streaming responses</div>
+                  <div class="miniItem">Copy code button</div>
+                  <div class="miniItem">Export chats</div>
                 </div>
               </div>
-            </div>
 
-            <div class="mock-bottom">
-              <div class="inputbar" aria-hidden="true">
-                <span class="ghost-text">Message SoboAI...</span>
-                <span class="send">↵</span>
+              <div class="bubble you">
+                <div class="bubbleHdr">
+                  <span class="bubbleName">You</span>
+                  <span class="bubbleTime">04:37</span>
+                </div>
+                <p>What model should I start with?</p>
               </div>
-              <div class="mini">
-                <span class="chip">Qwen 2.5</span>
-                <span class="chip">Llama 3.1</span>
-                <span class="chip">Mistral</span>
-                <span class="chip">Phi-3</span>
+
+              <div class="composer">
+                <div class="chips">
+                  <span class="chip">Qwen</span>
+                  <span class="chip">Llama</span>
+                  <span class="chip">Mistral</span>
+                  <span class="chip">Phi</span>
+                </div>
+                <div class="composeRow">
+                  <input class="composeInput" type="text" value="Type here..." aria-label="Message input" readonly />
+                  <button class="btn small primary" type="button">Send</button>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="glow" aria-hidden="true"></div>
+          <div class="heroNote">
+            Styled to match the SoboAI desktop vibe: dark panels, soft glow, clean spacing.
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PRODUCT -->
-    <section class="section" id="product">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2>SoboAI Professional Edition</h2>
-          <p class="sub">Everything you listed, organized like a real product page.</p>
+    <section id="product" class="section">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>Product</h2>
+          <p>SoboAI runs on your Windows PC and keeps your conversations local.</p>
         </div>
 
-        <div class="grid cards">
-          <article class="card reveal">
-            <h3>What’s included</h3>
-            <ul class="check">
-              <li>SoboAI Desktop App (Windows 10/11)</li>
-              <li>Lifetime license, no subscriptions ever</li>
-              <li>Unlimited messages and conversations</li>
-              <li>Access to 10+ AI models</li>
-              <li>Free updates forever</li>
-            </ul>
-          </article>
-
-          <article class="card reveal" style="--delay: 80ms">
-            <h3>Multi-model support</h3>
-            <p class="muted">
-              Runs locally via Ollama. Choose based on your PC.
-            </p>
-            <div class="model-list">
-              <span class="model">Qwen 2.5 (7B, 3B)</span>
-              <span class="model">Llama 3.1 8B</span>
-              <span class="model">Mistral 7B</span>
-              <span class="model">Phi-3 Mini</span>
-              <span class="model">6+ more models</span>
-            </div>
-          </article>
-
-          <article class="card reveal" style="--delay: 160ms">
-            <h3>Privacy-first</h3>
-            <ul class="check">
-              <li>100% local, data never leaves your computer</li>
-              <li>No cloud storage</li>
-              <li>No tracking</li>
-              <li>No data collection</li>
-              <li>Offline capability</li>
-            </ul>
-          </article>
+        <div class="grid3">
+          <div class="card">
+            <h3>Desktop app</h3>
+            <p>Windows 10/11 app with a chat focused UI and settings page.</p>
+          </div>
+          <div class="card">
+            <h3>Offline capable</h3>
+            <p>Use it without an internet connection after models are downloaded.</p>
+          </div>
+          <div class="card">
+            <h3>Simple setup</h3>
+            <p>Install, pick a model, and start chatting. No complicated steps.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- FEATURES -->
-    <section class="section alt" id="features">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2>Features built for real use</h2>
-          <p class="sub">Fast, clean, and actually usable day to day.</p>
+    <section id="features" class="section alt">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>Features</h2>
+          <p>Everything you expect in a modern assistant UI, without the clutter.</p>
         </div>
 
-        <div class="grid feature-grid">
-          <article class="feature reveal">
-            <div class="icon">💬</div>
-            <h3>Professional chat UI</h3>
-            <p>Dark mode, streaming responses, editing, regeneration, and search history.</p>
-          </article>
-
-          <article class="feature reveal" style="--delay: 80ms">
-            <div class="icon">🧠</div>
-            <h3>Model recommendations</h3>
-            <p>Suggest models based on your hardware so you do not guess.</p>
-          </article>
-
-          <article class="feature reveal" style="--delay: 160ms">
-            <div class="icon">📄</div>
-            <h3>Code blocks and exports</h3>
-            <p>Syntax highlighting, copy buttons, export chats to TXT or Markdown.</p>
-          </article>
-
-          <article class="feature reveal">
-            <div class="icon">📎</div>
-            <h3>Attachments</h3>
-            <p>Drag and drop file attachments for better workflows.</p>
-          </article>
-
-          <article class="feature reveal" style="--delay: 80ms">
-            <div class="icon">⏹️</div>
-            <h3>Stop generation</h3>
-            <p>One click to stop responses mid-stream.</p>
-          </article>
-
-          <article class="feature reveal" style="--delay: 160ms">
-            <div class="icon">💾</div>
+        <div class="grid2">
+          <div class="card">
+            <h3>Streaming responses</h3>
+            <p>Replies appear smoothly as they generate, with a clean reading experience.</p>
+          </div>
+          <div class="card">
+            <h3>Copy buttons for code</h3>
+            <p>Copy code blocks quickly without selecting text.</p>
+          </div>
+          <div class="card">
+            <h3>Edit and regenerate</h3>
+            <p>Fix prompts, rerun outputs, and keep your chat history neat.</p>
+          </div>
+          <div class="card">
+            <h3>Export chats</h3>
+            <p>Export to TXT or Markdown for notes, logs, or sharing.</p>
+          </div>
+          <div class="card">
             <h3>Session management</h3>
-            <p>Auto-save conversations and keep sessions organized.</p>
-          </article>
-        </div>
-
-        <div class="callout reveal" id="get">
-          <div class="callout-left">
-            <h3>Get SoboAI</h3>
-            <p class="muted">
-              Lifetime license, unlimited chats, and free updates forever.
-              Desktop app for Windows 10/11.
-            </p>
+            <p>Keep multiple chats organized with quick switching.</p>
           </div>
-          <div class="callout-right">
-            <a class="btn primary" href="#faq">Launch info</a>
-            <a class="btn ghost" href="#roadmap">Model roadmap</a>
+          <div class="card">
+            <h3>Stop generation</h3>
+            <p>Cancel mid reply instantly when you already got the answer.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section class="section" id="roadmap">
-      <div class="container">
-        <div class="section-head reveal">
+    <section id="models" class="section">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>Models</h2>
+          <p>Pick based on speed, quality, and your hardware.</p>
+        </div>
+
+        <div class="modelGrid">
+          <div class="modelCard">
+            <div class="modelTop">
+              <h3>Qwen 2.5</h3>
+              <span class="tag">Best quality</span>
+            </div>
+            <p>Great balance of reasoning and writing quality.</p>
+          </div>
+
+          <div class="modelCard">
+            <div class="modelTop">
+              <h3>Llama 3.1</h3>
+              <span class="tag">Flagship</span>
+            </div>
+            <p>Strong general performance and conversation ability.</p>
+          </div>
+
+          <div class="modelCard">
+            <div class="modelTop">
+              <h3>Mistral</h3>
+              <span class="tag">Fast</span>
+            </div>
+            <p>Quick responses and efficient use of resources.</p>
+          </div>
+
+          <div class="modelCard">
+            <div class="modelTop">
+              <h3>Phi</h3>
+              <span class="tag">Lightweight</span>
+            </div>
+            <p>Good for lower end systems and quick tasks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="section alt">
+      <div class="wrap">
+        <div class="sectionHead">
           <h2>Roadmap</h2>
-          <p class="sub">Dates and goals exactly as you stated.</p>
+          <p>Clear milestones, built around real features.</p>
         </div>
 
         <div class="timeline">
-          <div class="t-item reveal">
-            <div class="t-date">February 2</div>
-            <div class="t-card">
-              <h3>SoboAI Desktop v1.02</h3>
-              <p class="muted">Ollama model hoster with a ChatGPT-style UI.</p>
-              <ul class="bullets">
-                <li>Streaming UI, code blocks, exports</li>
-                <li>Local-first privacy and offline support</li>
-                <li>Model downloads and recommendations</li>
+          <div class="milestone">
+            <div class="msLeft">
+              <div class="msDot"></div>
+              <div class="msLine"></div>
+            </div>
+            <div class="msCard">
+              <div class="msTitleRow">
+                <h3>Desktop improvements</h3>
+                <span class="msTag">Near term</span>
+              </div>
+              <ul>
+                <li>UI polish and smoother streaming</li>
+                <li>Better model download flow</li>
+                <li>More exports and chat tools</li>
               </ul>
             </div>
           </div>
 
-          <div class="t-item reveal" style="--delay: 80ms">
-            <div class="t-date">April 2</div>
-            <div class="t-card">
-              <h3>Sobolak Model partial release</h3>
-              <p class="muted">Early model release, likely 4B to 6B size.</p>
-              <ul class="bullets">
-                <li>Testing and iteration</li>
-                <li>Community feedback cycle</li>
+          <div class="milestone">
+            <div class="msLeft">
+              <div class="msDot"></div>
+              <div class="msLine"></div>
+            </div>
+            <div class="msCard">
+              <div class="msTitleRow">
+                <h3>Web interface</h3>
+                <span class="msTag">In development</span>
+              </div>
+              <ul>
+                <li>Remote access on your own network</li>
+                <li>Same SoboAI UI style</li>
+                <li>Optional API for advanced users</li>
               </ul>
             </div>
           </div>
 
-          <div class="t-item reveal" style="--delay: 160ms">
-            <div class="t-date">2027</div>
-            <div class="t-card">
-              <h3>Full Sobolak Model release</h3>
-              <p class="muted">Flagship model release target.</p>
-              <ul class="bullets">
-                <li>Full release milestone</li>
-                <li>Long-term support plan</li>
+          <div class="milestone">
+            <div class="msLeft">
+              <div class="msDot"></div>
+            </div>
+            <div class="msCard">
+              <div class="msTitleRow">
+                <h3>Mobile companion</h3>
+                <span class="msTag">Planned</span>
+              </div>
+              <ul>
+                <li>Connect to your home PC</li>
+                <li>Quick prompts and history</li>
+                <li>Lightweight and fast</li>
               </ul>
             </div>
-          </div>
-        </div>
-
-        <div class="mini-grid">
-          <div class="mini-card reveal">
-            <h3>Cross-platform</h3>
-            <p class="muted">iOS app coming soon. Web interface in development.</p>
-          </div>
-          <div class="mini-card reveal" style="--delay: 80ms">
-            <h3>Brand goal</h3>
-            <p class="muted">Build the world’s best local AI assistant, without cloud drama.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section alt" id="faq">
-      <div class="container">
-        <div class="section-head reveal">
+    <section id="faq" class="section">
+      <div class="wrap">
+        <div class="sectionHead">
           <h2>FAQ</h2>
-          <p class="sub">Fast answers so people trust the product.</p>
+          <p>Fast answers that build trust.</p>
         </div>
 
         <div class="faq">
-          <details class="reveal">
-            <summary>Is SoboAI cloud-based?</summary>
-            <p>No. It’s local-first. Your data stays on your computer, with offline capability.</p>
+          <details class="faqItem">
+            <summary>Does SoboAI need internet?</summary>
+            <div class="faqBody">
+              Only for the first model download. After that, you can run offline.
+            </div>
           </details>
 
-          <details class="reveal" style="--delay: 80ms">
-            <summary>Does it require subscriptions?</summary>
-            <p>No subscriptions. It’s a lifetime license with free updates forever.</p>
+          <details class="faqItem">
+            <summary>What hardware do I need?</summary>
+            <div class="faqBody">
+              A modern CPU works fine. A GPU helps a lot for faster responses. More RAM lets you run larger models.
+            </div>
           </details>
 
-          <details class="reveal" style="--delay: 160ms">
-            <summary>What models does it support?</summary>
-            <p>Multiple local models via Ollama, including Qwen 2.5, Llama 3.1 8B, Mistral 7B, Phi-3 Mini, plus more.</p>
-          </details>
-
-          <details class="reveal">
+          <details class="faqItem">
             <summary>Can I export my chats?</summary>
-            <p>Yes. Export chats to TXT or Markdown.</p>
+            <div class="faqBody">
+              Yes. Export to TXT or Markdown.
+            </div>
           </details>
 
-          <details class="reveal" style="--delay: 80ms">
-            <summary>Will there be mobile and web versions?</summary>
-            <p>Yes. iOS is coming soon and a web interface is in development.</p>
+          <details class="faqItem">
+            <summary>Is my data stored online?</summary>
+            <div class="faqBody">
+              No. The goal is to keep your data local to your machine.
+            </div>
           </details>
         </div>
+      </div>
+    </section>
 
-        <div class="footer-cta reveal">
+    <section id="get" class="section alt">
+      <div class="wrap">
+        <div class="ctaCard">
           <div>
-            <h3>Ready to launch Sobolak online?</h3>
-            <p class="muted">Host on GitHub Pages for free, then point your domain to it.</p>
+            <h2>Get SoboAI</h2>
+            <p>Download the desktop app and start with a recommended model.</p>
           </div>
-          <a class="btn primary" href="#top">Back to top</a>
+
+          <div class="ctaBtns">
+            <a class="btn primary" href="#" onclick="return false;">Download for Windows</a>
+            <a class="btn ghost" href="#faq">Read FAQ</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <div class="foot-left">
-        <div class="brand-mini">
-          <span class="logo" aria-hidden="true"></span>
-          <span><strong>Sobolak</strong> Technologies</span>
+    <div class="wrap footerInner">
+      <div class="footLeft">
+        <div class="brand mini">
+          <span class="brandDot"></span>
+          <span class="brandText">SoboAI</span>
         </div>
-        <p class="muted">Privacy-first local AI. Built to be fast, clean, and useful.</p>
+        <div class="footText">Local AI. Clean UI. Privacy first.</div>
       </div>
-      <div class="foot-right">
-        <a href="#product">Product</a>
-        <a href="#features">Features</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#faq">FAQ</a>
+
+      <div class="footRight">
+        <a href="#top">Back to top</a>
       </div>
-    </div>
-    <div class="container foot-bottom">
-      <span class="muted">© <span id="year"></span> Sobolak Technologies</span>
-      <span class="muted">Built with HTML, CSS, JS</span>
     </div>
   </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 
   <script src="script.js"></script>
 </body>
