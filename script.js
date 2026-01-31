@@ -8,7 +8,7 @@ function setTheme(mode) {
   localStorage.setItem("sobo_theme", mode);
 }
 
-function initTheme() {
+  function initTheme() {
   const saved = localStorage.getItem("sobo_theme");
   if (saved === "light" || saved === "dark") {
     setTheme(saved);
