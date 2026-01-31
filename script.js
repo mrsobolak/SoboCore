@@ -1,21 +1,5 @@
-const themeBtn = document.getElementById("themeBtn");
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
-
-function applyTheme(mode) {
-  document.body.classList.toggle("light", mode === "light");
-  localStorage.setItem("sobo_theme", mode);
-  if (themeBtn) themeBtn.setAttribute("aria-pressed", mode === "light" ? "true" : "false");
-}
-
-function initTheme() {
-  const saved = localStorage.getItem("sobo_theme");
-  if (saved === "light" || saved === "dark") {
-    applyTheme(saved);
-  } else {
-    applyTheme("dark");
-  }
-}
 
 function closeMobileMenu() {
   if (!mobileMenu) return;
@@ -28,11 +12,6 @@ function toggleMobileMenu() {
   const open = mobileMenu.classList.toggle("open");
   mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
 }
-
-themeBtn?.addEventListener("click", () => {
-  const isLight = document.body.classList.contains("light");
-  applyTheme(isLight ? "dark" : "light");
-});
 
 menuBtn?.addEventListener("click", toggleMobileMenu);
 
@@ -52,5 +31,4 @@ document.addEventListener("click", (e) => {
   if (!clickedMenu && !clickedBtn) closeMobileMenu();
 });
 
-initTheme();
 closeMobileMenu();
