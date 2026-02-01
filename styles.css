@@ -350,10 +350,66 @@ a{ color:inherit; text-decoration:none; }
   max-width:70ch;
   line-height:1.6;
 }
-.sectionHead .sectionNote{
-  margin-top:10px;
-  color:var(--text);
-  font-weight:600;
+/* SoboAI Spotlight */
+.soboaiSpotlight{
+  margin:20px 0 28px;
+  padding:22px;
+  border-radius: var(--radius2);
+  background: linear-gradient(135deg, rgba(74,163,255,0.18), rgba(122,85,255,0.10));
+  border:1px solid rgba(255,255,255,0.14);
+  box-shadow: var(--shadow);
+}
+.soboaiSpotlightInner{
+  display:grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+  gap:20px;
+  align-items:center;
+}
+.soboaiSpotlightText h3{
+  margin:8px 0 10px;
+  font-size:24px;
+}
+.soboaiSpotlightText p{
+  margin:0 0 16px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.spotlightBadge{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  color: rgba(15,28,30,0.95);
+  background: rgba(94,255,214,0.92);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.28);
+}
+.spotlightActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.soboaiSpotlightStats{
+  display:grid;
+  gap:12px;
+}
+.spotlightStat{
+  padding:14px;
+  border-radius:16px;
+  background: rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+}
+.spotlightStatValue{
+  font-weight:800;
+  font-size:16px;
+}
+.spotlightStatLabel{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted2);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
 }
 
 /* Cards */
@@ -532,4 +588,5 @@ a{ color:inherit; text-decoration:none; }
   .mobileMenuBtn{ display:grid; }
   .heroTitle{ font-size:42px; }
   .stat{ min-width: 160px; }
+  .soboaiSpotlightInner{ grid-template-columns: 1fr; }
 }
