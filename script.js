@@ -1,5 +1,7 @@
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
+<<<<<<< codex/remove-project-placeholder-text-rh11cr
+=======
 const countdownTarget = new Date(2026, 1, 2, 0, 0, 0);
 const countdownFields = {
   days: document.getElementById("countDays"),
@@ -9,6 +11,7 @@ const countdownFields = {
 };
 const countdownNote = document.getElementById("countdownNote");
 
+>>>>>>> main
 function closeMobileMenu() {
   if (!mobileMenu) return;
   mobileMenu.classList.remove("open");
