@@ -374,6 +374,15 @@ a{ color:inherit; text-decoration:none; }
   color:var(--muted);
   line-height:1.7;
 }
+.spotlightList{
+  margin:0 0 16px;
+  padding-left:18px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.spotlightList li{
+  margin-bottom:6px;
+}
 .spotlightBadge{
   display:inline-flex;
   align-items:center;
