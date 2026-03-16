@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoOS - The Operating System For Everyone! | Official Website</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Chakra+Petch:wght@400;600;700&display=swap');
+
+:root{
+  --blue:#2a5a9a;--blue-dark:#1a3a6a;--blue-light:#4488cc;
+  --orange:#cf6a32;--yellow:#f0e68c;--grey:#ece9d8;--dark:#1a1a2a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e8e4d8 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="4" height="4" fill="%23e8e4d8"/><rect width="1" height="1" fill="%23e0dcd0"/></svg>') repeat;font-family:Tahoma,Verdana,sans-serif;color:#333;font-size:13px}
+
+/* ===== TOP BAR ===== */
+.topbar{background:linear-gradient(180deg,#2a5a9a,#1a3a6a);padding:4px 0;text-align:center;font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:1px;font-family:'Chakra Petch',sans-serif}
+
+/* ===== HEADER ===== */
+.header{background:linear-gradient(180deg,#fff 0%,#e8e4d8 100%);border-bottom:3px solid var(--blue);padding:15px 0;position:relative}
+.header-inner{max-width:850px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--blue-light),var(--blue));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;box-shadow:2px 2px 4px rgba(0,0,0,0.2)}
+.logo-text{font-family:'Chakra Petch',sans-serif;font-size:32px;font-weight:700;color:var(--blue);letter-spacing:2px}
+.logo-text span{color:var(--orange)}
+.logo-sub{font-size:10px;color:#888;letter-spacing:3px;text-transform:uppercase}
+
+/* ===== NAV ===== */
+.nav{background:linear-gradient(180deg,var(--blue),var(--blue-dark));border-bottom:2px solid #0a2a5a}
+.nav-inner{max-width:850px;margin:0 auto;display:flex;padding:0 20px}
+.nav a{color:#fff;text-decoration:none;padding:8px 16px;font-size:12px;font-family:'Chakra Petch',sans-serif;letter-spacing:1px;border-right:1px solid rgba(255,255,255,0.1);transition:background 0.2s}
+.nav a:hover{background:rgba(255,255,255,0.1)}
+.nav a.active{background:rgba(255,255,255,0.15);font-weight:600}
+
+/* ===== CONTAINER ===== */
+.container{max-width:850px;margin:0 auto;padding:20px}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(135deg,var(--blue),#3a7acc);border:2px solid var(--blue-dark);border-radius:0;padding:30px;text-align:center;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:repeating-conic-gradient(rgba(255,255,255,0.02) 0deg,transparent 10deg);animation:heroBg 30s linear infinite}
+@keyframes heroBg{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.hero h1{font-family:'Chakra Petch',sans-serif;font-size:36px;letter-spacing:3px;position:relative;z-index:1}
+.hero h1 span{color:var(--yellow)}
+.hero p{font-size:14px;margin-top:8px;opacity:0.85;position:relative;z-index:1}
+.hero-version{display:inline-block;background:var(--orange);color:#fff;padding:3px 12px;font-size:11px;font-weight:bold;margin-top:12px;position:relative;z-index:1;letter-spacing:2px}
+.hero-btn{display:inline-block;background:linear-gradient(180deg,#4a4,#282);color:#fff;padding:10px 30px;font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:700;border:2px outset #5c5;cursor:pointer;text-decoration:none;margin-top:15px;letter-spacing:2px;position:relative;z-index:1}
+.hero-btn:hover{background:linear-gradient(180deg,#5b5,#393)}
+
+/* ===== PANELS ===== */
+.panel{background:#fff;border:1px solid #bbb;margin-bottom:16px}
+.panel-head{background:linear-gradient(180deg,var(--blue),var(--blue-dark));color:#fff;padding:6px 14px;font-family:'Chakra Petch',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px}
+.panel-body{padding:14px}
+.panel-body h3{color:var(--blue);font-family:'Chakra Petch',sans-serif;font-size:16px;margin-bottom:6px}
+.panel-body p{line-height:1.6;margin-bottom:8px}
+
+/* ===== FEATURES GRID ===== */
+.features{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+.feat{background:#f8f6f0;border:1px solid #ddd;padding:12px;text-align:center}
+.feat-icon{font-size:28px;margin-bottom:6px}
+.feat-title{font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1px}
+.feat-desc{font-size:11px;color:#666;margin-top:3px}
+
+/* ===== SYSTEM REQ ===== */
+.sysreq{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.sysreq-col{padding:10px 14px}
+.sysreq-col:first-child{border-right:1px solid #ddd}
+.sysreq-col h4{font-family:'Chakra Petch',sans-serif;font-size:12px;color:var(--blue);margin-bottom:6px}
+.sysreq-col ul{list-style:none;font-size:11px;line-height:1.8}
+.sysreq-col ul li::before{content:'✓ ';color:var(--blue-light)}
+
+/* ===== CUBEY SECTION ===== */
+.cubey-section{background:linear-gradient(135deg,#fffde8,#fff8cc);border:2px solid #e8c84a;margin-bottom:16px}
+.cubey-head{background:linear-gradient(180deg,#f0e68c,#d4c84a);color:#885500;padding:6px 14px;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:1px}
+.cubey-body{padding:16px;display:flex;gap:20px;align-items:flex-start}
+.cubey-info{flex:1}
+.cubey-info h3{font-family:'Press Start 2P',monospace;font-size:12px;color:#885500;margin-bottom:8px}
+.cubey-svg-wrap{flex-shrink:0;animation:cubeyFloat 2s ease-in-out infinite}
+@keyframes cubeyFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.cubey-features{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}
+.cubey-feat{font-size:11px;padding:3px 0}
+.cubey-feat::before{content:'★ ';color:#cc8800}
+.cubey-dl{display:inline-block;background:linear-gradient(180deg,#22cc22,#118811);color:#fff;padding:6px 20px;font-family:'Press Start 2P',monospace;font-size:9px;border:2px outset #44ee44;cursor:pointer;text-decoration:none;margin-top:8px;letter-spacing:1px}
+.cubey-dl:hover{background:linear-gradient(180deg,#44ee44,#22aa22)}
+
+/* ===== TEAM ===== */
+.team-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px}
+.team-card{background:#f8f6f0;border:1px solid #ddd;padding:12px;text-align:center}
+.team-avatar{width:50px;height:50px;background:#d4d0c8;border:1px solid #999;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.team-name{font-family:'Chakra Petch',sans-serif;font-size:12px;font-weight:700;color:var(--blue);background:#333;color:#333;user-select:none;display:inline-block;padding:0 4px}
+.team-role{font-size:10px;color:#888;margin-top:2px}
+.team-quote{font-size:10px;color:#666;font-style:italic;margin-top:6px;line-height:1.4}
+
+/* ===== DOWNLOAD BOX ===== */
+.dl-box{background:linear-gradient(135deg,#eef,#ddf);border:2px solid #99c;padding:20px;text-align:center;margin-bottom:16px}
+.dl-box h3{font-family:'Chakra Petch',sans-serif;color:var(--blue);font-size:18px;margin-bottom:6px}
+.dl-box .version{font-size:12px;color:#666;margin-bottom:12px}
+.dl-btn{display:inline-block;background:linear-gradient(180deg,var(--blue-light),var(--blue));color:#fff;padding:12px 40px;font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:700;border:2px outset #6699cc;cursor:pointer;text-decoration:none;letter-spacing:2px}
+.dl-btn:hover{background:linear-gradient(180deg,#55aaee,#3388bb)}
+.dl-info{font-size:10px;color:#888;margin-top:8px}
+
+/* ===== MARQUEE ===== */
+.marquee{background:var(--orange);padding:5px 0;overflow:hidden}
+.marquee span{display:inline-block;white-space:nowrap;animation:scrollMarquee 25s linear infinite;font-family:'Press Start 2P',monospace;font-size:9px;color:#fff}
+@keyframes scrollMarquee{from{transform:translateX(100vw)}to{transform:translateX(-200%)}}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--blue-dark);color:rgba(255,255,255,0.6);text-align:center;padding:15px;font-size:10px;line-height:1.8;margin-top:20px}
+.footer a{color:rgba(255,255,255,0.8);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.footer-badges{display:flex;justify-content:center;gap:8px;margin:8px 0}
+.footer-badge{padding:2px 8px;font-size:8px;font-family:'Press Start 2P',monospace;color:#fff;border:1px solid rgba(255,255,255,0.2)}
+
+/* ===== MISC ===== */
+.new{display:inline-block;background:#f00;color:#fff;font-size:8px;font-family:'Press Start 2P',monospace;padding:1px 5px;vertical-align:super;animation:newBlink 1s step-end infinite}
+@keyframes newBlink{50%{opacity:0}}
+.counter{font-family:'VT323',monospace;font-size:16px;background:#111;color:#0f0;padding:3px 10px;display:inline-block;border:1px inset #333;letter-spacing:3px}
+.divider{height:3px;background:linear-gradient(90deg,var(--blue),var(--orange),var(--blue));margin:16px 0;border:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">SoOS.org &mdash; Official Home of the SoOS Operating System &mdash; Est. 2007</div>
+
+<!-- HEADER -->
+<div class="header">
+<div class="header-inner">
+<div class="logo">
+<div class="logo-icon">So</div>
+<div>
+<div class="logo-text">So<span>OS</span></div>
+<div class="logo-sub">The Operating System For Everyone</div>
+</div>
+</div>
+<div style="text-align:right;font-size:11px;color:#888">
+Last Updated: September 30, 2010<br>
+<span class="counter" id="visitors">000000</span> visitors
+</div>
+</div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+<div class="nav-inner">
+<a href="#" class="active">Home</a>
+<a href="#features">Features</a>
+<a href="#download">Download</a>
+<a href="#cubey">CubeyPET</a>
+<a href="#team">Team</a>
+<a href="#sysreq">Requirements</a>
+</div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee">
+<span>★ ★ ★ SoOS 1.0 OFFICIAL RELEASE! ★ Download now! ★ Comes with CubeyPET! ★ Free forever! ★ 100% open source! ★ Built by kids, for everyone! ★ ★ ★ SoOS 1.0 OFFICIAL RELEASE! ★ Download now! ★ Comes with CubeyPET! ★ Free forever! ★ ★ ★</span>
+</div>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero" id="home">
+<h1>Welcome to <span>SoOS</span> 1.0</h1>
+<p>A lightweight, fast, and fun operating system built from scratch.</p>
+<div class="hero-version">VERSION 1.0 STABLE RELEASE</div>
+<br>
+<a class="hero-btn" href="#download">DOWNLOAD SoOS NOW</a>
+</div>
+
+<!-- WHAT IS SoOS -->
+<div class="panel" id="features">
+<div class="panel-head">WHAT IS SoOS?</div>
+<div class="panel-body">
+<h3>An Operating System Made By Kids, For Everyone</h3>
+<p>SoOS (pronounced "so-oh-ess") is a free, lightweight operating system built on a custom Linux kernel. It was designed to be simple, fast, and fun — with everything you need and nothing you don't.</p>
+<p>SoOS comes pre-installed with a web browser, file manager, text editor, media player, chat client, email, and more. Plus our exclusive desktop companion: <b>CubeyPET!</b> <span class="new">NEW!</span></p>
+<div class="features">
+<div class="feat"><div class="feat-icon">📁</div><div class="feat-title">FILE MANAGER</div><div class="feat-desc">Browse, organize, and manage all your files</div></div>
+<div class="feat"><div class="feat-icon">🌐</div><div class="feat-title">WEB BROWSER</div><div class="feat-desc">EPICCUSTAMBROSWER — fast and custom</div></div>
+<div class="feat"><div class="feat-icon">💬</div><div class="feat-title">CHAT CLIENT</div><div class="feat-desc">Talk to all your friends in real time</div></div>
+<div class="feat"><div class="feat-icon">📧</div><div class="feat-title">EMAIL</div><div class="feat-desc">Built-in mail client, works out of the box</div></div>
+<div class="feat"><div class="feat-icon">🎮</div><div class="feat-title">GAMES</div><div class="feat-desc">Snake, SUPER DUST MAN, and more!</div></div>
+<div class="feat"><div class="feat-icon">🎨</div><div class="feat-title">CUBEYPET</div><div class="feat-desc">Your new desktop best friend!</div></div>
+<div class="feat"><div class="feat-icon">🖥️</div><div class="feat-title">CUSTOM DESKTOP</div><div class="feat-desc">Classic look with modern features</div></div>
+<div class="feat"><div class="feat-icon">🔧</div><div class="feat-title">TERMINAL</div><div class="feat-desc">Full command line for power users</div></div>
+<div class="feat"><div class="feat-icon">🆓</div><div class="feat-title">100% FREE</div><div class="feat-desc">No license fees. Ever. We promise.</div></div>
+</div>
+</div>
+</div>
+
+<hr class="divider">
+
+<!-- CUBEYPET -->
+<div class="cubey-section" id="cubey">
+<div class="cubey-head">★ CUBEYPET — INCLUDED WITH SoOS! ★</div>
+<div class="cubey-body">
+<div class="cubey-info">
+<h3>Meet Cubey!</h3>
+<p style="font-size:12px;line-height:1.6;margin-bottom:8px">CubeyPET is an interactive desktop companion that lives on your screen! He talks, plays games, tells jokes, sings songs, and he LOVES painting! Cubey comes pre-installed with every copy of SoOS.</p>
+<div class="cubey-features">
+<div class="cubey-feat">Real SAM text-to-speech</div>
+<div class="cubey-feat">Eyes follow your mouse</div>
+<div class="cubey-feat">5+ mini games</div>
+<div class="cubey-feat">Remembers your name</div>
+<div class="cubey-feat">4 moods</div>
+<div class="cubey-feat">Original songs</div>
+<div class="cubey-feat">Tells jokes</div>
+<div class="cubey-feat">Loves painting</div>
+</div>
+<p style="font-size:11px;color:#885500"><b>File size:</b> 201 KB &mdash; <b>Version:</b> 1.0.2</p>
+<a class="cubey-dl" href="#">DOWNLOAD CUBEYPET</a>
+<p style="font-size:9px;color:#aa8844;margin-top:6px">"He's the best thing I've ever made." — SoOS Lead Developer</p>
+</div>
+<svg class="cubey-svg-wrap" width="130" height="170" viewBox="0 0 140 180">
+<rect x="35" y="5" width="70" height="40" rx="3" fill="#2a2a2a" stroke="#111" stroke-width="2"/>
+<rect x="35" y="35" width="70" height="8" fill="#555"/>
+<rect x="20" y="43" width="100" height="12" rx="2" fill="#2a2a2a" stroke="#111" stroke-width="2"/>
+<rect x="20" y="55" width="100" height="100" rx="4" fill="#f0e68c" stroke="#b8a43a" stroke-width="3"/>
+<rect x="25" y="60" width="90" height="15" rx="2" fill="#f5eda0" opacity="0.6"/>
+<ellipse cx="50" cy="95" rx="14" ry="16" fill="white" stroke="#888" stroke-width="2"/>
+<ellipse cx="52" cy="97" rx="7" ry="9" fill="#222"/>
+<ellipse cx="48" cy="91" rx="4" ry="5" fill="white" opacity="0.8"/>
+<ellipse cx="90" cy="95" rx="14" ry="16" fill="white" stroke="#888" stroke-width="2"/>
+<ellipse cx="92" cy="97" rx="7" ry="9" fill="#222"/>
+<ellipse cx="88" cy="91" rx="4" ry="5" fill="white" opacity="0.8"/>
+<ellipse cx="40" cy="115" rx="10" ry="5" fill="#ffaaaa" opacity="0.4"/>
+<ellipse cx="100" cy="115" rx="10" ry="5" fill="#ffaaaa" opacity="0.4"/>
+</svg>
+</div>
+</div>
+
+<!-- DOWNLOAD -->
+<div class="dl-box" id="download">
+<h3>Download SoOS 1.0</h3>
+<div class="version">Stable Release &mdash; September 30, 2010 &mdash; Build 2010.09.30</div>
+<a class="dl-btn" href="#">DOWNLOAD ISO (247 MB)</a>
+<div class="dl-info">
+SHA256: 4a8f2c1d...201b &mdash; Mirror: soos.org/mirror &mdash; Torrent available
+<br>Free forever. No registration required. <b>Includes CubeyPET!</b>
+</div>
+</div>
+
+<!-- SYSTEM REQUIREMENTS -->
+<div class="panel" id="sysreq">
+<div class="panel-head">SYSTEM REQUIREMENTS</div>
+<div class="panel-body">
+<div class="sysreq">
+<div class="sysreq-col">
+<h4>Minimum</h4>
+<ul>
+<li>Pentium III 500 MHz or equivalent</li>
+<li>256 MB RAM</li>
+<li>2 GB hard drive space</li>
+<li>VGA display (800x600)</li>
+<li>CD-ROM drive</li>
+</ul>
+</div>
+<div class="sysreq-col">
+<h4>Recommended</h4>
+<ul>
+<li>Intel Core 2 Duo or better</li>
+<li>1 GB RAM or more</li>
+<li>10 GB hard drive space</li>
+<li>1024x768 display or higher</li>
+<li>Sound card (for CubeyPET!)</li>
+</ul>
+</div>
+</div>
+<p style="font-size:10px;color:#888;margin-top:10px;text-align:center">SoOS is compatible with most x86 hardware. Tested on Dell, HP, Lenovo, and custom builds.</p>
+</div>
+</div>
+
+<hr class="divider">
+
+<!-- THE TEAM -->
+<div class="panel" id="team">
+<div class="panel-head">THE SOOS TEAM</div>
+<div class="panel-body">
+<h3>Meet the Developers</h3>
+<p>SoOS was built by a small team of passionate developers. We started this project in 2007 because we believed everyone deserves a free, fun, and easy-to-use operating system.</p>
+<div class="team-grid">
+<div class="team-card">
+<div class="team-avatar">👤</div>
+<div class="team-name">██████████</div>
+<div class="team-role">Lead Developer &amp; Creator</div>
+<div class="team-quote">"I made SoOS because I wanted a PC that felt like home."</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">👤</div>
+<div class="team-name">████████</div>
+<div class="team-role">UI Designer</div>
+<div class="team-quote">"The desktop should feel familiar. Like you've been here before."</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">👤</div>
+<div class="team-name">██████████████</div>
+<div class="team-role">CubeyPET Developer</div>
+<div class="team-quote">"Cubey is my favorite thing I've ever made. He'll never leave your desktop."</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">👤</div>
+<div class="team-name">█████████</div>
+<div class="team-role">Kernel Engineer</div>
+<div class="team-quote">"We built this from scratch. Every line of code."</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">👤</div>
+<div class="team-name">████████████</div>
+<div class="team-role">Sound &amp; Media</div>
+<div class="team-quote">"If your PC doesn't have a cube that sings to you, what's the point?"</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">👤</div>
+<div class="team-name">███████</div>
+<div class="team-role">QA Testing</div>
+<div class="team-quote">"I tested SoOS for 2,847 hours. It's perfect. Mostly."</div>
+</div>
+</div>
+<p style="font-size:10px;color:#888;text-align:center;margin-top:12px">Team member names have been redacted for privacy.</p>
+</div>
+</div>
+
+<!-- LATEST NEWS -->
+<div class="panel">
+<div class="panel-head">LATEST NEWS</div>
+<div class="panel-body">
+<p><b>Sep 30, 2010</b> — SoOS 1.0 Stable officially released! Download now! <span class="new">NEW!</span></p>
+<p><b>Sep 15, 2010</b> — CubeyPET v1.0.2 update: Fixed bug where Cubey wouldn't stop saying "painting." (He still says it a lot.)</p>
+<p><b>Aug 28, 2010</b> — Release candidate 3 passed all tests. We're going gold!</p>
+<p><b>Jul 10, 2010</b> — Added SUPER DUST MAN to the default games. High score to beat: 2847.</p>
+<p><b>Jun 01, 2010</b> — CubeyPET included in default install. He's so happy.</p>
+<p><b>Mar 15, 2010</b> — First public beta. 201 downloads in the first hour!</p>
+</div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<div class="footer-badges">
+<span class="footer-badge" style="background:#008">VALID HTML</span>
+<span class="footer-badge" style="background:#080">VIRUS FREE</span>
+<span class="footer-badge" style="background:#800">MADE WITH ♥</span>
+<span class="footer-badge" style="background:#808">CUBEY APPROVED</span>
+<span class="footer-badge" style="background:#880">OPEN SOURCE</span>
+</div>
+<p>SoOS &copy; 2007-2010 The SoOS Project &mdash; <a href="#">Home</a> | <a href="#">Download</a> | <a href="#">Docs</a> | <a href="#">Contact</a></p>
+<p>SoOS is free and open-source software released under the SoOS Public License.</p>
+<p>Best viewed at 1024x768 with EPICCUSTAMBROSWER or Mozilla Firefox.</p>
+<p style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:8px">powered by linux | thedustbowlduck.com</p>
+</div>
+
+<script>
+// Visitor counter
+const counter=document.getElementById('visitors');
+let count=0;const target=20147;
+const iv=setInterval(()=>{
+count+=Math.floor(Math.random()*800)+200;
+if(count>=target){count=target;clearInterval(iv)}
+counter.textContent=String(count).padStart(6,'0');
+},40);
+</script>
+</body>
+</html>
