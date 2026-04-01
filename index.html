@@ -41,24 +41,31 @@ var DUR = [
   1,2,1,2, 2,1,1,1, 1,1,1,1, 2,1,5
 ];
 
-// Waltz chords: [bass MIDI, chord1 MIDI, chord2 MIDI, duration in quarters]
+// Simple chord roots for bass oom-pah-pah
+// Each: [bassMIDI, chord1MIDI, chord2MIDI, durationInQuarters]
 var CHORDS = [
-  [50,66,71, 6],[55,59,67, 6],
-  [52,57,64, 3],[55,59,67, 3],[55,59,62, 6],
-  [57,62,69, 6],[52,55,64, 6],
-  [50,57,62, 3],[55,59,67, 3],[50,55,62, 6],
-  [52,57,64, 6],[55,59,67, 6],
-  [50,57,62, 6],[55,59,62, 6],
-  [57,62,69, 4],[50,55,62, 4],[55,59,67, 4],
-  [50,57,62, 3],[55,59,62, 3],[55,59,67, 2],[50,55,62, 5],
+  [50,66,71,6],[55,59,67,6],
+  [52,57,64,3],[55,59,67,3],[55,59,62,6],
+  [57,62,69,6],[52,55,64,6],
+  [50,57,62,3],[55,59,67,3],[50,55,62,6],
+  [52,57,64,6],[55,59,67,6],
+  [50,57,62,6],[55,59,62,6],
+  [57,62,69,4],[50,55,62,4],[55,59,67,4],
+  [50,57,62,3],[55,59,62,3],[55,59,67,2],[50,55,62,5],
 ];
 
 function mtf(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
-var ctx, masterGain;
+var ctx;
+var melOsc, melGain;       // 1 oscillator for melody
+var bassOsc, bassGain;     // 1 oscillator for bass
+var ch1Osc, ch1Gain;       // 1 oscillator for chord note 1
+var ch2Osc, ch2Gain;       // 1 oscillator for chord note 2
+var shimOsc, shimGain;     // 1 oscillator for shimmer
+var masterGain, revGain, dryGain, brightF;
 var loopCount = 0;
 
-function asc() {
+function ga() {
   var t = Math.min(loopCount, 12);
   var p = t / 12;
   return {
@@ -66,8 +73,7 @@ function asc() {
     ps: p * 3,
     rev: 0.15 + p * 0.35,
     bright: 2500 + p * 3000,
-    shim: p * 0.05,
-    atk: 0.01 + p * 0.03,
+    shim: p * 0.04,
   };
 }
 
@@ -78,18 +84,10 @@ async function goFull() {
     else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
   } catch(e) {}
   try {
-    if ('wakeLock' in navigator) {
-      var wl = await navigator.wakeLock.request('screen');
-      document.addEventListener('visibilitychange', async function() {
-        if (document.visibilityState === 'visible') {
-          try { wl = await navigator.wakeLock.request('screen'); } catch(e) {}
-        }
-      });
-    }
+    if ('wakeLock' in navigator)
+      await navigator.wakeLock.request('screen');
   } catch(e) {}
 }
-
-var revGain, dryGain, brightF, convNode;
 
 function start() {
   document.getElementById('btn').style.display = 'none';
@@ -99,50 +97,58 @@ function start() {
   ctx.resume();
 
   masterGain = ctx.createGain();
-  masterGain.gain.value = 0.22;
+  masterGain.gain.value = 0.25;
 
-  // Simple delay-based reverb instead of convolver (lighter on mobile)
-  var delay1 = ctx.createDelay(); delay1.delayTime.value = 0.12;
-  var delay2 = ctx.createDelay(); delay2.delayTime.value = 0.23;
-  var delay3 = ctx.createDelay(); delay3.delayTime.value = 0.37;
-  var fb1 = ctx.createGain(); fb1.gain.value = 0.3;
-  var fb2 = ctx.createGain(); fb2.gain.value = 0.25;
-  var fb3 = ctx.createGain(); fb3.gain.value = 0.2;
-  delay1.connect(fb1); fb1.connect(delay1);
-  delay2.connect(fb2); fb2.connect(delay2);
-  delay3.connect(fb3); fb3.connect(delay3);
+  // Simple reverb: 3 delay lines
+  var d1 = ctx.createDelay(); d1.delayTime.value = 0.11;
+  var d2 = ctx.createDelay(); d2.delayTime.value = 0.22;
+  var d3 = ctx.createDelay(); d3.delayTime.value = 0.35;
+  var f1 = ctx.createGain(); f1.gain.value = 0.25;
+  var f2 = ctx.createGain(); f2.gain.value = 0.2;
+  var f3 = ctx.createGain(); f3.gain.value = 0.15;
+  d1.connect(f1); f1.connect(d1);
+  d2.connect(f2); f2.connect(d2);
+  d3.connect(f3); f3.connect(d3);
 
   revGain = ctx.createGain(); revGain.gain.value = 0.15;
   dryGain = ctx.createGain(); dryGain.gain.value = 0.85;
-
   brightF = ctx.createBiquadFilter();
   brightF.type = 'lowpass'; brightF.frequency.value = 2500;
 
   masterGain.connect(brightF);
   brightF.connect(dryGain);
-  brightF.connect(delay1);
-  brightF.connect(delay2);
-  brightF.connect(delay3);
-  delay1.connect(revGain);
-  delay2.connect(revGain);
-  delay3.connect(revGain);
+  brightF.connect(d1); brightF.connect(d2); brightF.connect(d3);
+  d1.connect(revGain); d2.connect(revGain); d3.connect(revGain);
   dryGain.connect(ctx.destination);
   revGain.connect(ctx.destination);
 
-  loop();
-}
+  // Create PERSISTENT oscillators (never destroyed)
+  melOsc = ctx.createOscillator(); melOsc.type = 'sine';
+  melGain = ctx.createGain(); melGain.gain.value = 0;
+  melOsc.connect(melGain); melGain.connect(masterGain);
+  melOsc.start();
 
-function tone(freq, t, dur, type, vol, dest) {
-  var o = ctx.createOscillator();
-  o.type = type;
-  o.frequency.value = freq;
-  var g = ctx.createGain();
-  g.gain.setValueAtTime(0, t);
-  g.gain.linearRampToValueAtTime(vol, t + 0.015);
-  g.gain.setValueAtTime(vol, t + Math.max(dur - 0.04, 0.02));
-  g.gain.linearRampToValueAtTime(0, t + dur);
-  o.connect(g); g.connect(dest);
-  o.start(t); o.stop(t + dur + 0.02);
+  bassOsc = ctx.createOscillator(); bassOsc.type = 'sine';
+  bassGain = ctx.createGain(); bassGain.gain.value = 0;
+  bassOsc.connect(bassGain); bassGain.connect(masterGain);
+  bassOsc.start();
+
+  ch1Osc = ctx.createOscillator(); ch1Osc.type = 'triangle';
+  ch1Gain = ctx.createGain(); ch1Gain.gain.value = 0;
+  ch1Osc.connect(ch1Gain); ch1Gain.connect(masterGain);
+  ch1Osc.start();
+
+  ch2Osc = ctx.createOscillator(); ch2Osc.type = 'triangle';
+  ch2Gain = ctx.createGain(); ch2Gain.gain.value = 0;
+  ch2Osc.connect(ch2Gain); ch2Gain.connect(masterGain);
+  ch2Osc.start();
+
+  shimOsc = ctx.createOscillator(); shimOsc.type = 'sine';
+  shimGain = ctx.createGain(); shimGain.gain.value = 0;
+  shimOsc.connect(shimGain); shimGain.connect(masterGain);
+  shimOsc.start();
+
+  loop();
 }
 
 function scheduleMelody(t0, a) {
@@ -151,14 +157,23 @@ function scheduleMelody(t0, a) {
   for (var i = 0; i < PITCH.length; i++) {
     var dur = DUR[i] * q;
     var f = mtf(PITCH[i] + a.ps);
-    // Main melody: sine
-    tone(f, t, dur * 0.9, 'sine', 0.35, masterGain);
-    // Warmth: quiet triangle
-    tone(f, t, dur * 0.9, 'triangle', 0.08, masterGain);
-    // Shimmer: octave up sine (grows)
-    if (a.shim > 0.01) {
-      tone(f * 2, t, dur * 0.9, 'sine', a.shim, masterGain);
-    }
+
+    // Set frequency
+    melOsc.frequency.setValueAtTime(f, t);
+    shimOsc.frequency.setValueAtTime(f * 2, t);
+
+    // Envelope: on then off
+    melGain.gain.setValueAtTime(0, t);
+    melGain.gain.linearRampToValueAtTime(0.3, t + 0.02);
+    melGain.gain.setValueAtTime(0.3, t + dur * 0.85);
+    melGain.gain.linearRampToValueAtTime(0, t + dur * 0.92);
+
+    // Shimmer envelope
+    shimGain.gain.setValueAtTime(0, t);
+    shimGain.gain.linearRampToValueAtTime(a.shim, t + 0.02);
+    shimGain.gain.setValueAtTime(a.shim, t + dur * 0.85);
+    shimGain.gain.linearRampToValueAtTime(0, t + dur * 0.92);
+
     t += dur;
   }
 }
@@ -168,7 +183,7 @@ function scheduleAccomp(t0, a) {
   var t = t0;
   for (var i = 0; i < CHORDS.length; i++) {
     var c = CHORDS[i];
-    var bassF = mtf(c[0] + a.ps);
+    var bf = mtf(c[0] + a.ps);
     var c1f = mtf(c[1] + a.ps);
     var c2f = mtf(c[2] + a.ps);
     var beats = c[3];
@@ -176,20 +191,35 @@ function scheduleAccomp(t0, a) {
     var pos = t;
     var left = beats;
     while (left >= 3) {
-      // Beat 1: bass (sine, warm)
-      tone(bassF, pos, q * 1.8, 'sine', 0.18, masterGain);
-      // Beat 2: chord (triangle, soft)
-      tone(c1f, pos + q, q * 0.6, 'triangle', 0.08, masterGain);
-      tone(c2f, pos + q, q * 0.6, 'triangle', 0.08, masterGain);
-      // Beat 3: chord (triangle, softer)
-      tone(c1f, pos + q * 2, q * 0.6, 'triangle', 0.06, masterGain);
-      tone(c2f, pos + q * 2, q * 0.6, 'triangle', 0.06, masterGain);
+      // Beat 1: bass on
+      bassOsc.frequency.setValueAtTime(bf, pos);
+      bassGain.gain.setValueAtTime(0, pos);
+      bassGain.gain.linearRampToValueAtTime(0.15, pos + 0.015);
+      bassGain.gain.setValueAtTime(0.15, pos + q * 0.7);
+      bassGain.gain.linearRampToValueAtTime(0, pos + q * 0.9);
+
+      // Beat 2: chord hit
+      ch1Osc.frequency.setValueAtTime(c1f, pos + q);
+      ch2Osc.frequency.setValueAtTime(c2f, pos + q);
+      ch1Gain.gain.setValueAtTime(0, pos + q);
+      ch1Gain.gain.linearRampToValueAtTime(0.06, pos + q + 0.01);
+      ch1Gain.gain.linearRampToValueAtTime(0, pos + q + q * 0.6);
+      ch2Gain.gain.setValueAtTime(0, pos + q);
+      ch2Gain.gain.linearRampToValueAtTime(0.06, pos + q + 0.01);
+      ch2Gain.gain.linearRampToValueAtTime(0, pos + q + q * 0.6);
+
+      // Beat 3: chord hit
+      ch1Osc.frequency.setValueAtTime(c1f, pos + q * 2);
+      ch2Osc.frequency.setValueAtTime(c2f, pos + q * 2);
+      ch1Gain.gain.setValueAtTime(0, pos + q * 2);
+      ch1Gain.gain.linearRampToValueAtTime(0.04, pos + q * 2 + 0.01);
+      ch1Gain.gain.linearRampToValueAtTime(0, pos + q * 2 + q * 0.6);
+      ch2Gain.gain.setValueAtTime(0, pos + q * 2);
+      ch2Gain.gain.linearRampToValueAtTime(0.04, pos + q * 2 + 0.01);
+      ch2Gain.gain.linearRampToValueAtTime(0, pos + q * 2 + q * 0.6);
+
       pos += q * 3;
       left -= 3;
-    }
-    // Handle leftover beats
-    if (left >= 1) {
-      tone(bassF, pos, q * Math.min(left, 1.8), 'sine', 0.18, masterGain);
     }
     t += beats * q;
   }
@@ -197,7 +227,7 @@ function scheduleAccomp(t0, a) {
 
 function loop() {
   ctx.resume();
-  var a = asc();
+  var a = ga();
 
   brightF.frequency.setTargetAtTime(a.bright, ctx.currentTime, 1);
   revGain.gain.setTargetAtTime(a.rev, ctx.currentTime, 1);
