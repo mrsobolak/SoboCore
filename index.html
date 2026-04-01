@@ -28,88 +28,94 @@
 <body>
 <button id="btn" onclick="start()">Hello</button>
 <script>
+// MELODY - exact from ayoungblood/daisy-bell
 var PITCH = [
-  74, 71, 67, 62, 64, 66, 67, 64, 67, 62,
-  69, 74, 71, 67, 64, 66, 67, 69, 71, 69,
-  71, 72, 71, 69, 74, 71, 69, 67, 69, 71, 67, 64, 67, 64, 62,
-  62, 67, 71, 69, 67, 71, 69, 71, 72, 74, 71, 67, 69, 62, 67
+  74,71,67,62, 64,66,67,64,67,62,
+  69,74,71,67, 64,66,67,69,71,69,
+  71,72,71,69, 74,71,69,67, 69,71,67,64, 67,64,62,
+  62,67,71,69, 67,71,69,71, 72,74,71,67, 69,62,67
 ];
 var DUR = [
-  3,  3,  3,  3,  1,  1,  1,  2,  1,  6,
-  3,  3,  3,  3,  1,  1,  1,  2,  1,  6,
-  1,  1,  1,  1,  2,  1,  1,  4,  1,  2,  1,  2,  1,  1,  5,
-  1,  2,  1,  2,  2,  1,  1,  1,  1,  1,  1,  1,  2,  1,  5
+  3,3,3,3, 1,1,1,2,1,6,
+  3,3,3,3, 1,1,1,2,1,6,
+  1,1,1,1, 2,1,1,4, 1,2,1,2, 1,1,5,
+  1,2,1,2, 2,1,1,1, 1,1,1,1, 2,1,5
+];
+
+// CHORDS for accompaniment (waltz oom-pah-pah)
+// Each chord lasts a certain number of quarter notes
+// [bass MIDI note, [chord MIDI notes], duration in quarters]
+var CHORDS = [
+  // "Daisy Daisy" - D major, G major
+  [50,[66,71],6], [55,[59,62],6],
+  // "give me your answer do"
+  [52,[57,64],3], [55,[59,62],3], [55,[59,62],6],
+  // "I'm half crazy"
+  [57,[62,69],6], [52,[55,64],6],
+  // "all for the love of you"
+  [50,[57,62],3], [55,[59,67],3], [50,[57,62],6],
+  // "It won't be a stylish marriage"
+  [52,[57,64],6], [55,[59,67],6],
+  // "I can't afford a carriage"
+  [50,[57,62],6], [55,[59,62],6],
+  // "but you'll look sweet upon the seat"
+  [57,[62,69],4], [50,[55,62],4], [55,[59,67],4],
+  // "of a bicycle built for two"
+  [50,[57,62],3], [55,[59,62],3], [55,[59,67],2], [50,[55,62],5],
 ];
 
 function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
-var ctx, mg, convolver, padGain;
+var ctx, melodyGain, bassGain, chordGain, reverbGain, dryGain, convolver, padGain, brightFilter;
 var loopCount = 0;
 
 function getAscend() {
-  var t = Math.min(loopCount, 10);
-  var p = t / 10;
+  var t = Math.min(loopCount, 12);
+  var p = t / 12;
   return {
-    bpm: 120 - p * 55,
-    pitchShift: p * 5,
-    volume: 0.16 + p * 0.04,
-    shimmer: p * 0.12,
-    padVol: p * 0.06,
-    reverbMix: 0.3 + p * 0.5,
-    brightness: 2000 + p * 4000,
-    attack: 0.01 + p * 0.06,
-    noteLen: 0.92 + p * 0.07,
-    vibratoRate: 4 - p * 2,
-    vibratoDepth: 1.5 + p * 1,
+    bpm: 105 - p * 30,
+    pitchShift: p * 3,
+    melodyVol: 0.14,
+    bassVol: 0.08 + p * 0.02,
+    chordVol: 0.04 + p * 0.02,
+    shimmer: p * 0.06,
+    padVol: p * 0.03,
+    reverbMix: 0.15 + p * 0.35,
+    brightness: 2500 + p * 3000,
+    attack: 0.01 + p * 0.03,
+    noteLen: 0.92 + p * 0.06,
+    vibratoRate: 4 - p * 1.5,
+    vibratoDepth: 1 + p * 0.5,
   };
 }
 
-function makeReverb(duration, decay) {
-  var len = ctx.sampleRate * duration;
+function makeReverb(dur, decay) {
+  var len = ctx.sampleRate * dur;
   var buf = ctx.createBuffer(2, len, ctx.sampleRate);
   for (var c = 0; c < 2; c++) {
     var d = buf.getChannelData(c);
-    for (var i = 0; i < len; i++)
+    for (var i = 0; i < len; i++) {
       d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
   }
   return buf;
 }
 
 async function goFullscreenAndWake() {
-  // Fullscreen
   try {
     var el = document.documentElement;
     if (el.requestFullscreen) await el.requestFullscreen();
     else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
   } catch(e) {}
-
-  // Wake Lock - keeps screen on
   try {
     if ('wakeLock' in navigator) {
       var wl = await navigator.wakeLock.request('screen');
-      // Re-acquire if page becomes visible again
       document.addEventListener('visibilitychange', async function() {
         if (document.visibilityState === 'visible') {
           try { wl = await navigator.wakeLock.request('screen'); } catch(e) {}
         }
       });
     }
-  } catch(e) {}
-
-  // Fallback: hidden video trick to prevent sleep on iOS
-  try {
-    var v = document.createElement('video');
-    v.setAttribute('playsinline','');
-    v.setAttribute('muted','');
-    v.setAttribute('loop','');
-    v.style.position = 'fixed';
-    v.style.width = '1px';
-    v.style.height = '1px';
-    v.style.opacity = '0.01';
-    // Tiny transparent webm
-    v.src = 'data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDE=';
-    document.body.appendChild(v);
-    v.play().catch(function(){});
   } catch(e) {}
 }
 
@@ -118,123 +124,165 @@ function start() {
   goFullscreenAndWake();
 
   ctx = new (window.AudioContext || window.webkitAudioContext)();
-  mg = ctx.createGain();
-  mg.gain.value = 0.16;
 
+  // Melody bus
+  melodyGain = ctx.createGain(); melodyGain.gain.value = 0.14;
+  // Bass bus
+  bassGain = ctx.createGain(); bassGain.gain.value = 0.08;
+  // Chord bus
+  chordGain = ctx.createGain(); chordGain.gain.value = 0.04;
+
+  // Reverb
   convolver = ctx.createConvolver();
-  convolver.buffer = makeReverb(4, 1.8);
-  var reverbGain = ctx.createGain();
-  reverbGain.gain.value = 0.3;
-  var dryGain = ctx.createGain();
-  dryGain.gain.value = 0.7;
-  window._dryGain = dryGain;
-  window._reverbGain = reverbGain;
+  convolver.buffer = makeReverb(3.5, 2.2);
+  reverbGain = ctx.createGain(); reverbGain.gain.value = 0.15;
+  dryGain = ctx.createGain(); dryGain.gain.value = 0.85;
 
-  var bright = ctx.createBiquadFilter();
-  bright.type = 'lowpass'; bright.frequency.value = 2000;
-  window._bright = bright;
+  // Brightness
+  brightFilter = ctx.createBiquadFilter();
+  brightFilter.type = 'lowpass'; brightFilter.frequency.value = 2500;
 
-  mg.connect(bright);
-  bright.connect(dryGain);
-  bright.connect(convolver);
+  // Master mix bus
+  var mixBus = ctx.createGain(); mixBus.gain.value = 1;
+
+  melodyGain.connect(mixBus);
+  bassGain.connect(mixBus);
+  chordGain.connect(mixBus);
+
+  mixBus.connect(brightFilter);
+  brightFilter.connect(dryGain);
+  brightFilter.connect(convolver);
   convolver.connect(reverbGain);
   dryGain.connect(ctx.destination);
   reverbGain.connect(ctx.destination);
 
-  padGain = ctx.createGain();
-  padGain.gain.value = 0;
+  // Warm pad (fades in over loops)
+  padGain = ctx.createGain(); padGain.gain.value = 0;
   var padFilter = ctx.createBiquadFilter();
-  padFilter.type = 'lowpass'; padFilter.frequency.value = 600;
-
+  padFilter.type = 'lowpass'; padFilter.frequency.value = 500;
   [261.63, 329.63, 392.00].forEach(function(f) {
-    var o = ctx.createOscillator();
-    o.type = 'sine'; o.frequency.value = f;
-    var o2 = ctx.createOscillator();
-    o2.type = 'sine'; o2.frequency.value = f * 2.001;
-    var o2g = ctx.createGain(); o2g.gain.value = 0.15;
-    var lfo = ctx.createOscillator();
-    lfo.frequency.value = 0.3 + Math.random() * 0.2;
-    var lfog = ctx.createGain(); lfog.gain.value = 1;
-    lfo.connect(lfog); lfog.connect(o.frequency);
-    o.connect(padGain);
-    o2.connect(o2g); o2g.connect(padGain);
-    o.start(); o2.start(); lfo.start();
+    var o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+    var lfo = ctx.createOscillator(); lfo.frequency.value = 0.2 + Math.random() * 0.15;
+    var lg = ctx.createGain(); lg.gain.value = 0.8;
+    lfo.connect(lg); lg.connect(o.frequency);
+    o.connect(padGain); o.start(); lfo.start();
   });
-
   padGain.connect(padFilter);
   padFilter.connect(convolver);
-  padFilter.connect(ctx.destination);
-
-  var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
-  var d = buf.getChannelData(0);
-  for (var i = 0; i < d.length; i++)
-    d[i] = (Math.random() - 0.5) * 0.006;
-  var noise = ctx.createBufferSource();
-  noise.buffer = buf; noise.loop = true;
-  var nG = ctx.createGain(); nG.gain.value = 0.15;
-  var nF = ctx.createBiquadFilter();
-  nF.type = 'bandpass'; nF.frequency.value = 3000; nF.Q.value = 0.2;
-  noise.connect(nG); nG.connect(nF); nF.connect(ctx.destination);
-  noise.start();
 
   loop();
 }
 
-function playNote(freq, t, dur, asc) {
+// --- MELODY NOTE ---
+function playMelody(freq, t, dur, asc) {
   var sine = ctx.createOscillator();
   sine.type = 'sine'; sine.frequency.value = freq;
   var tri = ctx.createOscillator();
   tri.type = 'triangle'; tri.frequency.value = freq;
-  var triG = ctx.createGain(); triG.gain.value = 0.3;
+  var triG = ctx.createGain(); triG.gain.value = 0.25;
+
+  // Shimmer (octave up, grows over loops)
   var shim = ctx.createOscillator();
   shim.type = 'sine'; shim.frequency.value = freq * 2;
   var shimG = ctx.createGain(); shimG.gain.value = asc.shimmer;
-  var fifth = ctx.createOscillator();
-  fifth.type = 'sine'; fifth.frequency.value = freq * 1.5;
-  var fifthG = ctx.createGain(); fifthG.gain.value = asc.shimmer * 0.4;
 
   var mix = ctx.createGain(); mix.gain.value = 0.5;
   var env = ctx.createGain();
   env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(0.55, t + asc.attack);
-  env.gain.setValueAtTime(0.55, t + dur * 0.7);
+  env.gain.linearRampToValueAtTime(0.6, t + asc.attack);
+  env.gain.setValueAtTime(0.6, t + dur * 0.75);
   env.gain.exponentialRampToValueAtTime(0.01, t + dur);
 
   var lfo = ctx.createOscillator();
   lfo.frequency.value = asc.vibratoRate;
-  var lfoG = ctx.createGain(); lfoG.gain.value = asc.vibratoDepth;
-  lfo.connect(lfoG);
-  lfoG.connect(sine.frequency);
-  lfoG.connect(tri.frequency);
-  lfoG.connect(shim.frequency);
+  var lg = ctx.createGain(); lg.gain.value = asc.vibratoDepth;
+  lfo.connect(lg); lg.connect(sine.frequency); lg.connect(tri.frequency);
 
   sine.connect(mix); tri.connect(triG); triG.connect(mix);
   shim.connect(shimG); shimG.connect(mix);
-  fifth.connect(fifthG); fifthG.connect(mix);
-  mix.connect(env); env.connect(mg);
+  mix.connect(env); env.connect(melodyGain);
 
-  sine.start(t); tri.start(t); shim.start(t); fifth.start(t); lfo.start(t);
-  sine.stop(t+dur+0.1); tri.stop(t+dur+0.1); shim.stop(t+dur+0.1);
-  fifth.stop(t+dur+0.1); lfo.stop(t+dur+0.1);
+  sine.start(t); tri.start(t); shim.start(t); lfo.start(t);
+  sine.stop(t+dur+0.05); tri.stop(t+dur+0.05);
+  shim.stop(t+dur+0.05); lfo.stop(t+dur+0.05);
 }
 
-function scheduleVerse(t, asc) {
+// --- BASS NOTE (beat 1 of each bar) ---
+function playBass(freq, t, dur) {
+  var o = ctx.createOscillator();
+  o.type = 'sine'; o.frequency.value = freq;
+  var env = ctx.createGain();
+  env.gain.setValueAtTime(0, t);
+  env.gain.linearRampToValueAtTime(0.5, t + 0.02);
+  env.gain.setValueAtTime(0.5, t + dur * 0.6);
+  env.gain.exponentialRampToValueAtTime(0.01, t + dur);
+  o.connect(env); env.connect(bassGain);
+  o.start(t); o.stop(t + dur + 0.05);
+}
+
+// --- CHORD HIT (beats 2 & 3) ---
+function playChordHit(freqs, t, dur) {
+  freqs.forEach(function(f) {
+    var o = ctx.createOscillator();
+    o.type = 'triangle'; o.frequency.value = f;
+    var env = ctx.createGain();
+    env.gain.setValueAtTime(0, t);
+    env.gain.linearRampToValueAtTime(0.3, t + 0.01);
+    env.gain.exponentialRampToValueAtTime(0.01, t + dur);
+    o.connect(env); env.connect(chordGain);
+    o.start(t); o.stop(t + dur + 0.05);
+  });
+}
+
+// --- SCHEDULE WALTZ ACCOMPANIMENT ---
+function scheduleAccomp(startTime, asc) {
   var quarter = 60 / asc.bpm;
+  var t = startTime;
+  for (var i = 0; i < CHORDS.length; i++) {
+    var bass = midiToFreq(CHORDS[i][0] + asc.pitchShift);
+    var chordNotes = CHORDS[i][1].map(function(n) {
+      return midiToFreq(n + asc.pitchShift);
+    });
+    var totalBeats = CHORDS[i][2];
+
+    // Walk through in groups of 3 beats (one bar)
+    var beatsLeft = totalBeats;
+    var pos = t;
+    while (beatsLeft >= 3) {
+      // Beat 1: bass
+      playBass(bass, pos, quarter * 2.5);
+      // Beat 2: chord
+      playChordHit(chordNotes, pos + quarter, quarter * 0.8);
+      // Beat 3: chord
+      playChordHit(chordNotes, pos + quarter * 2, quarter * 0.8);
+      pos += quarter * 3;
+      beatsLeft -= 3;
+    }
+    t += totalBeats * quarter;
+  }
+}
+
+// --- SCHEDULE MELODY ---
+function scheduleMelody(startTime, asc) {
+  var quarter = 60 / asc.bpm;
+  var t = startTime;
   for (var i = 0; i < PITCH.length; i++) {
     var dur = DUR[i] * quarter;
     var freq = midiToFreq(PITCH[i] + asc.pitchShift);
-    playNote(freq, t, dur * asc.noteLen, asc);
+    playMelody(freq, t, dur * asc.noteLen, asc);
     t += dur;
   }
-  return t;
 }
 
 function loop() {
   var asc = getAscend();
-  mg.gain.setTargetAtTime(asc.volume, ctx.currentTime, 1);
-  window._bright.frequency.setTargetAtTime(asc.brightness, ctx.currentTime, 1);
-  window._reverbGain.gain.setTargetAtTime(asc.reverbMix, ctx.currentTime, 1);
-  window._dryGain.gain.setTargetAtTime(1 - asc.reverbMix * 0.5, ctx.currentTime, 1);
+
+  melodyGain.gain.setTargetAtTime(asc.melodyVol, ctx.currentTime, 0.5);
+  bassGain.gain.setTargetAtTime(asc.bassVol, ctx.currentTime, 0.5);
+  chordGain.gain.setTargetAtTime(asc.chordVol, ctx.currentTime, 0.5);
+  brightFilter.frequency.setTargetAtTime(asc.brightness, ctx.currentTime, 1);
+  reverbGain.gain.setTargetAtTime(asc.reverbMix, ctx.currentTime, 1);
+  dryGain.gain.setTargetAtTime(1 - asc.reverbMix * 0.4, ctx.currentTime, 1);
   padGain.gain.setTargetAtTime(asc.padVol, ctx.currentTime, 2);
 
   var quarter = 60 / asc.bpm;
@@ -242,7 +290,10 @@ function loop() {
   for (var i = 0; i < DUR.length; i++) total += DUR[i];
   total *= quarter;
 
-  scheduleVerse(ctx.currentTime + 0.1, asc);
+  var t0 = ctx.currentTime + 0.1;
+  scheduleMelody(t0, asc);
+  scheduleAccomp(t0, asc);
+
   loopCount++;
   setTimeout(loop, (total + 3) * 1000);
 }
