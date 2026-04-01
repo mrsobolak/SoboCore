@@ -43,25 +43,24 @@ var DUR = [
 
 function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
-var ctx, mg, convolver, padGain, shimmerGain;
+var ctx, mg, convolver, padGain;
 var loopCount = 0;
 
-// Ascends over ~10 loops then stays in heaven
 function getAscend() {
   var t = Math.min(loopCount, 10);
-  var p = t / 10; // 0 → 1 progress toward heaven
+  var p = t / 10;
   return {
-    bpm: 120 - p * 55,              // gently slows: 120 → 65 (peaceful)
-    pitchShift: p * 5,              // drifts UP 5 semitones
-    volume: 0.16 + p * 0.04,        // slightly fuller
-    shimmer: p * 0.12,              // octave-up shimmer grows
-    padVol: p * 0.06,               // warm choir pad fades in
-    reverbMix: 0.3 + p * 0.5,       // reverb opens into cathedral
-    brightness: 2000 + p * 4000,    // filter opens: more light
-    attack: 0.01 + p * 0.06,        // notes soften, bloom slower
-    noteLen: 0.92 + p * 0.07,       // notes sustain longer, legato
-    vibratoRate: 4 - p * 2,         // vibrato slows: calm, peaceful
-    vibratoDepth: 1.5 + p * 1,      // gentle widening
+    bpm: 120 - p * 55,
+    pitchShift: p * 5,
+    volume: 0.16 + p * 0.04,
+    shimmer: p * 0.12,
+    padVol: p * 0.06,
+    reverbMix: 0.3 + p * 0.5,
+    brightness: 2000 + p * 4000,
+    attack: 0.01 + p * 0.06,
+    noteLen: 0.92 + p * 0.07,
+    vibratoRate: 4 - p * 2,
+    vibratoDepth: 1.5 + p * 1,
   };
 }
 
@@ -70,33 +69,67 @@ function makeReverb(duration, decay) {
   var buf = ctx.createBuffer(2, len, ctx.sampleRate);
   for (var c = 0; c < 2; c++) {
     var d = buf.getChannelData(c);
-    for (var i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++)
       d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
-    }
   }
   return buf;
 }
 
+async function goFullscreenAndWake() {
+  // Fullscreen
+  try {
+    var el = document.documentElement;
+    if (el.requestFullscreen) await el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+  } catch(e) {}
+
+  // Wake Lock - keeps screen on
+  try {
+    if ('wakeLock' in navigator) {
+      var wl = await navigator.wakeLock.request('screen');
+      // Re-acquire if page becomes visible again
+      document.addEventListener('visibilitychange', async function() {
+        if (document.visibilityState === 'visible') {
+          try { wl = await navigator.wakeLock.request('screen'); } catch(e) {}
+        }
+      });
+    }
+  } catch(e) {}
+
+  // Fallback: hidden video trick to prevent sleep on iOS
+  try {
+    var v = document.createElement('video');
+    v.setAttribute('playsinline','');
+    v.setAttribute('muted','');
+    v.setAttribute('loop','');
+    v.style.position = 'fixed';
+    v.style.width = '1px';
+    v.style.height = '1px';
+    v.style.opacity = '0.01';
+    // Tiny transparent webm
+    v.src = 'data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDE=';
+    document.body.appendChild(v);
+    v.play().catch(function(){});
+  } catch(e) {}
+}
+
 function start() {
   document.getElementById('btn').style.display = 'none';
-  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  goFullscreenAndWake();
 
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
   mg = ctx.createGain();
   mg.gain.value = 0.16;
 
-  // Reverb (cathedral)
   convolver = ctx.createConvolver();
   convolver.buffer = makeReverb(4, 1.8);
   var reverbGain = ctx.createGain();
   reverbGain.gain.value = 0.3;
-
-  // Dry/wet
   var dryGain = ctx.createGain();
   dryGain.gain.value = 0.7;
   window._dryGain = dryGain;
   window._reverbGain = reverbGain;
 
-  // Brightness filter
   var bright = ctx.createBiquadFilter();
   bright.type = 'lowpass'; bright.frequency.value = 2000;
   window._bright = bright;
@@ -108,18 +141,16 @@ function start() {
   dryGain.connect(ctx.destination);
   reverbGain.connect(ctx.destination);
 
-  // Warm pad drone (choir, fades in over loops)
   padGain = ctx.createGain();
   padGain.gain.value = 0;
   var padFilter = ctx.createBiquadFilter();
   padFilter.type = 'lowpass'; padFilter.frequency.value = 600;
 
-  // C major chord pad: C4 E4 G4
   [261.63, 329.63, 392.00].forEach(function(f) {
     var o = ctx.createOscillator();
     o.type = 'sine'; o.frequency.value = f;
     var o2 = ctx.createOscillator();
-    o2.type = 'sine'; o2.frequency.value = f * 2.001; // octave shimmer
+    o2.type = 'sine'; o2.frequency.value = f * 2.001;
     var o2g = ctx.createGain(); o2g.gain.value = 0.15;
     var lfo = ctx.createOscillator();
     lfo.frequency.value = 0.3 + Math.random() * 0.2;
@@ -134,7 +165,6 @@ function start() {
   padFilter.connect(convolver);
   padFilter.connect(ctx.destination);
 
-  // Soft hiss (like tape, but gentle — like wind)
   var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
   var d = buf.getChannelData(0);
   for (var i = 0; i < d.length; i++)
@@ -151,33 +181,25 @@ function start() {
 }
 
 function playNote(freq, t, dur, asc) {
-  // Pure sine (angelic) + soft triangle
   var sine = ctx.createOscillator();
   sine.type = 'sine'; sine.frequency.value = freq;
   var tri = ctx.createOscillator();
   tri.type = 'triangle'; tri.frequency.value = freq;
   var triG = ctx.createGain(); triG.gain.value = 0.3;
-
-  // Octave-up shimmer (grows as you ascend)
   var shim = ctx.createOscillator();
   shim.type = 'sine'; shim.frequency.value = freq * 2;
   var shimG = ctx.createGain(); shimG.gain.value = asc.shimmer;
-
-  // Fifth above (heavenly harmony, very quiet)
   var fifth = ctx.createOscillator();
   fifth.type = 'sine'; fifth.frequency.value = freq * 1.5;
   var fifthG = ctx.createGain(); fifthG.gain.value = asc.shimmer * 0.4;
 
   var mix = ctx.createGain(); mix.gain.value = 0.5;
-
-  // Soft bloom envelope
   var env = ctx.createGain();
   env.gain.setValueAtTime(0, t);
   env.gain.linearRampToValueAtTime(0.55, t + asc.attack);
   env.gain.setValueAtTime(0.55, t + dur * 0.7);
   env.gain.exponentialRampToValueAtTime(0.01, t + dur);
 
-  // Gentle vibrato
   var lfo = ctx.createOscillator();
   lfo.frequency.value = asc.vibratoRate;
   var lfoG = ctx.createGain(); lfoG.gain.value = asc.vibratoDepth;
@@ -209,8 +231,6 @@ function scheduleVerse(t, asc) {
 
 function loop() {
   var asc = getAscend();
-
-  // Update live params
   mg.gain.setTargetAtTime(asc.volume, ctx.currentTime, 1);
   window._bright.frequency.setTargetAtTime(asc.brightness, ctx.currentTime, 1);
   window._reverbGain.gain.setTargetAtTime(asc.reverbMix, ctx.currentTime, 1);
