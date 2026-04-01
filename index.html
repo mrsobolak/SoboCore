@@ -28,7 +28,6 @@
 <body>
 <button id="btn" onclick="start()">Hello</button>
 <script>
-// MELODY - exact from ayoungblood/daisy-bell
 var PITCH = [
   74,71,67,62, 64,66,67,64,67,62,
   69,74,71,67, 64,66,67,69,71,69,
@@ -42,66 +41,37 @@ var DUR = [
   1,2,1,2, 2,1,1,1, 1,1,1,1, 2,1,5
 ];
 
-// CHORDS for accompaniment (waltz oom-pah-pah)
-// Each chord lasts a certain number of quarter notes
-// [bass MIDI note, [chord MIDI notes], duration in quarters]
+// Waltz chords: [bass MIDI, chord1 MIDI, chord2 MIDI, duration in quarters]
 var CHORDS = [
-  // "Daisy Daisy" - D major, G major
-  [50,[66,71],6], [55,[59,62],6],
-  // "give me your answer do"
-  [52,[57,64],3], [55,[59,62],3], [55,[59,62],6],
-  // "I'm half crazy"
-  [57,[62,69],6], [52,[55,64],6],
-  // "all for the love of you"
-  [50,[57,62],3], [55,[59,67],3], [50,[57,62],6],
-  // "It won't be a stylish marriage"
-  [52,[57,64],6], [55,[59,67],6],
-  // "I can't afford a carriage"
-  [50,[57,62],6], [55,[59,62],6],
-  // "but you'll look sweet upon the seat"
-  [57,[62,69],4], [50,[55,62],4], [55,[59,67],4],
-  // "of a bicycle built for two"
-  [50,[57,62],3], [55,[59,62],3], [55,[59,67],2], [50,[55,62],5],
+  [50,66,71, 6],[55,59,67, 6],
+  [52,57,64, 3],[55,59,67, 3],[55,59,62, 6],
+  [57,62,69, 6],[52,55,64, 6],
+  [50,57,62, 3],[55,59,67, 3],[50,55,62, 6],
+  [52,57,64, 6],[55,59,67, 6],
+  [50,57,62, 6],[55,59,62, 6],
+  [57,62,69, 4],[50,55,62, 4],[55,59,67, 4],
+  [50,57,62, 3],[55,59,62, 3],[55,59,67, 2],[50,55,62, 5],
 ];
 
-function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+function mtf(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
-var ctx, melodyGain, bassGain, chordGain, reverbGain, dryGain, convolver, padGain, brightFilter;
+var ctx, masterGain;
 var loopCount = 0;
 
-function getAscend() {
+function asc() {
   var t = Math.min(loopCount, 12);
   var p = t / 12;
   return {
     bpm: 105 - p * 30,
-    pitchShift: p * 3,
-    melodyVol: 0.14,
-    bassVol: 0.08 + p * 0.02,
-    chordVol: 0.04 + p * 0.02,
-    shimmer: p * 0.06,
-    padVol: p * 0.03,
-    reverbMix: 0.15 + p * 0.35,
-    brightness: 2500 + p * 3000,
-    attack: 0.01 + p * 0.03,
-    noteLen: 0.92 + p * 0.06,
-    vibratoRate: 4 - p * 1.5,
-    vibratoDepth: 1 + p * 0.5,
+    ps: p * 3,
+    rev: 0.15 + p * 0.35,
+    bright: 2500 + p * 3000,
+    shim: p * 0.05,
+    atk: 0.01 + p * 0.03,
   };
 }
 
-function makeReverb(dur, decay) {
-  var len = ctx.sampleRate * dur;
-  var buf = ctx.createBuffer(2, len, ctx.sampleRate);
-  for (var c = 0; c < 2; c++) {
-    var d = buf.getChannelData(c);
-    for (var i = 0; i < len; i++) {
-      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
-    }
-  }
-  return buf;
-}
-
-async function goFullscreenAndWake() {
+async function goFull() {
   try {
     var el = document.documentElement;
     if (el.requestFullscreen) await el.requestFullscreen();
@@ -119,180 +89,128 @@ async function goFullscreenAndWake() {
   } catch(e) {}
 }
 
+var revGain, dryGain, brightF, convNode;
+
 function start() {
   document.getElementById('btn').style.display = 'none';
-  goFullscreenAndWake();
+  goFull();
 
   ctx = new (window.AudioContext || window.webkitAudioContext)();
+  ctx.resume();
 
-  // Melody bus
-  melodyGain = ctx.createGain(); melodyGain.gain.value = 0.14;
-  // Bass bus
-  bassGain = ctx.createGain(); bassGain.gain.value = 0.08;
-  // Chord bus
-  chordGain = ctx.createGain(); chordGain.gain.value = 0.04;
+  masterGain = ctx.createGain();
+  masterGain.gain.value = 0.22;
 
-  // Reverb
-  convolver = ctx.createConvolver();
-  convolver.buffer = makeReverb(3.5, 2.2);
-  reverbGain = ctx.createGain(); reverbGain.gain.value = 0.15;
+  // Simple delay-based reverb instead of convolver (lighter on mobile)
+  var delay1 = ctx.createDelay(); delay1.delayTime.value = 0.12;
+  var delay2 = ctx.createDelay(); delay2.delayTime.value = 0.23;
+  var delay3 = ctx.createDelay(); delay3.delayTime.value = 0.37;
+  var fb1 = ctx.createGain(); fb1.gain.value = 0.3;
+  var fb2 = ctx.createGain(); fb2.gain.value = 0.25;
+  var fb3 = ctx.createGain(); fb3.gain.value = 0.2;
+  delay1.connect(fb1); fb1.connect(delay1);
+  delay2.connect(fb2); fb2.connect(delay2);
+  delay3.connect(fb3); fb3.connect(delay3);
+
+  revGain = ctx.createGain(); revGain.gain.value = 0.15;
   dryGain = ctx.createGain(); dryGain.gain.value = 0.85;
 
-  // Brightness
-  brightFilter = ctx.createBiquadFilter();
-  brightFilter.type = 'lowpass'; brightFilter.frequency.value = 2500;
+  brightF = ctx.createBiquadFilter();
+  brightF.type = 'lowpass'; brightF.frequency.value = 2500;
 
-  // Master mix bus
-  var mixBus = ctx.createGain(); mixBus.gain.value = 1;
-
-  melodyGain.connect(mixBus);
-  bassGain.connect(mixBus);
-  chordGain.connect(mixBus);
-
-  mixBus.connect(brightFilter);
-  brightFilter.connect(dryGain);
-  brightFilter.connect(convolver);
-  convolver.connect(reverbGain);
+  masterGain.connect(brightF);
+  brightF.connect(dryGain);
+  brightF.connect(delay1);
+  brightF.connect(delay2);
+  brightF.connect(delay3);
+  delay1.connect(revGain);
+  delay2.connect(revGain);
+  delay3.connect(revGain);
   dryGain.connect(ctx.destination);
-  reverbGain.connect(ctx.destination);
-
-  // Warm pad (fades in over loops)
-  padGain = ctx.createGain(); padGain.gain.value = 0;
-  var padFilter = ctx.createBiquadFilter();
-  padFilter.type = 'lowpass'; padFilter.frequency.value = 500;
-  [261.63, 329.63, 392.00].forEach(function(f) {
-    var o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
-    var lfo = ctx.createOscillator(); lfo.frequency.value = 0.2 + Math.random() * 0.15;
-    var lg = ctx.createGain(); lg.gain.value = 0.8;
-    lfo.connect(lg); lg.connect(o.frequency);
-    o.connect(padGain); o.start(); lfo.start();
-  });
-  padGain.connect(padFilter);
-  padFilter.connect(convolver);
+  revGain.connect(ctx.destination);
 
   loop();
 }
 
-// --- MELODY NOTE ---
-function playMelody(freq, t, dur, asc) {
-  var sine = ctx.createOscillator();
-  sine.type = 'sine'; sine.frequency.value = freq;
-  var tri = ctx.createOscillator();
-  tri.type = 'triangle'; tri.frequency.value = freq;
-  var triG = ctx.createGain(); triG.gain.value = 0.25;
-
-  // Shimmer (octave up, grows over loops)
-  var shim = ctx.createOscillator();
-  shim.type = 'sine'; shim.frequency.value = freq * 2;
-  var shimG = ctx.createGain(); shimG.gain.value = asc.shimmer;
-
-  var mix = ctx.createGain(); mix.gain.value = 0.5;
-  var env = ctx.createGain();
-  env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(0.6, t + asc.attack);
-  env.gain.setValueAtTime(0.6, t + dur * 0.75);
-  env.gain.exponentialRampToValueAtTime(0.01, t + dur);
-
-  var lfo = ctx.createOscillator();
-  lfo.frequency.value = asc.vibratoRate;
-  var lg = ctx.createGain(); lg.gain.value = asc.vibratoDepth;
-  lfo.connect(lg); lg.connect(sine.frequency); lg.connect(tri.frequency);
-
-  sine.connect(mix); tri.connect(triG); triG.connect(mix);
-  shim.connect(shimG); shimG.connect(mix);
-  mix.connect(env); env.connect(melodyGain);
-
-  sine.start(t); tri.start(t); shim.start(t); lfo.start(t);
-  sine.stop(t+dur+0.05); tri.stop(t+dur+0.05);
-  shim.stop(t+dur+0.05); lfo.stop(t+dur+0.05);
-}
-
-// --- BASS NOTE (beat 1 of each bar) ---
-function playBass(freq, t, dur) {
+function tone(freq, t, dur, type, vol, dest) {
   var o = ctx.createOscillator();
-  o.type = 'sine'; o.frequency.value = freq;
-  var env = ctx.createGain();
-  env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(0.5, t + 0.02);
-  env.gain.setValueAtTime(0.5, t + dur * 0.6);
-  env.gain.exponentialRampToValueAtTime(0.01, t + dur);
-  o.connect(env); env.connect(bassGain);
-  o.start(t); o.stop(t + dur + 0.05);
+  o.type = type;
+  o.frequency.value = freq;
+  var g = ctx.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(vol, t + 0.015);
+  g.gain.setValueAtTime(vol, t + Math.max(dur - 0.04, 0.02));
+  g.gain.linearRampToValueAtTime(0, t + dur);
+  o.connect(g); g.connect(dest);
+  o.start(t); o.stop(t + dur + 0.02);
 }
 
-// --- CHORD HIT (beats 2 & 3) ---
-function playChordHit(freqs, t, dur) {
-  freqs.forEach(function(f) {
-    var o = ctx.createOscillator();
-    o.type = 'triangle'; o.frequency.value = f;
-    var env = ctx.createGain();
-    env.gain.setValueAtTime(0, t);
-    env.gain.linearRampToValueAtTime(0.3, t + 0.01);
-    env.gain.exponentialRampToValueAtTime(0.01, t + dur);
-    o.connect(env); env.connect(chordGain);
-    o.start(t); o.stop(t + dur + 0.05);
-  });
-}
-
-// --- SCHEDULE WALTZ ACCOMPANIMENT ---
-function scheduleAccomp(startTime, asc) {
-  var quarter = 60 / asc.bpm;
-  var t = startTime;
-  for (var i = 0; i < CHORDS.length; i++) {
-    var bass = midiToFreq(CHORDS[i][0] + asc.pitchShift);
-    var chordNotes = CHORDS[i][1].map(function(n) {
-      return midiToFreq(n + asc.pitchShift);
-    });
-    var totalBeats = CHORDS[i][2];
-
-    // Walk through in groups of 3 beats (one bar)
-    var beatsLeft = totalBeats;
-    var pos = t;
-    while (beatsLeft >= 3) {
-      // Beat 1: bass
-      playBass(bass, pos, quarter * 2.5);
-      // Beat 2: chord
-      playChordHit(chordNotes, pos + quarter, quarter * 0.8);
-      // Beat 3: chord
-      playChordHit(chordNotes, pos + quarter * 2, quarter * 0.8);
-      pos += quarter * 3;
-      beatsLeft -= 3;
-    }
-    t += totalBeats * quarter;
-  }
-}
-
-// --- SCHEDULE MELODY ---
-function scheduleMelody(startTime, asc) {
-  var quarter = 60 / asc.bpm;
-  var t = startTime;
+function scheduleMelody(t0, a) {
+  var q = 60 / a.bpm;
+  var t = t0;
   for (var i = 0; i < PITCH.length; i++) {
-    var dur = DUR[i] * quarter;
-    var freq = midiToFreq(PITCH[i] + asc.pitchShift);
-    playMelody(freq, t, dur * asc.noteLen, asc);
+    var dur = DUR[i] * q;
+    var f = mtf(PITCH[i] + a.ps);
+    // Main melody: sine
+    tone(f, t, dur * 0.9, 'sine', 0.35, masterGain);
+    // Warmth: quiet triangle
+    tone(f, t, dur * 0.9, 'triangle', 0.08, masterGain);
+    // Shimmer: octave up sine (grows)
+    if (a.shim > 0.01) {
+      tone(f * 2, t, dur * 0.9, 'sine', a.shim, masterGain);
+    }
     t += dur;
   }
 }
 
+function scheduleAccomp(t0, a) {
+  var q = 60 / a.bpm;
+  var t = t0;
+  for (var i = 0; i < CHORDS.length; i++) {
+    var c = CHORDS[i];
+    var bassF = mtf(c[0] + a.ps);
+    var c1f = mtf(c[1] + a.ps);
+    var c2f = mtf(c[2] + a.ps);
+    var beats = c[3];
+
+    var pos = t;
+    var left = beats;
+    while (left >= 3) {
+      // Beat 1: bass (sine, warm)
+      tone(bassF, pos, q * 1.8, 'sine', 0.18, masterGain);
+      // Beat 2: chord (triangle, soft)
+      tone(c1f, pos + q, q * 0.6, 'triangle', 0.08, masterGain);
+      tone(c2f, pos + q, q * 0.6, 'triangle', 0.08, masterGain);
+      // Beat 3: chord (triangle, softer)
+      tone(c1f, pos + q * 2, q * 0.6, 'triangle', 0.06, masterGain);
+      tone(c2f, pos + q * 2, q * 0.6, 'triangle', 0.06, masterGain);
+      pos += q * 3;
+      left -= 3;
+    }
+    // Handle leftover beats
+    if (left >= 1) {
+      tone(bassF, pos, q * Math.min(left, 1.8), 'sine', 0.18, masterGain);
+    }
+    t += beats * q;
+  }
+}
+
 function loop() {
-  var asc = getAscend();
+  ctx.resume();
+  var a = asc();
 
-  melodyGain.gain.setTargetAtTime(asc.melodyVol, ctx.currentTime, 0.5);
-  bassGain.gain.setTargetAtTime(asc.bassVol, ctx.currentTime, 0.5);
-  chordGain.gain.setTargetAtTime(asc.chordVol, ctx.currentTime, 0.5);
-  brightFilter.frequency.setTargetAtTime(asc.brightness, ctx.currentTime, 1);
-  reverbGain.gain.setTargetAtTime(asc.reverbMix, ctx.currentTime, 1);
-  dryGain.gain.setTargetAtTime(1 - asc.reverbMix * 0.4, ctx.currentTime, 1);
-  padGain.gain.setTargetAtTime(asc.padVol, ctx.currentTime, 2);
+  brightF.frequency.setTargetAtTime(a.bright, ctx.currentTime, 1);
+  revGain.gain.setTargetAtTime(a.rev, ctx.currentTime, 1);
+  dryGain.gain.setTargetAtTime(1 - a.rev * 0.4, ctx.currentTime, 1);
 
-  var quarter = 60 / asc.bpm;
+  var q = 60 / a.bpm;
   var total = 0;
   for (var i = 0; i < DUR.length; i++) total += DUR[i];
-  total *= quarter;
+  total *= q;
 
-  var t0 = ctx.currentTime + 0.1;
-  scheduleMelody(t0, asc);
-  scheduleAccomp(t0, asc);
+  var t0 = ctx.currentTime + 0.15;
+  scheduleMelody(t0, a);
+  scheduleAccomp(t0, a);
 
   loopCount++;
   setTimeout(loop, (total + 3) * 1000);
