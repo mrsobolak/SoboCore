@@ -28,8 +28,6 @@
 <body>
 <button id="btn" onclick="start()">Hello</button>
 <script>
-// Exact Daisy Bell score from github.com/ayoungblood/daisy-bell
-// MIDI note numbers and quarter-note durations
 var PITCH = [
   74, 71, 67, 62, 64, 66, 67, 64, 67, 62,
   69, 74, 71, 67, 64, 66, 67, 69, 71, 69,
@@ -45,94 +43,187 @@ var DUR = [
 
 function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
-var BPM = 120;
-var QUARTER = 60 / BPM;
-var ctx, mg;
+var ctx, mg, convolver, padGain, shimmerGain;
+var loopCount = 0;
+
+// Ascends over ~10 loops then stays in heaven
+function getAscend() {
+  var t = Math.min(loopCount, 10);
+  var p = t / 10; // 0 → 1 progress toward heaven
+  return {
+    bpm: 120 - p * 55,              // gently slows: 120 → 65 (peaceful)
+    pitchShift: p * 5,              // drifts UP 5 semitones
+    volume: 0.16 + p * 0.04,        // slightly fuller
+    shimmer: p * 0.12,              // octave-up shimmer grows
+    padVol: p * 0.06,               // warm choir pad fades in
+    reverbMix: 0.3 + p * 0.5,       // reverb opens into cathedral
+    brightness: 2000 + p * 4000,    // filter opens: more light
+    attack: 0.01 + p * 0.06,        // notes soften, bloom slower
+    noteLen: 0.92 + p * 0.07,       // notes sustain longer, legato
+    vibratoRate: 4 - p * 2,         // vibrato slows: calm, peaceful
+    vibratoDepth: 1.5 + p * 1,      // gentle widening
+  };
+}
+
+function makeReverb(duration, decay) {
+  var len = ctx.sampleRate * duration;
+  var buf = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (var c = 0; c < 2; c++) {
+    var d = buf.getChannelData(c);
+    for (var i = 0; i < len; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+  }
+  return buf;
+}
 
 function start() {
   document.getElementById('btn').style.display = 'none';
   ctx = new (window.AudioContext || window.webkitAudioContext)();
 
   mg = ctx.createGain();
-  mg.gain.value = 0.18;
+  mg.gain.value = 0.16;
 
-  // IBM vocoder-style filter chain
-  var f1 = ctx.createBiquadFilter();
-  f1.type = 'bandpass'; f1.frequency.value = 800; f1.Q.value = 2;
-  var f2 = ctx.createBiquadFilter();
-  f2.type = 'peaking'; f2.frequency.value = 1400; f2.gain.value = 8; f2.Q.value = 2;
-  var lp = ctx.createBiquadFilter();
-  lp.type = 'lowpass'; lp.frequency.value = 3000;
-  var hp = ctx.createBiquadFilter();
-  hp.type = 'highpass'; hp.frequency.value = 200;
+  // Reverb (cathedral)
+  convolver = ctx.createConvolver();
+  convolver.buffer = makeReverb(4, 1.8);
+  var reverbGain = ctx.createGain();
+  reverbGain.gain.value = 0.3;
 
-  mg.connect(f1); f1.connect(f2); f2.connect(lp); lp.connect(hp); hp.connect(ctx.destination);
+  // Dry/wet
+  var dryGain = ctx.createGain();
+  dryGain.gain.value = 0.7;
+  window._dryGain = dryGain;
+  window._reverbGain = reverbGain;
 
-  // 60Hz mains hum
-  var hum = ctx.createOscillator();
-  hum.type = 'sine'; hum.frequency.value = 60;
-  var humG = ctx.createGain(); humG.gain.value = 0.01;
-  hum.connect(humG); humG.connect(ctx.destination); hum.start();
+  // Brightness filter
+  var bright = ctx.createBiquadFilter();
+  bright.type = 'lowpass'; bright.frequency.value = 2000;
+  window._bright = bright;
 
-  // Tape hiss
+  mg.connect(bright);
+  bright.connect(dryGain);
+  bright.connect(convolver);
+  convolver.connect(reverbGain);
+  dryGain.connect(ctx.destination);
+  reverbGain.connect(ctx.destination);
+
+  // Warm pad drone (choir, fades in over loops)
+  padGain = ctx.createGain();
+  padGain.gain.value = 0;
+  var padFilter = ctx.createBiquadFilter();
+  padFilter.type = 'lowpass'; padFilter.frequency.value = 600;
+
+  // C major chord pad: C4 E4 G4
+  [261.63, 329.63, 392.00].forEach(function(f) {
+    var o = ctx.createOscillator();
+    o.type = 'sine'; o.frequency.value = f;
+    var o2 = ctx.createOscillator();
+    o2.type = 'sine'; o2.frequency.value = f * 2.001; // octave shimmer
+    var o2g = ctx.createGain(); o2g.gain.value = 0.15;
+    var lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.3 + Math.random() * 0.2;
+    var lfog = ctx.createGain(); lfog.gain.value = 1;
+    lfo.connect(lfog); lfog.connect(o.frequency);
+    o.connect(padGain);
+    o2.connect(o2g); o2g.connect(padGain);
+    o.start(); o2.start(); lfo.start();
+  });
+
+  padGain.connect(padFilter);
+  padFilter.connect(convolver);
+  padFilter.connect(ctx.destination);
+
+  // Soft hiss (like tape, but gentle — like wind)
   var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
   var d = buf.getChannelData(0);
   for (var i = 0; i < d.length; i++)
-    d[i] = (Math.random() - 0.5) * 0.012;
+    d[i] = (Math.random() - 0.5) * 0.006;
   var noise = ctx.createBufferSource();
   noise.buffer = buf; noise.loop = true;
-  var nG = ctx.createGain(); nG.gain.value = 0.25;
+  var nG = ctx.createGain(); nG.gain.value = 0.15;
   var nF = ctx.createBiquadFilter();
-  nF.type = 'bandpass'; nF.frequency.value = 2000; nF.Q.value = 0.3;
-  noise.connect(nG); nG.connect(nF); nF.connect(ctx.destination); noise.start();
+  nF.type = 'bandpass'; nF.frequency.value = 3000; nF.Q.value = 0.2;
+  noise.connect(nG); nG.connect(nF); nF.connect(ctx.destination);
+  noise.start();
 
   loop();
 }
 
-function playNote(freq, t, dur) {
-  var saw = ctx.createOscillator();
-  saw.type = 'sawtooth'; saw.frequency.value = freq;
-  var saw2 = ctx.createOscillator();
-  saw2.type = 'sawtooth'; saw2.frequency.value = freq * 1.002;
-  var sub = ctx.createOscillator();
-  sub.type = 'square'; sub.frequency.value = freq / 2;
-  var subG = ctx.createGain(); subG.gain.value = 0.07;
+function playNote(freq, t, dur, asc) {
+  // Pure sine (angelic) + soft triangle
+  var sine = ctx.createOscillator();
+  sine.type = 'sine'; sine.frequency.value = freq;
+  var tri = ctx.createOscillator();
+  tri.type = 'triangle'; tri.frequency.value = freq;
+  var triG = ctx.createGain(); triG.gain.value = 0.3;
+
+  // Octave-up shimmer (grows as you ascend)
+  var shim = ctx.createOscillator();
+  shim.type = 'sine'; shim.frequency.value = freq * 2;
+  var shimG = ctx.createGain(); shimG.gain.value = asc.shimmer;
+
+  // Fifth above (heavenly harmony, very quiet)
+  var fifth = ctx.createOscillator();
+  fifth.type = 'sine'; fifth.frequency.value = freq * 1.5;
+  var fifthG = ctx.createGain(); fifthG.gain.value = asc.shimmer * 0.4;
 
   var mix = ctx.createGain(); mix.gain.value = 0.5;
+
+  // Soft bloom envelope
   var env = ctx.createGain();
   env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(0.6, t + 0.01);
-  env.gain.setValueAtTime(0.6, t + dur - 0.02);
-  env.gain.linearRampToValueAtTime(0, t + dur);
+  env.gain.linearRampToValueAtTime(0.55, t + asc.attack);
+  env.gain.setValueAtTime(0.55, t + dur * 0.7);
+  env.gain.exponentialRampToValueAtTime(0.01, t + dur);
 
+  // Gentle vibrato
   var lfo = ctx.createOscillator();
-  lfo.frequency.value = 3 + Math.random() * 0.5;
-  var lfoG = ctx.createGain(); lfoG.gain.value = 1.5;
-  lfo.connect(lfoG); lfoG.connect(saw.frequency); lfoG.connect(saw2.frequency);
+  lfo.frequency.value = asc.vibratoRate;
+  var lfoG = ctx.createGain(); lfoG.gain.value = asc.vibratoDepth;
+  lfo.connect(lfoG);
+  lfoG.connect(sine.frequency);
+  lfoG.connect(tri.frequency);
+  lfoG.connect(shim.frequency);
 
-  saw.connect(mix); saw2.connect(mix);
-  sub.connect(subG); subG.connect(mix);
+  sine.connect(mix); tri.connect(triG); triG.connect(mix);
+  shim.connect(shimG); shimG.connect(mix);
+  fifth.connect(fifthG); fifthG.connect(mix);
   mix.connect(env); env.connect(mg);
 
-  saw.start(t); saw2.start(t); sub.start(t); lfo.start(t);
-  saw.stop(t + dur + 0.01); saw2.stop(t + dur + 0.01);
-  sub.stop(t + dur + 0.01); lfo.stop(t + dur + 0.01);
+  sine.start(t); tri.start(t); shim.start(t); fifth.start(t); lfo.start(t);
+  sine.stop(t+dur+0.1); tri.stop(t+dur+0.1); shim.stop(t+dur+0.1);
+  fifth.stop(t+dur+0.1); lfo.stop(t+dur+0.1);
 }
 
-function scheduleVerse(t) {
+function scheduleVerse(t, asc) {
+  var quarter = 60 / asc.bpm;
   for (var i = 0; i < PITCH.length; i++) {
-    var dur = DUR[i] * QUARTER;
-    playNote(midiToFreq(PITCH[i]), t, dur * 0.92);
+    var dur = DUR[i] * quarter;
+    var freq = midiToFreq(PITCH[i] + asc.pitchShift);
+    playNote(freq, t, dur * asc.noteLen, asc);
     t += dur;
   }
   return t;
 }
 
 function loop() {
+  var asc = getAscend();
+
+  // Update live params
+  mg.gain.setTargetAtTime(asc.volume, ctx.currentTime, 1);
+  window._bright.frequency.setTargetAtTime(asc.brightness, ctx.currentTime, 1);
+  window._reverbGain.gain.setTargetAtTime(asc.reverbMix, ctx.currentTime, 1);
+  window._dryGain.gain.setTargetAtTime(1 - asc.reverbMix * 0.5, ctx.currentTime, 1);
+  padGain.gain.setTargetAtTime(asc.padVol, ctx.currentTime, 2);
+
+  var quarter = 60 / asc.bpm;
   var total = 0;
   for (var i = 0; i < DUR.length; i++) total += DUR[i];
-  total *= QUARTER;
-  scheduleVerse(ctx.currentTime + 0.1);
+  total *= quarter;
+
+  scheduleVerse(ctx.currentTime + 0.1, asc);
+  loopCount++;
   setTimeout(loop, (total + 3) * 1000);
 }
 </script>
