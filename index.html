@@ -28,23 +28,28 @@
 <body>
 <button id="btn" onclick="start()">Hello</button>
 <script>
+// Correct Daisy Bell chorus melody (key of C, 3/4 waltz)
+// Just "Daisy, Daisy, give me your answer do" looping
 var MELODY = [
-  ['E4',3],['C4',3],['E4',3],['C4',3],
-  ['D4',1],['E4',1],['F4',1],['E4',2],['D4',1],['C4',3],['R',3],
-  ['E4',1.5],['E4',1.5],['F4',1.5],['F4',1.5],
-  ['E4',1],['F4',1],['G4',1],['F4',2],['E4',1],['D4',3],['R',3],
-  ['G4',1],['A4',1],['G4',1],['F4',1],['E4',1],['F4',1],['G4',3],['E4',3],
-  ['A4',1],['B4',1],['A4',1],['G4',1],['F4',1],['G4',1],['A4',3],['F4',3],
-  ['B4',1],['C5',1],['B4',1],['A4',3],['G4',1],['A4',1],['B4',1],['C5',3],
-  ['B4',1],['A4',1],['G4',1],['A4',1],['F4',1],['E4',1],['D4',2],['C4',4]
+  ['G4', 3],   // Dai-
+  ['E4', 3],   // -sy,
+  ['C4', 3],   // Dai-
+  ['E4', 3],   // -sy,
+  ['E4', 1],   // give
+  ['G4', 1],   // me
+  ['G4', 1],   // your
+  ['E4', 1],   // an-
+  ['G4', 1],   // -swer
+  ['D4', 3],   // do
+  ['R',  3]    // pause before loop
 ];
 
 var NOTES = {
-  'C4':261.63,'D4':293.66,'E4':329.63,'F4':349.23,'G4':392.00,
-  'A4':440.00,'B4':493.88,'C5':523.25,'R':0
+  'C4':261.63, 'D4':293.66, 'E4':329.63, 'F4':349.23,
+  'G4':392.00, 'A4':440.00, 'B4':493.88, 'C5':523.25, 'R':0
 };
 
-var BPM = 88;
+var BPM = 72;
 var BEAT = 60 / BPM;
 var ctx, mg;
 
@@ -64,6 +69,7 @@ function start() {
 
   mg.connect(bp); bp.connect(lp); lp.connect(hp); hp.connect(ctx.destination);
 
+  // crackle noise
   var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
   var d = buf.getChannelData(0);
   for (var i = 0; i < d.length; i++)
@@ -104,7 +110,8 @@ function playNote(freq, t, dur) {
   o.stop(t + dur + 0.01); o2.stop(t + dur + 0.01); lfo.stop(t + dur + 0.01);
 }
 
-function scheduleVerse(t) {
+function schedulePhrase(startTime) {
+  var t = startTime;
   for (var i = 0; i < MELODY.length; i++) {
     var dur = MELODY[i][1] * BEAT;
     playNote(NOTES[MELODY[i][0]], t, dur * 0.9);
@@ -114,11 +121,12 @@ function scheduleVerse(t) {
 }
 
 function loop() {
-  var total = 0;
-  for (var i = 0; i < MELODY.length; i++) total += MELODY[i][1];
-  total *= BEAT;
-  scheduleVerse(ctx.currentTime + 0.1);
-  setTimeout(loop, (total + 2.5) * 1000);
+  var totalBeats = 0;
+  for (var i = 0; i < MELODY.length; i++) totalBeats += MELODY[i][1];
+  var totalTime = totalBeats * BEAT;
+
+  schedulePhrase(ctx.currentTime + 0.1);
+  setTimeout(loop, (totalTime + 1.5) * 1000);
 }
 </script>
 </body>
