@@ -29,28 +29,24 @@
 <button id="btn" onclick="start()">Hello</button>
 <script>
 // Daisy Bell chorus - Key of C, 3/4 waltz
-// Reconstructed from piano sheet music + kalimba letter notes
-// [note, beats] - dotted half = 3 beats = 1 full bar
+// Melody from kalimba letter notes + piano sheet (corrected: opens G E C)
+// [note, beats]
 var MELODY = [
-  // "Dai- sy,  Dai- sy,"  (C chord)
-  ['G4',3], ['E4',3], ['C4',3], ['E4',3],
-  // "give me your an- swer, do."  (F → C)
-  ['F4',1], ['G4',1], ['A4',1], ['G4',1.5], ['F4',1.5], ['E4',3],
-  // (breath)
-  ['R',3],
-  // "I'm half cra- zy,"  (F → C)
-  ['A4',3], ['A4',3], ['G4',3], ['G4',3],
-  // "all for the love of you."  (Am → G)
-  ['F4',1], ['G4',1], ['A4',1], ['G4',1.5], ['F4',1.5], ['E4',3],
-  // (breath)
-  ['R',3],
-  // "It won't be a sty-lish mar-riage,"  (F → C)
+  // "Dai-  sy,     Dai-  sy,"
+  ['G4',3], ['E4',3], ['C4',3], ['G4',3],
+  // "give  me  your  an-  swer  do."
+  ['E4',1], ['G4',1], ['G4',1], ['E4',1], ['G4',1], ['D4',1], ['R',6],
+  // "I'm   half    cra-  zy,"
+  ['D4',1.5], ['C5',1.5], ['A4',1.5], ['F4',1.5],
+  // "all for the love of  you."
+  ['C4',1], ['D4',1], ['E4',1], ['F4',1], ['G4',1], ['F4',1], ['R',6],
+  // "It  won't be  a   sty- lish  mar-     riage,"
   ['G4',1],['C5',1],['G4',1], ['A4',1],['B4',1],['A4',1], ['G4',3], ['E4',3],
-  // "I can't af-ford a car-riage,"  (C → G)
+  // "I   can't af- ford a   car-  riage,"
   ['G4',1],['A4',1],['G4',1], ['F4',1],['G4',1],['F4',1], ['E4',3], ['R',3],
-  // "but you'll look sweet up-on the seat"  (C → G)
+  // "but  you'll look sweet,  up-  on   the  seat"
   ['C4',1],['E4',1],['G4',1], ['F4',3], ['C4',1],['E4',1],['G4',1], ['F4',3],
-  // "of a bi-cy-cle built for two."  (C → G → C)
+  // "of   a   bi-  cy-  cle  built for  two."
   ['A4',1],['B4',1],['C5',1], ['A4',1],['F4',1],['G4',1], ['E4',2],['C4',4]
 ];
 
@@ -59,66 +55,131 @@ var NOTES = {
   'G4':392.00,'A4':440.00,'B4':493.88,'C5':523.25,'R':0
 };
 
-var BPM = 110;
+// IBM 7094 style: slow, robotic, vocoder-like
+var BPM = 80;
 var BEAT = 60 / BPM;
 var ctx, mg;
 
 function start() {
   document.getElementById('btn').style.display = 'none';
   ctx = new (window.AudioContext || window.webkitAudioContext)();
-  mg = ctx.createGain(); mg.gain.value = 0.25;
 
-  // Old phonograph filter chain
-  var bp = ctx.createBiquadFilter();
-  bp.type = 'bandpass'; bp.frequency.value = 1000; bp.Q.value = 0.5;
+  // Master gain
+  mg = ctx.createGain();
+  mg.gain.value = 0.18;
+
+  // Vocoder-style filter chain:
+  // Narrow bandpass to simulate vocal tract resonance
+  var f1 = ctx.createBiquadFilter();
+  f1.type = 'bandpass'; f1.frequency.value = 800; f1.Q.value = 2;
+
+  // Second formant
+  var f2 = ctx.createBiquadFilter();
+  f2.type = 'peaking'; f2.frequency.value = 1400; f2.gain.value = 8; f2.Q.value = 2;
+
+  // Harsh low-pass to kill highs like old DAC
   var lp = ctx.createBiquadFilter();
-  lp.type = 'lowpass'; lp.frequency.value = 2200;
+  lp.type = 'lowpass'; lp.frequency.value = 3000;
+
+  // High-pass to thin it out like a telephone
   var hp = ctx.createBiquadFilter();
-  hp.type = 'highpass'; hp.frequency.value = 280;
+  hp.type = 'highpass'; hp.frequency.value = 200;
 
-  mg.connect(bp); bp.connect(lp); lp.connect(hp); hp.connect(ctx.destination);
+  mg.connect(f1);
+  f1.connect(f2);
+  f2.connect(lp);
+  lp.connect(hp);
+  hp.connect(ctx.destination);
 
-  // Vinyl crackle
+  // 60Hz mains hum (IBM mainframe room)
+  var hum = ctx.createOscillator();
+  hum.type = 'sine';
+  hum.frequency.value = 60;
+  var humGain = ctx.createGain();
+  humGain.gain.value = 0.012;
+  hum.connect(humGain);
+  humGain.connect(ctx.destination);
+  hum.start();
+
+  // Tape hiss
   var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
   var d = buf.getChannelData(0);
   for (var i = 0; i < d.length; i++)
-    d[i] = Math.random() < 0.002 ? (Math.random() - 0.5) * 1.0 : (Math.random() - 0.5) * 0.008;
-  var cn = ctx.createBufferSource(); cn.buffer = buf; cn.loop = true;
-  var cg = ctx.createGain(); cg.gain.value = 0.12;
-  cn.connect(cg); cg.connect(ctx.destination); cn.start();
+    d[i] = (Math.random() - 0.5) * 0.015;
+  var noise = ctx.createBufferSource();
+  noise.buffer = buf; noise.loop = true;
+  var noiseGain = ctx.createGain();
+  noiseGain.gain.value = 0.3;
+  var noiseFilt = ctx.createBiquadFilter();
+  noiseFilt.type = 'bandpass';
+  noiseFilt.frequency.value = 2000;
+  noiseFilt.Q.value = 0.3;
+  noise.connect(noiseGain);
+  noiseGain.connect(noiseFilt);
+  noiseFilt.connect(ctx.destination);
+  noise.start();
+
   loop();
 }
 
 function playNote(freq, t, dur) {
   if (freq === 0) return;
-  var o = ctx.createOscillator();
-  o.type = 'triangle'; o.frequency.value = freq;
-  o.detune.value = (Math.random() - 0.5) * 10;
 
-  var o2 = ctx.createOscillator();
-  o2.type = 'square'; o2.frequency.value = freq; o2.detune.value = 5;
-  var o2g = ctx.createGain(); o2g.gain.value = 0.03;
+  // IBM vocoder source: sawtooth (rich harmonics like vocal cord buzz)
+  var saw = ctx.createOscillator();
+  saw.type = 'sawtooth';
+  saw.frequency.value = freq;
 
+  // Second detuned sawtooth for thickness
+  var saw2 = ctx.createOscillator();
+  saw2.type = 'sawtooth';
+  saw2.frequency.value = freq * 1.002; // very slight detune
+
+  // Sub oscillator (square, one octave down) for body
+  var sub = ctx.createOscillator();
+  sub.type = 'square';
+  sub.frequency.value = freq / 2;
+  var subGain = ctx.createGain();
+  subGain.gain.value = 0.08;
+
+  // Mix
+  var mix = ctx.createGain();
+  mix.gain.value = 0.5;
+
+  // Envelope: flat and robotic, minimal attack/release
   var env = ctx.createGain();
   env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(0.4, t + 0.03);
-  env.gain.setValueAtTime(0.4, t + dur - 0.05);
+  env.gain.linearRampToValueAtTime(0.6, t + 0.01); // instant attack
+  env.gain.setValueAtTime(0.6, t + dur - 0.02);
   env.gain.linearRampToValueAtTime(0, t + dur);
 
+  // Slow wobble (unstable early synthesis)
   var lfo = ctx.createOscillator();
-  lfo.frequency.value = 4 + Math.random();
-  var lg = ctx.createGain(); lg.gain.value = 2;
-  lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
+  lfo.frequency.value = 3 + Math.random() * 0.5;
+  var lfoGain = ctx.createGain();
+  lfoGain.gain.value = 1.5; // subtle pitch drift
+  lfo.connect(lfoGain);
+  lfoGain.connect(saw.frequency);
+  lfoGain.connect(saw2.frequency);
 
-  o.connect(env); o2.connect(o2g); o2g.connect(env); env.connect(mg);
-  o.start(t); o2.start(t); lfo.start(t);
-  o.stop(t + dur + 0.01); o2.stop(t + dur + 0.01); lfo.stop(t + dur + 0.01);
+  saw.connect(mix);
+  saw2.connect(mix);
+  sub.connect(subGain);
+  subGain.connect(mix);
+  mix.connect(env);
+  env.connect(mg);
+
+  saw.start(t); saw2.start(t); sub.start(t); lfo.start(t);
+  saw.stop(t + dur + 0.01);
+  saw2.stop(t + dur + 0.01);
+  sub.stop(t + dur + 0.01);
+  lfo.stop(t + dur + 0.01);
 }
 
 function scheduleVerse(t) {
   for (var i = 0; i < MELODY.length; i++) {
     var dur = MELODY[i][1] * BEAT;
-    playNote(NOTES[MELODY[i][0]], t, dur * 0.88);
+    playNote(NOTES[MELODY[i][0]], t, dur * 0.92);
     t += dur;
   }
   return t;
@@ -129,7 +190,7 @@ function loop() {
   for (var i = 0; i < MELODY.length; i++) total += MELODY[i][1];
   total *= BEAT;
   scheduleVerse(ctx.currentTime + 0.1);
-  setTimeout(loop, (total + 2.5) * 1000);
+  setTimeout(loop, (total + 3) * 1000);
 }
 </script>
 </body>
