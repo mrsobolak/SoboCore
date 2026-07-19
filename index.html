@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sobolak Technologies</title>
-<meta name="description" content="Sobolak Technologies — independent Michigan-based technology company. AI development returning soon, plus vintage &amp; modern computer sales.">
+<meta name="description" content="Sobolak Technologies — independent Michigan-based technology company. Computer sales coming soon, with SoboVids.com working its way back too.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -254,6 +254,7 @@ a { color: var(--accent); }
   padding: 2px 8px; border-radius: 999px;
   background: rgba(255,200,87,0.18); color: var(--gold); border: 1px solid rgba(255,200,87,0.45);
 }
+.soon-badge.badge-hold { background: rgba(255,255,255,0.08); color: var(--text-faint); border-color: rgba(255,255,255,0.25); }
 .soon-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; }
 
 /* PRODUCT / HISTORY LIST */
@@ -306,6 +307,7 @@ a { color: var(--accent); }
 .status-row:last-child { border-bottom: none; }
 .status-live { color: #6fdc8c; font-weight: 700; }
 .status-ret { color: var(--text-faint); font-weight: 600; }
+.status-soon { color: var(--gold); font-weight: 700; }
 .sidebar-note { font-size: 10.5px; color: var(--text-faint); line-height: 1.7; padding-top: 10px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); }
 .sidebar-body p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
 .sidebar-body p + p { margin-top: 10px; }
@@ -400,7 +402,7 @@ a { color: var(--accent); }
 <div id="hero">
   <div id="hero-inner">
     <h2>Software, media, and hardware &mdash; <span>built to last.</span></h2>
-    <p>Sobolak Technologies is an independent Michigan-based company. We've built local AI tools, run community video platforms, and now we're starting a new chapter: computers, and AI, again.</p>
+    <p>Sobolak Technologies is an independent Michigan-based company. We've built local AI tools and run community platforms like SoboVids.com. Computer sales are now our main focus &mdash; with SoboVids.com and AI development both working their way back.</p>
     <div class="btn-group">
       <a href="#coming-soon" class="btn btn-primary">See What's Coming</a>
       <a href="#about" class="btn btn-secondary">Our Story</a>
@@ -444,9 +446,9 @@ a { color: var(--accent); }
     <div class="box glass" id="about">
       <div class="box-hdr">About Sobolak Technologies</div>
       <div class="box-body">
-        <p>Sobolak Technologies is an independent technology company based in Michigan, United States. We've been through a few chapters so far.</p>
-        <p>We started as a local-first software company, building AI tools that ran entirely on your own hardware with no cloud dependency. That chapter closed in early 2026 when our focus shifted to media, launching <strong>SoboVids.com</strong> as our flagship community video platform. SoboVids.com was shut down in late summer 2026.</p>
-        <p>Right now we're between chapters. AI development is back on the roadmap, and we're opening a new storefront: computers, from the 90s through the 2020s. See what's coming below.</p>
+        <p>Sobolak Technologies was founded in Michigan, originally envisioned as a computer sales company. We spent some time operating out of California early on before coming back home to Michigan &mdash; and before we ever sold a computer, we became a software company instead.</p>
+        <p>We built local-first AI tools aimed at making local AI usable for everyday people, including folks who aren't especially technical, and it helped a number of people get real, useful AI running on their own hardware. From there we moved into media with <strong>SoboVids.com</strong>, probably our best work and home to a genuinely strong community. It went offline in late summer 2026 &mdash; not because of the community, but because of aging hardware and a rebuild we weren't ready to take on. It's coming back.</p>
+        <p>Right now, we need revenue. Computer sales, from the 90s through the 2020s, is our main focus going forward, and honestly what we're counting on to keep Sobolak Technologies going. AI development continues, but at a slower pace than before. See what's coming below.</p>
       </div>
     </div>
 
@@ -471,12 +473,17 @@ a { color: var(--accent); }
         <div class="soon-card">
           <div class="soon-icon">&#128421;&#65039;</div>
           <div class="soon-title">Computer Sales <span class="soon-badge">Launching Soon</span></div>
-          <div class="soon-desc">Vintage and modern computers, spanning the 90s to the 2020s. Restored, tested, and sold direct. Launch details TBA.</div>
+          <div class="soon-desc">Vintage and modern computers, spanning the 90s to the 2020s. Restored, tested, and sold direct. This is our main focus right now &mdash; and what we're counting on to keep the company going. Launch details TBA.</div>
+        </div>
+        <div class="soon-card">
+          <div class="soon-icon">&#127909;</div>
+          <div class="soon-title">SoboVids.com <span class="soon-badge">Returning Soon</span></div>
+          <div class="soon-desc">SoboVids.com is coming back. It went offline for hardware reasons, not because of the community &mdash; the community was the best part. Details TBA.</div>
         </div>
         <div class="soon-card">
           <div class="soon-icon">&#129302;</div>
-          <div class="soon-title">SoboAI 2.0 <span class="soon-badge">In Development</span></div>
-          <div class="soon-desc">AI development is back at Sobolak Technologies. A new AI platform is in the works. Details TBA.</div>
+          <div class="soon-title">SoboAI 2.0 <span class="soon-badge badge-hold">On Hold</span></div>
+          <div class="soon-desc">AI is taking a back seat while we focus on computer sales and get back on our feet financially. We'd like to revisit it eventually, but there's nothing solid to share yet.</div>
         </div>
       </div>
     </div>
@@ -489,16 +496,8 @@ a { color: var(--accent); }
         <div class="product-item">
           <div><span class="product-badge badge-retired">Retired</span></div>
           <div class="product-info">
-            <div class="product-name">SoboVids.com</div>
-            <div class="product-desc">Our flagship community video platform, launched in 2026. Shut down in late summer 2026. Rest in peace.</div>
-          </div>
-        </div>
-
-        <div class="product-item">
-          <div><span class="product-badge badge-retired">Retired</span></div>
-          <div class="product-info">
             <div class="product-name">SoboAI / Local AI Suite</div>
-            <div class="product-desc">A locally-hosted AI assistant for Windows with multi-model support and offline capability. Discontinued in early 2026 &mdash; a successor is now in development, see Coming Soon.</div>
+            <div class="product-desc">A locally-hosted AI assistant for Windows with multi-model support and offline capability. Discontinued in early 2026 &mdash; a successor is planned but on hold for now, see Coming Soon.</div>
           </div>
         </div>
 
@@ -527,7 +526,7 @@ a { color: var(--accent); }
         </div>
         <div class="info-item">
           <div class="info-item-title">Current Focus</div>
-          <div class="info-item-text">Computer sales &amp; AI R&amp;D</div>
+          <div class="info-item-text">Computer sales</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">Active Products</div>
@@ -544,7 +543,7 @@ a { color: var(--accent); }
     <div class="sidebar-box glass" id="status">
       <div class="sidebar-hdr">Service Status</div>
       <div class="sidebar-body">
-        <div class="status-row"><span>SoboVids.com</span><span class="status-ret">Offline</span></div>
+        <div class="status-row"><span>SoboVids.com</span><span class="status-soon">Rebuilding</span></div>
         <div class="status-row"><span>SoboAI</span><span class="status-ret">Retired</span></div>
         <div class="status-row"><span>Servers</span><span class="status-live">&#9679; Michigan</span></div>
         <div class="sidebar-note">Last checked: July 2026</div>
@@ -554,7 +553,7 @@ a { color: var(--accent); }
     <div class="sidebar-box glass">
       <div class="sidebar-hdr">Notice</div>
       <div class="sidebar-body">
-        <p>SoboVids.com is discontinued and no longer accepting uploads, registrations, or support requests.</p>
+        <p>SoboVids.com is offline for a rebuild and will be returning. Uploads, registrations, and support are paused until then.</p>
       </div>
     </div>
 
@@ -574,12 +573,12 @@ a { color: var(--accent); }
     </div>
     <div class="footer-col">
       <h4>Past Products</h4>
-      <span>SoboVids.com (Retired)</span>
       <span>SoboAI (Retired)</span>
     </div>
     <div class="footer-col">
       <h4>Coming Soon</h4>
       <span>Computer Sales</span>
+      <span>SoboVids.com</span>
       <span>SoboAI 2.0</span>
     </div>
   </div>
