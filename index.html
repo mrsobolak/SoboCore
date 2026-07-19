@@ -4,333 +4,392 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sobolak Technologies</title>
+<meta name="description" content="Sobolak Technologies — independent Michigan-based technology company. AI development returning soon, plus vintage &amp; modern computer sales.">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+:root{
+  --glass-bg: rgba(255,255,255,0.07);
+  --glass-bg-strong: rgba(255,255,255,0.12);
+  --glass-border: rgba(255,255,255,0.2);
+  --glass-shadow: 0 8px 32px rgba(0,8,24,0.45), inset 0 1px 0 rgba(255,255,255,0.22);
+  --accent: #4fb3ff;
+  --accent-deep: #0a63c9;
+  --gold: #ffc857;
+  --text: #eaf4ff;
+  --text-dim: #9fc2e8;
+  --text-faint: #6d93bc;
+}
 
 body {
-  background: #f4f4f4;
-  color: #222;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 13px;
-  line-height: 1.6;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(90,180,255,0.30), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(130,210,255,0.22), transparent 45%),
+    radial-gradient(circle at 50% 95%, rgba(40,110,220,0.30), transparent 55%),
+    linear-gradient(160deg, #030d1f 0%, #08213f 45%, #051627 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
 }
+
+/* FLOATING AERO ORBS (decorative) */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+  animation: float 16s ease-in-out infinite;
+}
+.orb-a { width: 220px; height: 220px; top: 8%; left: 6%; background: radial-gradient(circle at 30% 30%, rgba(140,210,255,0.55), rgba(60,140,240,0) 70%); animation-duration: 18s; }
+.orb-b { width: 320px; height: 320px; top: 55%; right: -60px; background: radial-gradient(circle at 30% 30%, rgba(100,190,255,0.4), rgba(60,140,240,0) 70%); animation-duration: 22s; animation-delay: -6s; }
+.orb-c { width: 160px; height: 160px; bottom: 6%; left: 12%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(60,140,240,0) 70%); animation-duration: 14s; animation-delay: -3s; }
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-26px) translateX(14px); }
+}
+@media (prefers-reduced-motion: reduce) { .orb { animation: none; } }
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  box-shadow: var(--glass-shadow);
+}
+
+a { color: var(--accent); }
 
 /* HEADER */
 #header {
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-  border-bottom: 3px solid #0066cc;
-  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(6, 18, 38, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
 }
 #header-inner {
-  max-width: 960px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 18px 20px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .logo-icon {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, #0066cc, #004499);
-  border: 2px solid #3399ff;
-  display: flex;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #7cd0ff, #1f7fe0 55%, #0a4faa);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 14px rgba(10,99,201,0.45), inset 0 1px 0 rgba(255,255,255,0.65);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: bold; color: #fff;
+  font-family: Georgia, serif; letter-spacing: -1px;
+  flex-shrink: 0;
+}
+.logo-text h1 { font-size: clamp(15px, 2.2vw, 18px); font-weight: 600; color: #fff; letter-spacing: 0.3px; }
+.logo-text span { font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px; }
+
+.nav-toggle {
+  display: none;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  font-family: Georgia, serif;
-  letter-spacing: -1px;
+  gap: 5px;
+  cursor: pointer;
 }
-.logo-text h1 {
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  letter-spacing: 0.5px;
-  font-family: Verdana, sans-serif;
-}
-.logo-text span {
-  font-size: 11px;
-  color: #7ab3e0;
-  letter-spacing: 1px;
-}
-#nav {
-  display: flex;
-  gap: 1px;
-}
-#nav a {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #99ccff;
-  padding: 5px 14px;
-  text-decoration: none;
-  font-size: 12px;
-  transition: background 0.15s;
-}
-#nav a:hover {
-  background: rgba(0,102,204,0.4);
-  color: #fff;
-  border-color: #0066cc;
-}
+.nav-toggle span { width: 18px; height: 2px; background: #dcecff; border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* NAV BAR */
-#navbar {
-  background: #0f3460;
-  border-bottom: 1px solid #0066cc;
-}
-#navbar-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  gap: 0;
-}
-#navbar a {
-  color: #aaccee;
+#site-nav { display: flex; gap: 6px; }
+#site-nav a {
+  color: #bcdcff;
   text-decoration: none;
-  font-size: 12px;
-  padding: 7px 14px;
-  display: block;
-  border-right: 1px solid rgba(255,255,255,0.08);
-  transition: background 0.15s;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
-#navbar a:hover { background: rgba(0,102,204,0.3); color: #fff; }
+#site-nav a:hover { background: rgba(79,179,255,0.18); border-color: rgba(79,179,255,0.4); color: #fff; }
 
 /* HERO */
-#hero {
-  background: linear-gradient(180deg, #0f3460 0%, #16213e 100%);
-  border-bottom: 1px solid #0044aa;
-  padding: 48px 20px 40px;
-  text-align: center;
-}
-#hero-inner { max-width: 700px; margin: 0 auto; }
+#hero { padding: 64px 20px 44px; text-align: center; position: relative; z-index: 1; }
+#hero-inner { max-width: 720px; margin: 0 auto; }
 #hero h2 {
-  font-size: 26px;
-  font-weight: bold;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 700;
   color: #fff;
-  font-family: Georgia, serif;
-  margin-bottom: 10px;
-  line-height: 1.3;
+  margin-bottom: 14px;
+  line-height: 1.25;
 }
-#hero h2 span { color: #66aaff; }
-#hero p { color: #8ab4d4; font-size: 13px; margin-bottom: 24px; }
-.btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+#hero h2 span { color: var(--accent); }
+#hero p { color: var(--text-dim); font-size: clamp(13px, 2vw, 15px); margin-bottom: 30px; max-width: 560px; margin-left: auto; margin-right: auto; }
+
+.btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .btn {
-  padding: 8px 22px;
-  font-size: 12px;
-  font-family: Verdana, sans-serif;
+  position: relative;
+  padding: 12px 26px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
   text-decoration: none;
-  font-weight: bold;
   border: 1px solid;
   cursor: pointer;
   display: inline-block;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0) 60%);
+  pointer-events: none;
 }
 .btn-primary {
-  background: linear-gradient(180deg, #0077ee, #0055bb);
-  border-color: #0099ff;
+  background: linear-gradient(180deg, #6cc4ff, #1f80e2 55%, #0a4faa);
+  border-color: rgba(255,255,255,0.5);
   color: #fff;
+  box-shadow: 0 6px 18px rgba(10,99,201,0.45), inset 0 1px 0 rgba(255,255,255,0.5);
 }
-.btn-primary:hover { background: linear-gradient(180deg, #0088ff, #0066cc); }
+.btn-primary:hover { box-shadow: 0 8px 22px rgba(10,99,201,0.6), inset 0 1px 0 rgba(255,255,255,0.6); }
 .btn-secondary {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.25);
-  color: #99ccff;
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border);
+  color: #dcecff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
 }
-.btn-secondary:hover { background: rgba(255,255,255,0.14); color: #fff; }
+.btn-secondary:hover { background: rgba(255,255,255,0.18); }
 
 /* FEATURES STRIP */
-#features {
-  background: #1a3a6e;
-  border-bottom: 1px solid #0044aa;
-  padding: 16px 20px;
-}
+#features { padding: 4px 20px 8px; position: relative; z-index: 1; }
 #features-inner {
-  max-width: 960px;
+  max-width: 1080px;
   margin: 0 auto;
-  display: flex;
-  gap: 0;
-  justify-content: center;
-}
-.feature {
-  flex: 1;
-  text-align: center;
-  padding: 12px 20px;
-  border-right: 1px solid rgba(255,255,255,0.1);
-}
-.feature:last-child { border-right: none; }
-.feature-icon { font-size: 20px; margin-bottom: 6px; }
-.feature-title { font-weight: bold; color: #fff; font-size: 12px; margin-bottom: 2px; }
-.feature-desc { color: #7ab3e0; font-size: 11px; }
-
-/* MAIN CONTENT */
-#main {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.feature { padding: 16px 14px; text-align: center; }
+.feature-icon { font-size: 22px; margin-bottom: 8px; }
+.feature-title { font-weight: 600; color: #fff; font-size: 12.5px; margin-bottom: 3px; }
+.feature-desc { color: var(--text-dim); font-size: 11.5px; }
+
+/* MAIN */
+#main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
 }
 
-/* CONTENT AREA */
-.box {
-  background: #fff;
-  border: 1px solid #c8d4e0;
-  margin-bottom: 16px;
-}
+.box { margin-bottom: 18px; overflow: hidden; }
 .box-hdr {
-  background: linear-gradient(180deg, #e8f0f8, #d0dcea);
-  border-bottom: 1px solid #b0c4d8;
-  padding: 7px 12px;
-  font-weight: bold;
-  color: #1a3a6e;
-  font-size: 12px;
+  padding: 12px 18px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.3px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
 }
-.box-hdr::before { content: ''; display:block; width:3px; height:14px; background:#0066cc; }
-.box-body { padding: 14px; }
-.box-body p { color: #444; margin-bottom: 10px; font-size: 12px; }
+.box-hdr::before { content: ''; display:block; width:4px; height:16px; border-radius: 2px; background: linear-gradient(180deg, #7cd0ff, #0a63c9); }
+.box-body { padding: 18px; }
+.box-body p { color: var(--text-dim); margin-bottom: 12px; font-size: 13px; }
 .box-body p:last-child { margin-bottom: 0; }
+.box-body strong { color: #fff; }
 
-/* PRODUCT CARDS */
-.product-list { display: flex; flex-direction: column; gap: 1px; background: #c8d4e0; }
+/* COMING SOON */
+#coming-soon .box-hdr::before { background: linear-gradient(180deg, #ffe08a, #ffab2e); }
+.soon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 18px; }
+.soon-card {
+  background: rgba(255,200,87,0.07);
+  border: 1px solid rgba(255,200,87,0.35);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.soon-icon { font-size: 24px; margin-bottom: 8px; }
+.soon-title { font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.soon-badge {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 999px;
+  background: rgba(255,200,87,0.18); color: var(--gold); border: 1px solid rgba(255,200,87,0.45);
+}
+.soon-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; }
+
+/* PRODUCT / HISTORY LIST */
+.product-list { display: flex; flex-direction: column; }
 .product-item {
-  background: #fff;
-  padding: 14px;
+  padding: 16px 18px;
   display: flex;
   gap: 14px;
   align-items: flex-start;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.product-item:hover { background: #f5f9ff; }
+.product-item:last-child { border-bottom: none; }
 .product-badge {
   flex-shrink: 0;
-  padding: 3px 8px;
-  font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 1px;
+  padding: 3px 9px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
+  border-radius: 999px;
   border: 1px solid;
   margin-top: 2px;
+  white-space: nowrap;
 }
-.badge-live { background: #e8f5e9; color: #2e7d32; border-color: #81c784; }
-.badge-retired { background: #f5f5f5; color: #888; border-color: #ccc; }
-.product-info { flex: 1; }
-.product-name { font-weight: bold; font-size: 14px; color: #1a3a6e; margin-bottom: 4px; }
-.product-name a { color: #0055cc; text-decoration: none; }
-.product-name a:hover { text-decoration: underline; }
-.product-desc { font-size: 12px; color: #555; line-height: 1.6; }
-.product-link { font-size: 11px; color: #0055cc; text-decoration: none; margin-top: 6px; display: inline-block; }
-.product-link:hover { text-decoration: underline; }
+.badge-retired { background: rgba(255,255,255,0.06); color: var(--text-faint); border-color: rgba(255,255,255,0.2); }
+.badge-soon { background: rgba(255,200,87,0.16); color: var(--gold); border-color: rgba(255,200,87,0.4); }
+.product-info { flex: 1; min-width: 0; }
+.product-name { font-weight: 700; font-size: 14.5px; color: #fff; margin-bottom: 4px; }
+.product-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.65; }
 
 /* INFO GRID */
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #c8d4e0; }
-.info-item { background: #fff; padding: 12px 14px; }
-.info-item-title { font-weight: bold; color: #1a3a6e; font-size: 12px; margin-bottom: 4px; }
-.info-item-text { font-size: 12px; color: #555; line-height: 1.6; }
-.info-item-text a { color: #0055cc; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.08); }
+.info-item { background: rgba(8,20,40,0.35); padding: 14px 16px; }
+.info-item-title { font-weight: 600; color: var(--text-dim); font-size: 11px; letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 4px; }
+.info-item-text { font-size: 13px; color: #fff; }
 
 /* SIDEBAR */
-.sidebar-box {
-  background: #fff;
-  border: 1px solid #c8d4e0;
-  margin-bottom: 14px;
-}
+.sidebar-box { margin-bottom: 16px; overflow: hidden; }
 .sidebar-hdr {
-  background: linear-gradient(180deg, #1a3a6e, #0f2a52);
-  padding: 6px 10px;
+  padding: 10px 14px;
   color: #fff;
-  font-size: 11px;
-  font-weight: bold;
+  font-size: 11.5px;
+  font-weight: 700;
   letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
 }
-.sidebar-body { padding: 10px; }
-.sidebar-body a { display: block; color: #0055cc; font-size: 11px; text-decoration: none; padding: 3px 0; border-bottom: 1px solid #eef2f7; }
-.sidebar-body a:hover { color: #0033aa; text-decoration: underline; }
-.sidebar-body a:last-child { border-bottom: none; }
-.status-row { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; border-bottom: 1px solid #eef2f7; color: #555; }
+.sidebar-body { padding: 12px 14px; }
+.status-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: var(--text-dim); }
 .status-row:last-child { border-bottom: none; }
-.status-live { color: #2e7d32; font-weight: bold; }
-.status-ret { color: #999; }
-.sidebar-note { font-size: 10px; color: #888; line-height: 1.6; padding: 8px 10px; border-top: 1px solid #eef2f7; }
+.status-live { color: #6fdc8c; font-weight: 700; }
+.status-ret { color: var(--text-faint); font-weight: 600; }
+.sidebar-note { font-size: 10.5px; color: var(--text-faint); line-height: 1.7; padding-top: 10px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); }
+.sidebar-body p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+.sidebar-body p + p { margin-top: 10px; }
 
 /* FOOTER */
 #footer {
-  background: linear-gradient(180deg, #16213e, #1a1a2e);
-  border-top: 2px solid #0044aa;
-  padding: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
+  padding: 26px 20px 20px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  background: rgba(4,12,26,0.6);
+  backdrop-filter: blur(18px);
+  position: relative;
+  z-index: 1;
 }
 #footer-inner {
-  max-width: 960px;
+  max-width: 1080px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
 }
-.footer-col { }
-.footer-col h4 { color: #7ab3e0; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
-.footer-col a { display: block; color: #4d7ea8; font-size: 11px; text-decoration: none; margin-bottom: 4px; }
-.footer-col a:hover { color: #99ccff; }
-.footer-copy { color: #2a4a6e; font-size: 11px; text-align: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid #0f2a52; max-width: 960px; margin-left: auto; margin-right: auto; }
+.footer-col h4 { color: var(--text-dim); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+.footer-col a, .footer-col span { display: block; color: var(--text-faint); font-size: 12px; margin-bottom: 6px; text-decoration: none; }
+.footer-col a:hover { color: var(--accent); }
+.footer-copy { color: #3f5f85; font-size: 11px; text-align: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); max-width: 1080px; margin-left: auto; margin-right: auto; line-height: 1.7; }
 
 /* MOBILE */
-@media(max-width:640px){
+@media (max-width: 860px) {
   #main { grid-template-columns: 1fr; }
-  #features-inner { flex-direction: column; gap: 1px; background: #1a3a6e; }
-  .feature { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .soon-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  #features-inner { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .nav-toggle { display: flex; }
+  #site-nav {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 16px 16px;
+    background: rgba(6, 18, 38, 0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.2s ease;
+  }
+  #site-nav.open { max-height: 320px; opacity: 1; padding-top: 12px; }
+  #site-nav a { padding: 12px 10px; border-radius: 10px; }
+  #hero { padding: 44px 18px 32px; }
   .info-grid { grid-template-columns: 1fr; }
-  #header-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
-  #nav { flex-wrap: wrap; }
 }
 </style>
 </head>
 <body>
 
+<div class="orb orb-a" aria-hidden="true"></div>
+<div class="orb orb-b" aria-hidden="true"></div>
+<div class="orb orb-c" aria-hidden="true"></div>
+
 <!-- HEADER -->
 <div id="header">
   <div id="header-inner">
-    <div class="logo">
+    <a href="#" class="logo">
       <div class="logo-icon">ST</div>
       <div class="logo-text">
         <h1>Sobolak Technologies</h1>
-        <span>Independent Software &amp; Media</span>
+        <span>Independent Software, Media &amp; Hardware</span>
       </div>
-    </div>
-    <div id="nav">
+    </a>
+    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav">
       <a href="#about">About</a>
-      <a href="#products">Products</a>
-      <a href="https://liveleak.site" target="_blank">LiveLeak.site &raquo;</a>
-    </div>
-  </div>
-  <div id="navbar">
-    <div id="navbar-inner">
-      <a href="#">Home</a>
-      <a href="#about">About</a>
-      <a href="#products">Products</a>
+      <a href="#coming-soon">Coming Soon</a>
+      <a href="#history">History</a>
       <a href="#status">Status</a>
-      <a href="https://liveleak.site" target="_blank">LiveLeak.site</a>
-    </div>
+    </nav>
   </div>
 </div>
 
 <!-- HERO -->
 <div id="hero">
   <div id="hero-inner">
-    <h2>Software and platforms built to <span>last.</span></h2>
-    <p>Sobolak Technologies builds independent software and media platforms.<br>Self-hosted, privacy-conscious, and built without compromise.</p>
+    <h2>Software, media, and hardware &mdash; <span>built to last.</span></h2>
+    <p>Sobolak Technologies is an independent Michigan-based company. We've built local AI tools, run community video platforms, and now we're starting a new chapter: computers, and AI, again.</p>
     <div class="btn-group">
-      <a href="https://liveleak.site" class="btn btn-primary" target="_blank">Visit LiveLeak.site</a>
-      <a href="#about" class="btn btn-secondary">About Us</a>
+      <a href="#coming-soon" class="btn btn-primary">See What's Coming</a>
+      <a href="#about" class="btn btn-secondary">Our Story</a>
     </div>
   </div>
 </div>
@@ -338,25 +397,25 @@ body {
 <!-- FEATURES -->
 <div id="features">
   <div id="features-inner">
-    <div class="feature">
+    <div class="feature glass">
       <div class="feature-icon">&#127968;</div>
       <div class="feature-title">Self-Hosted</div>
       <div class="feature-desc">We own the hardware</div>
     </div>
-    <div class="feature">
+    <div class="feature glass">
       <div class="feature-icon">&#128274;</div>
       <div class="feature-title">No Censorship</div>
       <div class="feature-desc">Law and ethics only</div>
     </div>
-    <div class="feature">
+    <div class="feature glass">
       <div class="feature-icon">&#127775;</div>
       <div class="feature-title">Community First</div>
-      <div class="feature-desc">Events, contests, access</div>
+      <div class="feature-desc">Always our core value</div>
     </div>
-    <div class="feature">
-      <div class="feature-icon">&#128736;</div>
+    <div class="feature glass">
+      <div class="feature-icon">&#128187;</div>
       <div class="feature-title">Built to Last</div>
-      <div class="feature-desc">Redundant infrastructure</div>
+      <div class="feature-desc">From 90s towers to 2020s rigs</div>
     </div>
   </div>
 </div>
@@ -368,39 +427,58 @@ body {
   <div>
 
     <!-- ABOUT -->
-    <div class="box" id="about">
+    <div class="box glass" id="about">
       <div class="box-hdr">About Sobolak Technologies</div>
       <div class="box-body">
-        <p>Sobolak Technologies is an independent technology company based in Michigan, United States. We build software and media platforms for people who value privacy, transparency, and real information.</p>
-        <p>We started as a local-first software company — building AI tools that run entirely on your own hardware with no cloud dependency. That chapter has closed. Our focus has shifted to media.</p>
-        <p>Our current flagship is <strong>LiveLeak.site</strong> — a full community-run revival of the original LiveLeak platform, rebuilt from scratch and self-hosted on our own servers. No corporate backing. No investor pressure. No censorship agenda.</p>
+        <p>Sobolak Technologies is an independent technology company based in Michigan, United States. We've been through a few chapters so far.</p>
+        <p>We started as a local-first software company, building AI tools that ran entirely on your own hardware with no cloud dependency. That chapter closed in early 2026 when our focus shifted to media &mdash; first with <strong>LiveLeak.site</strong>, a from-scratch community revival of the original LiveLeak, and later with <strong>SoboVids.com</strong>, which replaced it as our flagship video platform. SoboVids.com was shut down in late summer 2026.</p>
+        <p>Right now we're between chapters. AI development is back on the roadmap, and we're opening a new storefront: computers, from the 90s through the 2020s. See what's coming below.</p>
       </div>
     </div>
 
-    <!-- PRODUCTS -->
-    <div class="box" id="products">
-      <div class="box-hdr">Our Products</div>
+    <!-- COMING SOON -->
+    <div class="box glass" id="coming-soon">
+      <div class="box-hdr">Coming Soon</div>
+      <div class="soon-grid">
+        <div class="soon-card">
+          <div class="soon-icon">&#128421;&#65039;</div>
+          <div class="soon-title">Computer Sales <span class="soon-badge">Launching Soon</span></div>
+          <div class="soon-desc">Vintage and modern computers, spanning the 90s to the 2020s. Restored, tested, and sold direct. Launch details TBA.</div>
+        </div>
+        <div class="soon-card">
+          <div class="soon-icon">&#129302;</div>
+          <div class="soon-title">SoboAI 2.0 <span class="soon-badge">In Development</span></div>
+          <div class="soon-desc">AI development is back at Sobolak Technologies. A new AI platform is in the works. Details TBA.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="box glass" id="history">
+      <div class="box-hdr">Past Products</div>
       <div class="product-list">
 
         <div class="product-item">
-          <div>
-            <span class="product-badge badge-live">Live</span>
-          </div>
+          <div><span class="product-badge badge-retired">Retired</span></div>
           <div class="product-info">
-            <div class="product-name"><a href="https://liveleak.site" target="_blank">LiveLeak.site</a></div>
-            <div class="product-desc">Community-run revival of the original LiveLeak — the internet's home for real-world footage, dashcam video, citizen journalism, and uncensored news. Rebuilt from scratch in 2026 and self-hosted in Michigan on our own hardware. No advertisers. No corporate agenda.</div>
-            <a href="https://liveleak.site" class="product-link" target="_blank">Visit liveleak.site &raquo;</a>
+            <div class="product-name">SoboVids.com</div>
+            <div class="product-desc">Replaced LiveLeak.site as our flagship community video platform in 2026. Shut down in late summer 2026. Rest in peace.</div>
           </div>
         </div>
 
         <div class="product-item">
-          <div>
-            <span class="product-badge badge-retired">Retired</span>
-          </div>
+          <div><span class="product-badge badge-retired">Retired</span></div>
           <div class="product-info">
-            <div class="product-name" style="color:#888">SoboAI / Local AI Suite</div>
-            <div class="product-desc">A locally-hosted AI assistant for Windows with multi-model support, streaming replies, and offline capability. Ran entirely on your own hardware — no cloud, no subscriptions, no data collection. Retired in early 2026 as our focus moved to media platforms.</div>
-            <span style="font-size:11px;color:#aaa">Discontinued — 2026</span>
+            <div class="product-name">LiveLeak.site</div>
+            <div class="product-desc">A community-run revival of the original LiveLeak, rebuilt from scratch and self-hosted in Michigan. Succeeded by SoboVids.com.</div>
+          </div>
+        </div>
+
+        <div class="product-item">
+          <div><span class="product-badge badge-retired">Retired</span></div>
+          <div class="product-info">
+            <div class="product-name">SoboAI / Local AI Suite</div>
+            <div class="product-desc">A locally-hosted AI assistant for Windows with multi-model support and offline capability. Discontinued in early 2026 &mdash; a successor is now in development, see Coming Soon.</div>
           </div>
         </div>
 
@@ -408,7 +486,7 @@ body {
     </div>
 
     <!-- COMPANY INFO -->
-    <div class="box" id="about">
+    <div class="box glass">
       <div class="box-hdr">Company Information</div>
       <div class="info-grid">
         <div class="info-item">
@@ -428,12 +506,12 @@ body {
           <div class="info-item-text">None</div>
         </div>
         <div class="info-item">
-          <div class="info-item-title">Active Products</div>
-          <div class="info-item-text">1 (LiveLeak.site)</div>
+          <div class="info-item-title">Current Focus</div>
+          <div class="info-item-text">Computer sales &amp; AI R&amp;D</div>
         </div>
         <div class="info-item">
-          <div class="info-item-title">Contact</div>
-          <div class="info-item-text"><a href="https://liveleak.site/contact.php">liveleak.site/contact</a></div>
+          <div class="info-item-title">Active Products</div>
+          <div class="info-item-text">0 &mdash; in transition</div>
         </div>
       </div>
     </div>
@@ -443,43 +521,22 @@ body {
   <!-- SIDEBAR -->
   <div>
 
-    <div class="sidebar-box" id="status">
+    <div class="sidebar-box glass" id="status">
       <div class="sidebar-hdr">Service Status</div>
       <div class="sidebar-body">
-        <div class="status-row"><span>LiveLeak.site</span><span class="status-live">&#9679; Online</span></div>
+        <div class="status-row"><span>SoboVids.com</span><span class="status-ret">Offline</span></div>
+        <div class="status-row"><span>LiveLeak.site</span><span class="status-ret">Offline</span></div>
         <div class="status-row"><span>SoboAI</span><span class="status-ret">Retired</span></div>
         <div class="status-row"><span>Servers</span><span class="status-live">&#9679; Michigan</span></div>
-      </div>
-      <div class="sidebar-note">Last checked: April 2026</div>
-    </div>
-
-    <div class="sidebar-box">
-      <div class="sidebar-hdr">Quick Links</div>
-      <div class="sidebar-body">
-        <a href="https://liveleak.site" target="_blank">LiveLeak.site</a>
-        <a href="https://liveleak.site/register.php" target="_blank">Create Account</a>
-        <a href="https://liveleak.site/upload.php" target="_blank">Upload Video</a>
-        <a href="https://liveleak.site/contact.php" target="_blank">Contact / Support</a>
+        <div class="sidebar-note">Last checked: July 2026</div>
       </div>
     </div>
 
-    <div class="sidebar-box">
+    <div class="sidebar-box glass">
       <div class="sidebar-hdr">Notice</div>
       <div class="sidebar-body">
-        <div style="font-size:11px;color:#555;line-height:1.7">
-          Sobolak Technologies is not affiliated with the original LiveLeak or its founder.<br><br>
-          LiveLeak.site is an independent revival project owned and operated by Sobolak Technologies.
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-box">
-      <div class="sidebar-hdr">Coming Soon</div>
-      <div class="sidebar-body">
-        <div style="font-size:11px;color:#555;line-height:1.7">
-          <strong>SoboAI 2.0</strong><br>
-          Next-generation AI platform. Details TBA.
-        </div>
+        <p>LiveLeak.site and SoboVids.com were independent, now-discontinued revival projects previously operated by Sobolak Technologies. Neither is accepting uploads, registrations, or support requests.</p>
+        <p>Sobolak Technologies is not affiliated with the original LiveLeak or its founder, Hayden Hewitt.</p>
       </div>
     </div>
 
@@ -492,28 +549,47 @@ body {
   <div id="footer-inner">
     <div class="footer-col">
       <h4>Sobolak Technologies</h4>
-      <a href="#">Home</a>
       <a href="#about">About</a>
-      <a href="#products">Products</a>
+      <a href="#coming-soon">Coming Soon</a>
+      <a href="#history">Past Products</a>
     </div>
     <div class="footer-col">
-      <h4>Products</h4>
-      <a href="https://liveleak.site" target="_blank">LiveLeak.site</a>
-      <a href="#">SoboAI (Retired)</a>
+      <h4>Past Products</h4>
+      <span>SoboVids.com (Retired)</span>
+      <span>LiveLeak.site (Retired)</span>
+      <span>SoboAI (Retired)</span>
     </div>
     <div class="footer-col">
-      <h4>LiveLeak.site</h4>
-      <a href="https://liveleak.site/register.php" target="_blank">Register</a>
-      <a href="https://liveleak.site/upload.php" target="_blank">Upload</a>
-      <a href="https://liveleak.site/contact.php" target="_blank">Contact</a>
-      <a href="https://liveleak.site/terms.php" target="_blank">Terms of Service</a>
+      <h4>Coming Soon</h4>
+      <span>Computer Sales</span>
+      <span>SoboAI 2.0</span>
     </div>
   </div>
   <div class="footer-copy">
     2026 Sobolak Technologies &mdash; Michigan, United States &mdash; All Rights Reserved<br>
-    <span style="color:#1e3a5a;font-size:10px">Sobolak Technologies is not affiliated with the original LiveLeak or Hayden Hewitt.</span>
+    <span>LiveLeak.site and SoboVids.com are discontinued and not affiliated with the original LiveLeak or Hayden Hewitt.</span>
   </div>
 </div>
+
+<script>
+(function () {
+  var toggle = document.getElementById('nav-toggle');
+  var nav = document.getElementById('site-nav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    toggle.classList.toggle('active', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  Array.prototype.forEach.call(nav.querySelectorAll('a'), function (link) {
+    link.addEventListener('click', function () {
+      nav.classList.remove('open');
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
