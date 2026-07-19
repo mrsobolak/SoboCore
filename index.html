@@ -229,6 +229,15 @@ a { color: var(--accent); }
 
 /* APOLOGY */
 #apology .box-hdr::before { background: linear-gradient(180deg, #ff9a9a, #d64545); }
+.founder-quote {
+  border-left: 3px solid rgba(255,154,154,0.55);
+  background: rgba(255,255,255,0.04);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 18px;
+  margin: 4px 0 12px;
+}
+.founder-quote p { color: #fff; font-style: italic; font-size: 13px; line-height: 1.75; margin-bottom: 8px; }
+.founder-quote cite { display: block; font-style: normal; font-size: 11px; letter-spacing: 0.3px; color: var(--text-faint); }
 .soon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 18px; }
 .soon-card {
   background: rgba(255,200,87,0.07);
@@ -442,10 +451,15 @@ a { color: var(--accent); }
 
     <!-- APOLOGY -->
     <div class="box glass" id="apology">
-      <div class="box-hdr">An Apology to LiveLeak.site Users</div>
+      <div class="box-hdr">An Apology About LiveLeak.site</div>
       <div class="box-body">
-        <p>We owe an apology to everyone who used LiveLeak.site. We asked you to create accounts, upload content, and build a community around the platform &mdash; then we shut it down and pushed everyone toward SoboVids.com instead, which has since shut down too.</p>
-        <p>That's on us. We're sorry for the disruption, the lost content, and the churn that came with it. We're taking more time before launching anything new, and we'll do better.</p>
+        <p>We owe two apologies about LiveLeak.site: one for starting it, and one for how it ended.</p>
+        <p>We asked people to create accounts, upload content, and build a community around the platform &mdash; then we shut it down and pushed everyone toward SoboVids.com instead, which has since shut down too. We're sorry for the disruption, the lost content, and the churn that came with it.</p>
+        <div class="founder-quote">
+          <p>&ldquo;I have seen a lot of things in my life, but the minds that I let on my site&hellip; were horrific. I thought I would be able to make something good of the LiveLeak name, but I was mistaken. To all of you sick, twisted people out there, I hope you find peace. As for the community that LiveLeak had &mdash; the good one &mdash; thank you.&rdquo;</p>
+          <cite>&mdash; Founder, Sobolak Technologies</cite>
+        </div>
+        <p>We're taking more time before launching anything new, and we'll do better.</p>
       </div>
     </div>
 
