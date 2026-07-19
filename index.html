@@ -226,6 +226,9 @@ a { color: var(--accent); }
 
 /* COMING SOON */
 #coming-soon .box-hdr::before { background: linear-gradient(180deg, #ffe08a, #ffab2e); }
+
+/* APOLOGY */
+#apology .box-hdr::before { background: linear-gradient(180deg, #ff9a9a, #d64545); }
 .soon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 18px; }
 .soon-card {
   background: rgba(255,200,87,0.07);
@@ -375,6 +378,7 @@ a { color: var(--accent); }
     </button>
     <nav id="site-nav">
       <a href="#about">About</a>
+      <a href="#apology">Apology</a>
       <a href="#coming-soon">Coming Soon</a>
       <a href="#history">History</a>
       <a href="#status">Status</a>
@@ -431,8 +435,17 @@ a { color: var(--accent); }
       <div class="box-hdr">About Sobolak Technologies</div>
       <div class="box-body">
         <p>Sobolak Technologies is an independent technology company based in Michigan, United States. We've been through a few chapters so far.</p>
-        <p>We started as a local-first software company, building AI tools that ran entirely on your own hardware with no cloud dependency. That chapter closed in early 2026 when our focus shifted to media &mdash; first with <strong>LiveLeak.site</strong>, a from-scratch community revival of the original LiveLeak, and later with <strong>SoboVids.com</strong>, which replaced it as our flagship video platform. SoboVids.com was shut down in late summer 2026.</p>
+        <p>We started as a local-first software company, building AI tools that ran entirely on your own hardware with no cloud dependency. That chapter closed in early 2026 when our focus shifted to media, launching <strong>SoboVids.com</strong> as our flagship community video platform. SoboVids.com was shut down in late summer 2026.</p>
         <p>Right now we're between chapters. AI development is back on the roadmap, and we're opening a new storefront: computers, from the 90s through the 2020s. See what's coming below.</p>
+      </div>
+    </div>
+
+    <!-- APOLOGY -->
+    <div class="box glass" id="apology">
+      <div class="box-hdr">An Apology to LiveLeak.site Users</div>
+      <div class="box-body">
+        <p>We owe an apology to everyone who used LiveLeak.site. We asked you to create accounts, upload content, and build a community around the platform &mdash; then we shut it down and pushed everyone toward SoboVids.com instead, which has since shut down too.</p>
+        <p>That's on us. We're sorry for the disruption, the lost content, and the churn that came with it. We're taking more time before launching anything new, and we'll do better.</p>
       </div>
     </div>
 
@@ -462,15 +475,7 @@ a { color: var(--accent); }
           <div><span class="product-badge badge-retired">Retired</span></div>
           <div class="product-info">
             <div class="product-name">SoboVids.com</div>
-            <div class="product-desc">Replaced LiveLeak.site as our flagship community video platform in 2026. Shut down in late summer 2026. Rest in peace.</div>
-          </div>
-        </div>
-
-        <div class="product-item">
-          <div><span class="product-badge badge-retired">Retired</span></div>
-          <div class="product-info">
-            <div class="product-name">LiveLeak.site</div>
-            <div class="product-desc">A community-run revival of the original LiveLeak, rebuilt from scratch and self-hosted in Michigan. Succeeded by SoboVids.com.</div>
+            <div class="product-desc">Our flagship community video platform, launched in 2026. Shut down in late summer 2026. Rest in peace.</div>
           </div>
         </div>
 
@@ -525,7 +530,6 @@ a { color: var(--accent); }
       <div class="sidebar-hdr">Service Status</div>
       <div class="sidebar-body">
         <div class="status-row"><span>SoboVids.com</span><span class="status-ret">Offline</span></div>
-        <div class="status-row"><span>LiveLeak.site</span><span class="status-ret">Offline</span></div>
         <div class="status-row"><span>SoboAI</span><span class="status-ret">Retired</span></div>
         <div class="status-row"><span>Servers</span><span class="status-live">&#9679; Michigan</span></div>
         <div class="sidebar-note">Last checked: July 2026</div>
@@ -535,8 +539,7 @@ a { color: var(--accent); }
     <div class="sidebar-box glass">
       <div class="sidebar-hdr">Notice</div>
       <div class="sidebar-body">
-        <p>LiveLeak.site and SoboVids.com were independent, now-discontinued revival projects previously operated by Sobolak Technologies. Neither is accepting uploads, registrations, or support requests.</p>
-        <p>Sobolak Technologies is not affiliated with the original LiveLeak or its founder, Hayden Hewitt.</p>
+        <p>SoboVids.com is discontinued and no longer accepting uploads, registrations, or support requests.</p>
       </div>
     </div>
 
@@ -550,13 +553,13 @@ a { color: var(--accent); }
     <div class="footer-col">
       <h4>Sobolak Technologies</h4>
       <a href="#about">About</a>
+      <a href="#apology">Apology</a>
       <a href="#coming-soon">Coming Soon</a>
       <a href="#history">Past Products</a>
     </div>
     <div class="footer-col">
       <h4>Past Products</h4>
       <span>SoboVids.com (Retired)</span>
-      <span>LiveLeak.site (Retired)</span>
       <span>SoboAI (Retired)</span>
     </div>
     <div class="footer-col">
@@ -566,8 +569,7 @@ a { color: var(--accent); }
     </div>
   </div>
   <div class="footer-copy">
-    2026 Sobolak Technologies &mdash; Michigan, United States &mdash; All Rights Reserved<br>
-    <span>LiveLeak.site and SoboVids.com are discontinued and not affiliated with the original LiveLeak or Hayden Hewitt.</span>
+    2026 Sobolak Technologies &mdash; Michigan, United States &mdash; All Rights Reserved
   </div>
 </div>
 
