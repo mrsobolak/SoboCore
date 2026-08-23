@@ -1,0 +1,302 @@
+/* sobolak.org — handwritten stylesheet. Nothing generated, nothing minified.
+   Edit it with a text editor like a normal person. */
+
+/* ---- palette ------------------------------------------------------- */
+
+:root {
+  --paper:      #f5f2ea;
+  --ink:        #1f1c17;
+  --ink-soft:   #4b453b;
+  --ink-faint:  #7d7568;
+  --rule:       #cec7b6;
+  --rule-soft:  #e0d9c8;
+  --accent:     #9c3b1b;
+  --accent-lit: #c05a30;
+
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:      #17150f;
+    --ink:        #e9e2d2;
+    --ink-soft:   #bdb5a3;
+    --ink-faint:  #8d8574;
+    --rule:       #3a342a;
+    --rule-soft:  #2a251d;
+    --accent:     #d8794b;
+    --accent-lit: #ea9668;
+  }
+}
+
+/* ---- basics -------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 1.5rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: 17px/1.62 var(--serif);
+}
+
+.page {
+  max-width: 39rem;
+  margin: 0 auto;
+}
+
+.page.wide { max-width: 46rem; }
+
+p { margin: 0 0 1.05em; }
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--accent-lit); }
+
+strong { font-weight: 700; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.4rem 0;
+}
+
+/* a small typographic break, used between thoughts */
+.asterism {
+  border: 0;
+  text-align: center;
+  color: var(--ink-faint);
+  margin: 2.2rem 0;
+  overflow: visible;
+}
+.asterism::after {
+  content: "* * *";
+  letter-spacing: 0.5em;
+  font-size: 0.85rem;
+}
+
+/* ---- masthead ------------------------------------------------------ */
+
+header.masthead {
+  padding: 2.4rem 0 0;
+}
+
+.wordmark {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--ink);
+}
+.wordmark b {
+  display: block;
+  font-weight: 700;
+  font-size: 1.32rem;
+  letter-spacing: 0.01em;
+}
+.wordmark span {
+  display: block;
+  margin-top: 0.15rem;
+  font: 400 0.72rem/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+nav.menu {
+  margin: 1.3rem 0 0;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  font: 400 0.79rem/2 var(--mono);
+}
+nav.menu a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-right: 1.35rem;
+  white-space: nowrap;
+}
+nav.menu a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+nav.menu a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1px;
+}
+
+/* ---- headings ------------------------------------------------------ */
+
+main { padding: 2.4rem 0 1rem; }
+
+.kicker {
+  font: 400 0.71rem/1 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.7rem;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 1.95rem;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  margin: 0 0 1.1rem;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 1.16rem;
+  margin: 2.3rem 0 0.7rem;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 1.7rem 0 0.4rem;
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.note {
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+}
+
+/* ---- lists --------------------------------------------------------- */
+
+ul.plain {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem;
+}
+ul.plain li {
+  padding-left: 1.65rem;
+  margin-bottom: 0.45rem;
+  position: relative;
+}
+ul.plain li::before {
+  content: "\2014";           /* em dash, drawn by hand rather than a bullet */
+  position: absolute;
+  left: 0;
+  color: var(--ink-faint);
+}
+
+/* ---- entries (products, plans, archive rows) ----------------------- */
+
+.entry {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.entry:first-of-type { border-top: 1px solid var(--rule); }
+.entry h2, .entry h3 { margin-top: 0; }
+.entry p:last-child { margin-bottom: 0; }
+
+.tag {
+  font: 400 0.68rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.15rem;
+  margin-left: 0.6rem;
+  white-space: nowrap;
+}
+.tag.live { color: var(--accent); border-color: var(--accent); }
+
+/* ---- quote --------------------------------------------------------- */
+
+blockquote {
+  margin: 1.6rem 0;
+  padding: 0 0 0 1.4rem;
+  border-left: 2px solid var(--accent);
+}
+blockquote p {
+  font-style: italic;
+  color: var(--ink);
+}
+blockquote cite {
+  display: block;
+  font: 400 0.74rem/1.5 var(--mono);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+
+/* ---- tables & facts ------------------------------------------------ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.4rem;
+  font-size: 0.95rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.62rem 0.6rem 0.62rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top;
+}
+th {
+  font: 400 0.7rem/1.4 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--rule);
+}
+td.state { font-family: var(--mono); font-size: 0.82rem; }
+
+dl.facts { margin: 0 0 1.4rem; }
+dl.facts dt {
+  font: 400 0.7rem/1.4 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 1rem;
+}
+dl.facts dd {
+  margin: 0.15rem 0 0;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+/* ---- footer -------------------------------------------------------- */
+
+footer.colophon {
+  margin-top: 3rem;
+  padding: 1.4rem 0 3rem;
+  border-top: 1px solid var(--ink);
+  font: 400 0.76rem/1.85 var(--mono);
+  color: var(--ink-faint);
+}
+footer.colophon a { color: var(--ink-soft); text-decoration: none; }
+footer.colophon a:hover { color: var(--accent); text-decoration: underline; }
+footer.colophon .links a { margin-right: 1.1rem; }
+footer.colophon .fine { margin-top: 0.9rem; }
+
+/* ---- small screens ------------------------------------------------- */
+
+@media (max-width: 34rem) {
+  body { padding: 0 1.15rem; font-size: 16.5px; }
+  h1 { font-size: 1.65rem; }
+  nav.menu { line-height: 2.1; }
+  nav.menu a { margin-right: 1.05rem; }
+}
+
+/* ---- print --------------------------------------------------------- */
+
+@media print {
+  body { background: #fff; color: #000; }
+  nav.menu, footer.colophon { display: none; }
+}
