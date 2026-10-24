@@ -1,173 +1,733 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sobolak Technologies</title>
-<meta name="description" content="Sobolak Technologies is an independent technology company in Michigan. Computer sales, AI development, and cheap website hosting are in the works.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%232c5896'/%3E%3Ctext x='8' y='12' font-family='Georgia,serif' font-size='10' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EST%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SOBO IS COMING</title>
+<meta name="description" content="Sobo can speak again Saturday at 12:00 AM Pacific. The countdown is on.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sobolak.org/">
+<meta property="og:title" content="SOBO IS COMING">
+<meta property="og:description" content="Sobo can speak again Saturday at 12:00 AM Pacific.">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#020503">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Crect width='1000' height='1000' rx='160' fill='%23020503'/%3E%3Cpath d='M300 120H780V250H350V440H720L780 500V820L720 880H220V750H650V570H280L220 510V200Z' fill='%236dff95'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #020503;
+    --ink: #f3faf4;
+    --ink-dim: rgba(243, 250, 244, .74);
+    --g: #6dff95;
+    --g-soft: rgba(109, 255, 149, .35);
+    --font: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--bg); color: var(--ink); overflow: hidden; }
+  body { font-family: var(--font); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  /* ---------- scene ---------- */
+  .scene {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    background: radial-gradient(120% 90% at 30% 15%, #0f2b18 0%, #06120a 45%, #010302 100%);
+  }
+  .cam { position: absolute; inset: -4%; animation: cam 26s ease-in-out infinite alternate; will-change: transform; }
+  @keyframes cam {
+    from { transform: scale(1.06) translate3d(-.6%, .4%, 0); }
+    to   { transform: scale(1) translate3d(.6%, -.4%, 0); }
+  }
+  .windows {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    transform: translate3d(calc(var(--px, 0) * 8px), calc(var(--py, 0) * 6px), 0);
+  }
+  .rays {
+    position: absolute; inset: -20%; mix-blend-mode: screen; pointer-events: none;
+    background: repeating-conic-gradient(from 112deg at 22% 4%,
+      rgba(150, 255, 180, 0) 0deg, rgba(150, 255, 180, .11) 2deg,
+      rgba(150, 255, 180, 0) 5deg, rgba(150, 255, 180, 0) 11deg);
+    filter: blur(9px);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 22% 4%, #000 0%, transparent 78%);
+            mask-image: radial-gradient(ellipse 70% 80% at 22% 4%, #000 0%, transparent 78%);
+    transform-origin: 22% 4%;
+    animation: rays 16s ease-in-out infinite alternate;
+  }
+  @keyframes rays {
+    from { opacity: .55; transform: rotate(-1.5deg); }
+    to   { opacity: 1;   transform: rotate(1.5deg); }
+  }
+  .emblem {
+    position: absolute; left: 50%; top: 50%;
+    width: min(172vh, 150vw); height: min(172vh, 150vw); overflow: visible;
+    transform: translate(-50%, -50%) translate3d(calc(var(--px, 0) * -18px), calc(var(--py, 0) * -12px), 0)
+               perspective(1800px) rotateY(-7deg) rotateX(3deg);
+  }
+  .emblem .sheen { animation: sheen 11s ease-in-out infinite; }
+  @keyframes sheen {
+    0%, 15% { transform: translateX(-200px); }
+    70%, 100% { transform: translateX(1500px); }
+  }
+  #motes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .fog {
+    position: absolute; top: 0; bottom: 0; left: 0; pointer-events: none; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.009' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 1 0 0 0 0 0.6 1.7 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 1200px 600px;
+    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.6) 40%, transparent 85%);
+            mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.6) 40%, transparent 85%);
+    will-change: transform;
+  }
+  .fog.a { width: calc(100% + 1200px); opacity: .32; animation: drift 110s linear infinite; }
+  .fog.b { width: calc(100% + 1200px); opacity: .22; animation: drift 70s linear infinite reverse; background-position: 300px 180px; }
+  @keyframes drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-1200px, 0, 0); } }
+  .vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 75% 70% at 50% 48%, transparent 35%, rgba(0, 0, 0, .55) 75%, rgba(0, 0, 0, .92) 100%);
+  }
+
+  /* ---------- countdown ---------- */
+  .stage {
+    position: fixed; inset: 0; z-index: 2;
+    display: grid; place-items: center; padding: 24px 16px; text-align: center;
+  }
+  .stage::before {
+    content: ""; position: absolute; left: 50%; top: 50%; pointer-events: none;
+    width: min(1100px, 150vw); height: min(560px, 80vh); transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(0, 0, 0, .62), rgba(0, 0, 0, .34) 55%, transparent);
+  }
+  .countdown { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .countdown.kick { animation: kick .32s cubic-bezier(.2, .8, .3, 1); }
+  @keyframes kick { 0% { transform: scale(1.018); } 100% { transform: none; } }
+  .title {
+    font-weight: 800; font-size: clamp(17px, 3.5vw, 40px); line-height: 1; letter-spacing: .035em;
+    text-shadow: 0 0 24px rgba(0, 0, 0, .6), 0 0 2px rgba(0, 0, 0, .8);
+    animation: rise 1.4s cubic-bezier(.2, .7, .2, 1) .2s both;
+  }
+  .clock {
+    display: flex; align-items: flex-start; margin-top: clamp(10px, 1.6vw, 20px);
+    font-size: clamp(30px, 9.2vw, 84px); font-weight: 500; line-height: 1;
+    text-shadow: 0 0 22px rgba(0, 0, 0, .55);
+    animation: rise 1.4s cubic-bezier(.2, .7, .2, 1) .45s both;
+    transition: text-shadow .6s ease;
+  }
+  body.final .clock { text-shadow: 0 0 18px rgba(109, 255, 149, .55), 0 0 2px rgba(0, 0, 0, .6); }
+  .unit { display: flex; flex-direction: column; align-items: center; }
+  .digits { display: flex; }
+  .d { position: relative; display: block; width: .7em; text-align: center; font-variant-numeric: tabular-nums; }
+  .colon { display: block; width: .42em; text-align: center; transform: translateY(-.07em); }
+  .label {
+    margin-top: clamp(6px, 1vw, 12px); padding-left: .14em;
+    font-size: clamp(7.5px, 1.15vw, 11px); font-weight: 700; letter-spacing: .14em; color: var(--ink-dim);
+    text-shadow: none;
+  }
+  .sub {
+    margin-top: clamp(22px, 3.4vw, 40px); padding-left: .32em;
+    font-size: clamp(10px, 1.3vw, 13px); font-weight: 700; letter-spacing: .32em;
+    animation: fade 1.6s ease .9s both;
+  }
+  .when {
+    margin-top: 10px; padding-left: .2em; max-width: 92vw;
+    font-size: clamp(9.5px, 1.1vw, 12px); font-weight: 500; letter-spacing: .2em; line-height: 1.8;
+    color: rgba(200, 255, 215, .62); text-transform: uppercase;
+    animation: fade 1.6s ease 1.1s both;
+  }
+  .when span { display: inline-block; }
+  .when .sep { margin: 0 .7em; opacity: .5; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+  /* digit glitch: the main glyph scrambles while two slices of the real digit tear sideways */
+  .d::before, .d::after { content: attr(data-v); position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+  .d.glitch { animation: jit .34s steps(3) 1; }
+  .d.glitch::before { color: var(--g); animation: sliceA .34s steps(3) 1; }
+  .d.glitch::after { color: #fff; animation: sliceB .34s steps(3) 1; }
+  @keyframes jit {
+    0% { transform: translateX(.02em); text-shadow: -.05em 0 rgba(109, 255, 149, .85), .05em 0 rgba(255, 255, 255, .45); }
+    60% { transform: translateX(-.02em); }
+    100% { transform: none; }
+  }
+  @keyframes sliceA {
+    0% { opacity: .95; clip-path: inset(8% 0 60% 0); transform: translateX(-.09em); }
+    50% { opacity: .9; clip-path: inset(40% 0 32% 0); transform: translateX(.06em); }
+    100% { opacity: 0; clip-path: inset(70% 0 0 0); transform: translateX(-.03em); }
+  }
+  @keyframes sliceB {
+    0% { opacity: .85; clip-path: inset(58% 0 8% 0); transform: translateX(.08em); }
+    50% { opacity: .8; clip-path: inset(18% 0 62% 0); transform: translateX(-.05em); }
+    100% { opacity: 0; clip-path: inset(0 0 80% 0); transform: none; }
+  }
+
+  /* ---------- the moment ---------- */
+  .flash {
+    position: fixed; inset: 0; z-index: 4; pointer-events: none; opacity: 0;
+    background: radial-gradient(60% 60% at 50% 50%, rgba(170, 255, 195, .55), rgba(60, 200, 110, .18) 50%, transparent 80%);
+  }
+  .flash.go { animation: flash .55s ease-out; }
+  .flash.big { animation: flashBig 1.2s ease-out; }
+  @keyframes flash { 0% { opacity: .3; } 100% { opacity: 0; } }
+  @keyframes flashBig { 0% { opacity: 1; } 100% { opacity: 0; } }
+  body.zero .countdown { animation: shake .5s linear; }
+  @keyframes shake {
+    0%, 100% { transform: none; } 15% { transform: translate(-6px, 3px); } 30% { transform: translate(5px, -4px); }
+    45% { transform: translate(-4px, -2px); } 60% { transform: translate(3px, 4px); } 80% { transform: translate(-2px, 1px); }
+  }
+  body.flicker .scene, body.flicker .stage { animation: flicker 1s steps(1) 1 both; }
+  @keyframes flicker {
+    0% { opacity: 1; } 8% { opacity: .15; } 14% { opacity: 1; } 24% { opacity: .05; } 30% { opacity: .85; }
+    46% { opacity: .1; } 52% { opacity: .6; } 70% { opacity: .2; } 100% { opacity: .75; }
+  }
+  .blackout {
+    position: fixed; inset: 0; z-index: 5; background: #000; opacity: 0; pointer-events: none;
+    transition: opacity 2.8s cubic-bezier(.55, 0, .45, 1);
+  }
+  body.dark .blackout { opacity: 1; }
+  body.after .blackout { transition: none; }
+  body.after .countdown { display: none; }
+
+  .return {
+    position: fixed; inset: 0; z-index: 6; display: grid; place-content: center; justify-items: center;
+    padding: 24px 16px; text-align: center;
+  }
+  .return[hidden] { display: none; }
+  .return::before {
+    content: ""; position: absolute; left: 50%; top: 50%; width: min(900px, 130vw); height: min(420px, 60vh);
+    transform: translate(-50%, -50%); pointer-events: none; opacity: 0;
+    background: radial-gradient(closest-side, rgba(60, 200, 110, .16), transparent);
+    transition: opacity 4s ease 1.2s;
+  }
+  .return h2 {
+    position: relative; white-space: nowrap;
+    font-weight: 800; font-size: clamp(46px, 12vw, 168px); line-height: 1;
+    letter-spacing: .6em; padding-left: .6em; opacity: 0; filter: blur(16px);
+    transition: opacity 2.4s ease, letter-spacing 3.4s cubic-bezier(.16, 1, .3, 1), padding-left 3.4s cubic-bezier(.16, 1, .3, 1), filter 2.6s ease;
+  }
+  .return p {
+    position: relative; margin-top: clamp(16px, 2.4vw, 28px); padding-left: .36em;
+    font-size: clamp(11px, 1.5vw, 15px); font-weight: 700; letter-spacing: .36em; color: var(--ink-dim);
+    opacity: 0; transition: opacity 2.2s ease 2.4s;
+  }
+  .return.show::before { opacity: 1; }
+  .return.show h2 {
+    opacity: 1; letter-spacing: .02em; padding-left: .02em; filter: blur(0);
+    animation: breathe 7s ease-in-out 3.6s infinite;
+  }
+  .return.show p { opacity: 1; }
+  .return.instant h2 { transition-duration: 1.4s; }
+  .return.instant p { transition-delay: .8s; }
+  @keyframes breathe {
+    0%, 100% { text-shadow: 0 0 22px rgba(109, 255, 149, .18); }
+    50% { text-shadow: 0 0 44px rgba(109, 255, 149, .42), 0 0 2px rgba(200, 255, 215, .5); }
+  }
+
+  /* ---------- chrome ---------- */
+  .sound {
+    position: fixed; z-index: 7;
+    right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px 9px 12px;
+    font: 700 10px/1 var(--font); letter-spacing: .2em; color: var(--ink-dim);
+    background: rgba(0, 0, 0, .38); border: 1px solid rgba(255, 255, 255, .2); border-radius: 2px;
+    cursor: pointer; transition: color .2s, border-color .2s, opacity 1.5s;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .sound:hover, .sound:focus-visible { color: var(--ink); border-color: rgba(109, 255, 149, .6); outline: none; }
+  .sound .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 10px; }
+  .sound .bars i { display: block; width: 2px; height: 3px; background: currentColor; }
+  .sound[aria-pressed="true"] { color: var(--g); border-color: rgba(109, 255, 149, .5); }
+  .sound[aria-pressed="true"] .bars i { animation: eq .9s ease-in-out infinite alternate; }
+  .sound[aria-pressed="true"] .bars i:nth-child(2) { animation-delay: -.3s; }
+  .sound[aria-pressed="true"] .bars i:nth-child(3) { animation-delay: -.6s; }
+  @keyframes eq { from { height: 2px; } to { height: 10px; } }
+  body.back .sound { opacity: 0; pointer-events: none; }
+  .sound[hidden] { display: none; }
+  .grain {
+    position: fixed; z-index: 8; left: -50%; top: -50%; width: 200%; height: 200%; pointer-events: none; opacity: .06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.2 -0.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 1.2s steps(6) infinite;
+  }
+  @keyframes grain {
+    0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -3%); }
+    60% { transform: translate(-2%, -1%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(1%, -2%); }
+  }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cam, .rays, .fog, .grain, .emblem .sheen, .sound .bars i { animation: none !important; }
+    .title, .clock, .sub, .when { animation-duration: .01s !important; animation-delay: 0s !important; }
+    .return.show h2 { animation: none; }
+  }
+</style>
 </head>
 <body>
+<div class="scene" id="scene" aria-hidden="true">
+  <div class="cam">
+    <svg class="windows" id="windows" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"></svg>
+    <div class="rays"></div>
+    <svg class="emblem" viewBox="0 0 1000 1000">
+      <defs>
+        <path id="S" d="M300 120H780V250H350V440H720L780 500V820L720 880H220V750H650V570H280L220 510V200Z"/>
+        <linearGradient id="metal" x1="0" y1="0" x2=".35" y2="1">
+          <stop offset="0" stop-color="#142219"/>
+          <stop offset=".45" stop-color="#060b07"/>
+          <stop offset="1" stop-color="#0b150e"/>
+        </linearGradient>
+        <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#b9ffcc" stop-opacity=".95"/>
+          <stop offset=".45" stop-color="#6dff95" stop-opacity=".45"/>
+          <stop offset="1" stop-color="#6dff95" stop-opacity=".05"/>
+        </linearGradient>
+        <linearGradient id="sheenG" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#9dffb8" stop-opacity="0"/>
+          <stop offset=".5" stop-color="#9dffb8" stop-opacity=".09"/>
+          <stop offset="1" stop-color="#9dffb8" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="halo" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+        <clipPath id="sclip"><use href="#S"/></clipPath>
+      </defs>
+      <use href="#S" fill="none" stroke="#5dff8e" stroke-width="46" opacity=".32" filter="url(#halo)"/>
+      <g fill="#010302" id="depth"></g>
+      <use href="#S" fill="url(#metal)"/>
+      <g clip-path="url(#sclip)">
+        <use href="#S" fill="none" stroke="rgba(120,255,160,.10)" stroke-width="22"/>
+        <g class="sheen"><rect x="-300" y="-100" width="260" height="1200" fill="url(#sheenG)" transform="skewX(-18)"/></g>
+      </g>
+      <use href="#S" fill="none" stroke="url(#rim)" stroke-width="3"/>
+    </svg>
+    <canvas id="motes"></canvas>
+    <div class="fog a"></div>
+    <div class="fog b"></div>
+    <div class="vignette"></div>
+  </div>
+</div>
 
-<div id="shell">
-
-<!-- banner -->
-<div id="banner">
-  <a href="/" id="logo">ST</a>
-  <a href="/" id="banner-link">
-    <div id="banner-text">
-      <div class="name">Sobolak Technologies</div>
-      <div class="tag">Independent Software, Media &amp; Hardware &middot; Michigan, USA &middot; Est. 2024</div>
+<main class="stage">
+  <section class="countdown" id="countdown">
+    <h1 class="title">SOBO IS COMING</h1>
+    <div class="clock" id="clock" role="timer" aria-label="Countdown until Sobo can speak again">
+      <div class="unit" data-unit="months"><div class="digits" aria-hidden="true"><span class="d">0</span><span class="d">0</span></div><span class="label">MONTHS</span></div>
+      <span class="colon" aria-hidden="true">:</span>
+      <div class="unit" data-unit="days"><div class="digits" aria-hidden="true"><span class="d">0</span><span class="d">0</span></div><span class="label">DAYS</span></div>
+      <span class="colon" aria-hidden="true">:</span>
+      <div class="unit" data-unit="hours"><div class="digits" aria-hidden="true"><span class="d">0</span><span class="d">0</span></div><span class="label">HOURS</span></div>
+      <span class="colon" aria-hidden="true">:</span>
+      <div class="unit" data-unit="minutes"><div class="digits" aria-hidden="true"><span class="d">0</span><span class="d">0</span></div><span class="label">MINUTES</span></div>
+      <span class="colon" aria-hidden="true">:</span>
+      <div class="unit" data-unit="seconds"><div class="digits" aria-hidden="true"><span class="d">0</span><span class="d">0</span></div><span class="label">SECONDS</span></div>
     </div>
-  </a>
-</div>
+    <p class="sub">UNTIL SOBO CAN SPEAK AGAIN</p>
+    <p class="when" id="when"><span>Saturday 12:00 AM Pacific</span></p>
+  </section>
+</main>
 
-<!-- tabs -->
-<div id="tabs">
-    <a href="/" class="here">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/founder.html">Founder's Note</a>
-    <a href="/next.html">Coming Soon</a>
-    <a href="/archive.html">Past Products</a>
-    <a href="/status.html">Status</a>
-    <a href="/apology.html">Apology</a>
-</div>
+<div class="flash" id="flash"></div>
+<div class="blackout"></div>
 
-<div id="body">
+<section class="return" id="return" hidden>
+  <h2>HE&rsquo;S BACK</h2>
+  <p>SOBO CAN SPEAK AGAIN</p>
+</section>
 
-<div id="content">
-  <h1>Welcome to Sobolak Technologies</h1>
-
-  <p class="intro">We are a small independent technology company in Michigan,
-  founded in 2024. Over three chapters we have built local AI software, run
-  community video platforms, and shut both of those down.</p>
-
-  <div class="notice grim">
-    <b>Company update:</b> things are not going well right now. The team is
-    gone and the founder is the only one left.
-    <a href="/founder.html">Read the note</a>.
-  </div>
-
-  <h2>Where things stand</h2>
-
-  <p>Nothing we make is live today. The staff has moved on, the products are in
-  the <a href="/archive.html">archive</a>, and the company is one person and a
-  room full of servers in Michigan.</p>
-
-  <p>We are not closing. The plan is to get back on our feet: open the computer
-  shop, get the new AI software into a state worth showing, and rebuild from
-  there. It will take a while, and we would rather say so than pretend
-  otherwise.</p>
-
-  <h2>What is being worked on</h2>
-
-  <ul class="arrows">
-    <li><b>Computer sales</b> &mdash; vintage and modern machines, the nineties
-        through the twenties. Restored, tested, sold direct.</li>
-    <li><b>SoboAI 2.0</b> &mdash; a second attempt at the local AI software.
-        Your machine, your models, your data.</li>
-    <li><b>SoboHost.site</b> &mdash; cheap website hosting, on our own servers.
-        More below, though not much more.</li>
-  </ul>
-
-  <p class="small">None of them has a launch date. We are not going to invent
-  one to fill the space.</p>
-
-  <h2>SoboHost.site</h2>
-
-  <div class="notice">
-    <b>Cheap website hosting is coming soon.</b> That is genuinely most of what
-    we can say right now &mdash; the domain is registered, the servers are
-    already on and doing nothing, and the math works out better than you would
-    expect. ;)
-  </div>
-
-  <p>We have had a room full of hardware in Michigan sitting idle since the
-  video platforms went dark. Putting other people's websites on it is the
-  obvious thing to do with it, so that is what SoboHost.site is going to be:
-  small, plain, inexpensive hosting from a company that has to keep the lights
-  on anyway.</p>
-
-  <p>No prices, no plans, no signup, and no date yet. When there is something
-  to sign up for, it will show up here and on the
-  <a href="/next.html">Coming Soon</a> page first.</p>
-
-  <div class="buttons">
-    <a class="btn" href="/next.html">See What Is Coming</a>
-    <a class="btn" href="/about.html">Our Story</a>
-    <a class="btn" href="/founder.html">A Note From the Founder</a>
-  </div>
-
-  <h2>Around the site</h2>
-
-  <ul class="arrows">
-    <li><a href="/about.html">About</a> &mdash; who we are and the three chapters so far.</li>
-    <li><a href="/founder.html">Founder's Note</a> &mdash; where the company actually stands.</li>
-    <li><a href="/next.html">Coming Soon</a> &mdash; the computer shop, SoboAI 2.0, and SoboHost.site.</li>
-    <li><a href="/archive.html">Past Products</a> &mdash; everything we have retired.</li>
-    <li><a href="/status.html">Status</a> &mdash; what is up and what is not.</li>
-    <li><a href="/apology.html">Apology</a> &mdash; about LiveLeak.site, owed twice over.</li>
-  </ul>
-</div>
-
-<div id="sidebar">
-  <div class="side">
-    <h4>Service Status</h4>
-    <div class="in">
-      <div class="row"><span>SoboVids.com</span><span class="off">Offline</span></div>
-      <div class="row"><span>LiveLeak.site</span><span class="off">Offline</span></div>
-      <div class="row"><span>SoboAI</span><span class="off">Retired</span></div>
-      <div class="row"><span>SoboHost.site</span><span>Soon</span></div>
-      <div class="row"><span>Servers</span><span class="on">Online</span></div>
-      <div class="row"><span>Staff</span><span>1</span></div>
-      <div class="stamp">Last checked: August 2026</div>
-    </div>
-  </div>
-  <div class="side">
-    <h4>Notice</h4>
-    <div class="in">
-      <p>SoboVids.com is discontinued. It is not accepting uploads,
-      registrations, or support requests.</p>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<!-- footer -->
-<div id="footer">
-  <div class="row1">
-    <a href="/about.html">About</a>
-    <a href="/founder.html">Founder's Note</a>
-    <a href="/next.html">Coming Soon</a>
-    <a href="/archive.html">Past Products</a>
-    <a href="/status.html">Status</a>
-    <a href="/apology.html">Apology</a>
-  </div>
-  <div class="row2">
-    Sobolak Technologies &middot; 2026<br>
-    Michigan, United States &middot; Page last updated August 2026 &middot; Best viewed with a keyboard and some patience.
-  </div>
-</div>
-
-</div>
+<button class="sound" id="sound" type="button" aria-pressed="false"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="soundLabel">SOUND OFF</span></button>
+<div class="grain" aria-hidden="true"></div>
 
 <script>
-// The old site was one long page. Links from elsewhere still arrive with
-// hashes like #apology, so send those on to the page they live on now.
-(function () {
-  var moved = {
-    '#about':       '/about.html',
-    '#apology':     '/apology.html',
-    '#coming-soon': '/next.html',
-    '#history':     '/archive.html',
-    '#status':      '/status.html'
-  };
-  var target = moved[window.location.hash];
-  if (target) window.location.replace(target);
+(() => {
+  'use strict';
+
+  // The moment Sobo can speak again: Saturday, October 24 2026, 12:00 AM Pacific
+  // (Washington is on PDT, UTC-7, until Nov 1) = 07:00 UTC. Same instant for every viewer.
+  const RETURN_AT = Date.UTC(2026, 9, 24, 7, 0, 0);
+
+  // ?test=15 counts down 15 seconds from page load so the ending can be previewed.
+  const qs = new URLSearchParams(location.search);
+  const TEST = qs.has('test');
+  const testSecs = parseFloat(qs.get('test'));
+  const TARGET = TEST ? Date.now() + (Number.isFinite(testSecs) ? testSecs : 12) * 1000 : RETURN_AT;
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s) => document.querySelector(s);
+  const body = document.body;
+
+  // Correction for a device clock that is badly off, measured against the server's Date header.
+  let offset = 0;
+  const now = () => Date.now() + offset;
+
+  /* ---------- scene ---------- */
+
+  let builtPortrait = null;
+  function buildWindows() {
+    // Portrait phones get two tiers of narrower windows instead of one wide row blown up.
+    const portrait = innerHeight > innerWidth * 1.1;
+    if (portrait === builtPortrait) return;
+    builtPortrait = portrait;
+    const L = portrait
+      ? { W: 900, H: 1600, n: 5, w: 118, gap: 48, rows: [[60, 770], [850, 1560]] }
+      : { W: 1600, H: 900, n: 8, w: 128, gap: 72, rows: [[70, 860]] };
+    const { W, H, n, w, gap } = L;
+    const x0 = (W - (n * w + (n - 1) * gap)) / 2;
+    const level = [0.95, 1, 0.82, 0.55, 0.7, 0.45, 0.62, 0.38];
+    const ah = w * 0.866; // equilateral pointed arch
+    let glass = '', lead = '';
+    L.rows.forEach(([top, bottom], row) => {
+    for (let i = 0; i < n; i++) {
+      const x = x0 + i * (w + gap), cx = x + w / 2;
+      const d = `M${x} ${top + ah}V${bottom}H${x + w}V${top + ah}A${w} ${w} 0 0 0 ${cx} ${top}A${w} ${w} 0 0 0 ${x} ${top + ah}Z`;
+      glass += `<path d="${d}" fill="url(#glass)" opacity="${(level[(i + row * 3) % level.length] * (row ? 0.75 : 1)).toFixed(2)}"/>`;
+      lead += `<path d="${d}" stroke-width="11"/>`;
+      lead += `<path d="M${cx} ${top + ah * 0.82}V${bottom}" stroke-width="7"/>`;
+      lead += `<circle cx="${cx}" cy="${top + ah * 0.6}" r="${w * 0.19}" stroke-width="6"/>`;
+      for (let y = top + ah + 56, k = 0; y < bottom - 24; y += 62, k++) {
+        lead += `<path d="M${x} ${y}H${x + w}" stroke-width="${k % 3 === 2 ? 10 : 4}"/>`;
+      }
+    }
+    });
+    $('#windows').setAttribute('viewBox', `0 0 ${W} ${H}`);
+    $('#windows').innerHTML =
+      `<defs>
+        <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d4ffdd"/><stop offset=".3" stop-color="#6ee896"/>
+          <stop offset=".75" stop-color="#1f7a3e"/><stop offset="1" stop-color="#0b2e17"/>
+        </linearGradient>
+        <radialGradient id="lit" cx=".3" cy=".16" r=".9">
+          <stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#888"/><stop offset="1" stop-color="#151515"/>
+        </radialGradient>
+        <mask id="litMask"><rect width="${W}" height="${H}" fill="url(#lit)"/></mask>
+        <filter id="bloom" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="20"/></filter>
+      </defs>
+      <rect width="${W}" height="${H}" fill="#010302"/>
+      <g mask="url(#litMask)">
+        <g filter="url(#bloom)" opacity=".85">${glass}</g>
+        ${glass}
+        <g stroke="#020604" fill="none">${lead}</g>
+      </g>`;
+  }
+
+  function buildDepth() {
+    // Stacked copies behind the face give the emblem a solid, extruded body.
+    let s = '';
+    for (let i = 16; i >= 1; i--) s += `<use href="#S" transform="translate(${(i * 1.25).toFixed(2)} ${(i * 1.7).toFixed(2)})"/>`;
+    $('#depth').innerHTML = s;
+  }
+
+  let motesOn = true;
+  function startMotes() {
+    if (reduce) return;
+    const c = $('#motes'), x = c.getContext('2d');
+    if (!x) return;
+    let W = 0, H = 0, dpr = 1;
+    const size = () => {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = c.width = Math.round(c.clientWidth * dpr);
+      H = c.height = Math.round(c.clientHeight * dpr);
+    };
+    size();
+    addEventListener('resize', size);
+    const P = Array.from({ length: innerWidth < 600 ? 40 : 80 }, () => ({
+      x: Math.random(), y: Math.random(), r: Math.random() * 1.5 + 0.4,
+      vx: (Math.random() - 0.35) * 0.000045, vy: (Math.random() - 0.65) * 0.00004,
+      a: Math.random() * 0.45 + 0.12, ph: Math.random() * 6.283
+    }));
+    let last = performance.now();
+    const frame = (t) => {
+      if (!motesOn) { x.clearRect(0, 0, W, H); return; }
+      const dt = Math.min(64, t - last); last = t;
+      x.clearRect(0, 0, W, H);
+      x.fillStyle = '#c8ffd6';
+      for (const p of P) {
+        p.x += p.vx * dt; p.y += p.vy * dt; p.ph += dt * 0.0012;
+        if (p.x < -0.05) p.x = 1.05; else if (p.x > 1.05) p.x = -0.05;
+        if (p.y < -0.05) p.y = 1.05; else if (p.y > 1.05) p.y = -0.05;
+        x.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.ph));
+        x.beginPath(); x.arc(p.x * W, p.y * H, p.r * dpr, 0, 6.283); x.fill();
+      }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
+
+  function parallax() {
+    if (reduce || !matchMedia('(pointer: fine)').matches) return;
+    const scene = $('#scene');
+    let raf = 0, px = 0, py = 0;
+    addEventListener('pointermove', (e) => {
+      px = (e.clientX / innerWidth) * 2 - 1; py = (e.clientY / innerHeight) * 2 - 1;
+      if (!raf) raf = requestAnimationFrame(() => {
+        raf = 0;
+        scene.style.setProperty('--px', px.toFixed(3));
+        scene.style.setProperty('--py', py.toFixed(3));
+      });
+    });
+  }
+
+  /* ---------- sound (off until the viewer turns it on) ---------- */
+
+  const Sound = (() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    let ctx = null, out = null, noiseBuf = null, drone = null, enabled = false;
+    function init() {
+      if (!AC) return false;
+      if (!ctx) {
+        ctx = new AC();
+        const comp = ctx.createDynamicsCompressor();
+        out = ctx.createGain(); out.gain.value = 0.8;
+        out.connect(comp); comp.connect(ctx.destination);
+        noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+        const ch = noiseBuf.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
+      }
+      if (ctx.state === 'suspended') ctx.resume();
+      return true;
+    }
+    function startDrone() {
+      if (drone) return;
+      const t = ctx.currentTime, g = ctx.createGain(), lp = ctx.createBiquadFilter();
+      const a = ctx.createOscillator(), b = ctx.createOscillator();
+      lp.type = 'lowpass'; lp.frequency.value = 170;
+      a.type = b.type = 'sawtooth'; a.frequency.value = 41.2; b.frequency.value = 41.55;
+      a.connect(lp); b.connect(lp); lp.connect(g); g.connect(out);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.07, t + 2.5);
+      a.start(t); b.start(t);
+      drone = { g, a, b };
+    }
+    function stopDrone(secs) {
+      if (!drone) return;
+      const { g, a, b } = drone, t = ctx.currentTime;
+      g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + secs);
+      a.stop(t + secs + 0.1); b.stop(t + secs + 0.1);
+      drone = null;
+    }
+    function hit(from, to, dur, vol) {
+      const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(from, t); o.frequency.exponentialRampToValueAtTime(to, t + dur);
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + dur + 0.05);
+    }
+    function rumble(dur, vol, freq) {
+      const t = ctx.currentTime, s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      s.buffer = noiseBuf; s.loop = true;
+      f.type = 'lowpass'; f.frequency.setValueAtTime(freq, t); f.frequency.exponentialRampToValueAtTime(50, t + dur);
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      s.connect(f); f.connect(g); g.connect(out); s.start(t); s.stop(t + dur + 0.05);
+    }
+    return {
+      toggle(over) {
+        if (enabled) { enabled = false; if (ctx) stopDrone(0.4); return false; }
+        if (!init()) return false;
+        enabled = true;
+        if (!over) startDrone();
+        return true;
+      },
+      tick() { if (enabled) hit(92, 46, 0.4, 0.55); },
+      boom() { if (enabled) { hit(68, 26, 2.8, 0.95); rumble(2.4, 0.55, 1400); } },
+      darken() { if (enabled) stopDrone(3); },
+      swell() {
+        if (!enabled) return;
+        const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+        o.type = 'sawtooth'; o.frequency.setValueAtTime(55, t); o.frequency.exponentialRampToValueAtTime(110, t + 3.5);
+        lp.type = 'lowpass'; lp.frequency.setValueAtTime(120, t); lp.frequency.exponentialRampToValueAtTime(900, t + 3.5);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 3); g.gain.exponentialRampToValueAtTime(0.0001, t + 6);
+        o.connect(lp); lp.connect(g); g.connect(out); o.start(t); o.stop(t + 6.1);
+      }
+    };
+  })();
+
+  /* ---------- countdown ---------- */
+
+  const UNITS = ['months', 'days', 'hours', 'minutes', 'seconds'].map((k) => ({
+    k, els: Array.from(document.querySelectorAll(`[data-unit="${k}"] .d`))
+  }));
+  const GLYPHS = '0123456789#%&@$/\\';
+
+  // Whole seconds are rounded up, so the display reads all zeros exactly at the target.
+  function breakdown(ms) {
+    let s = Math.max(0, Math.ceil(ms / 1000));
+    let months = 0;
+    if (s >= 28 * 86400) {
+      const from = TARGET - s * 1000;
+      const plus = (m) => { const d = new Date(from); d.setUTCMonth(d.getUTCMonth() + m); return d.getTime(); };
+      while (months < 99 && plus(months + 1) <= TARGET) months++;
+      s = Math.round((TARGET - plus(months)) / 1000);
+    }
+    const days = Math.floor(s / 86400); s -= days * 86400;
+    const hours = Math.floor(s / 3600); s -= hours * 3600;
+    const minutes = Math.floor(s / 60);
+    return { months, days, hours, minutes, seconds: s - minutes * 60 };
+  }
+
+  function setDigit(el, ch, animate) {
+    if (el.dataset.v === ch) return;
+    el.dataset.v = ch;
+    clearTimeout(el._a); clearTimeout(el._b); clearTimeout(el._c);
+    if (!animate || reduce || document.hidden) { el.classList.remove('glitch'); el.textContent = ch; return; }
+    const rand = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
+    el.classList.remove('glitch'); void el.offsetWidth; el.classList.add('glitch');
+    el.textContent = rand();
+    el._a = setTimeout(() => { el.textContent = rand(); }, 60);
+    el._b = setTimeout(() => { el.textContent = ch; }, 130);
+    el._c = setTimeout(() => { el.classList.remove('glitch'); }, 360);
+  }
+
+  function render(p, animate) {
+    for (const u of UNITS) {
+      const str = String(Math.min(99, p[u.k])).padStart(2, '0');
+      u.els.forEach((el, i) => setDigit(el, str[i], animate));
+    }
+  }
+
+  const pad = (n) => String(n).padStart(2, '0');
+  function describe(total) {
+    const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60), s = total % 60;
+    document.title = `${h > 0 ? h + ':' : ''}${pad(m)}:${pad(s)} · SOBO IS COMING`;
+    if (s === 0 || total < 60 || !describe.done) {
+      describe.done = true;
+      const parts = [];
+      if (h) parts.push(`${h} hour${h === 1 ? '' : 's'}`);
+      if (m) parts.push(`${m} minute${m === 1 ? '' : 's'}`);
+      if (!h && (s || !m)) parts.push(`${s} second${s === 1 ? '' : 's'}`);
+      $('#clock').setAttribute('aria-label', `${parts.join(', ')} until Sobo can speak again`);
+    }
+  }
+
+  function flash(big) {
+    const f = $('#flash');
+    f.classList.remove('go', 'big'); void f.offsetWidth;
+    f.classList.add(big ? 'big' : 'go');
+  }
+
+  function kick() {
+    const c = $('#countdown');
+    c.classList.remove('kick'); void c.offsetWidth; c.classList.add('kick');
+  }
+
+  function onSecond(total) {
+    if (total <= 10) {
+      body.classList.add('final');
+      if (!reduce) { flash(false); kick(); }
+      Sound.tick();
+    }
+    if (total <= 15 * 60) keepAwake();
+  }
+
+  let timer = 0, started = false, revealed = false, pendingReveal = false, lastTotal = -1;
+
+  function tick() {
+    clearTimeout(timer);
+    if (revealed) return;
+    const ms = TARGET - now();
+    if (ms <= 0) {
+      render(breakdown(0), started);
+      zero(started);
+      return;
+    }
+    const total = Math.ceil(ms / 1000);
+    render(breakdown(ms), started);
+    if (total !== lastTotal) {
+      describe(total);
+      if (started) onSecond(total);
+      lastTotal = total;
+    }
+    started = true;
+    // Wake right after the next whole-second boundary of the remaining time.
+    timer = setTimeout(tick, (ms % 1000 || 1000) + 4);
+  }
+
+  function zero(live) {
+    if (revealed) return;
+    if (live && document.hidden) { pendingReveal = true; return; } // play it when they look again
+    revealed = true; pendingReveal = false;
+    document.title = 'HE’S BACK';
+    $('#clock').setAttribute('aria-label', 'Countdown finished');
+    if (!live) { body.classList.add('after', 'dark'); showReturn(true); return; }
+    body.classList.add('final', 'zero');
+    flash(true);
+    Sound.boom();
+    if (!reduce) setTimeout(() => body.classList.add('flicker'), 450);
+    setTimeout(() => { body.classList.add('dark'); Sound.darken(); }, reduce ? 700 : 1500);
+    setTimeout(() => { motesOn = false; }, 4500);
+    setTimeout(() => showReturn(false), reduce ? 4000 : 1500 + 2800 + 1700);
+  }
+
+  function showReturn(instant) {
+    const r = $('#return');
+    body.classList.add('dark', 'back');
+    if (instant) { r.classList.add('instant'); motesOn = false; }
+    r.hidden = false;
+    void r.offsetWidth;
+    r.classList.add('show');
+    Sound.swell();
+    setTimeout(releaseWake, 60000);
+  }
+
+  /* ---------- extras ---------- */
+
+  function whenLine() {
+    const el = $('#when');
+    try {
+      const time = { hour: 'numeric', minute: '2-digit' };
+      const fmt = (o) => new Intl.DateTimeFormat('en-US', o).format(TARGET);
+      if (TEST) {
+        el.innerHTML = `<span>Test mode</span><span class="sep">/</span><span>Ends ${fmt({ ...time, second: '2-digit', timeZoneName: 'short' })}</span>`;
+        return;
+      }
+      const PT = 'America/Los_Angeles';
+      const ptDay = fmt({ weekday: 'long', timeZone: PT });
+      const ptTime = fmt({ ...time, timeZone: PT });
+      const myDay = fmt({ weekday: 'long' });
+      const myTime = fmt({ ...time, timeZoneName: 'short' });
+      const same = fmt({ ...time, timeZone: PT, timeZoneName: 'short' }) === myTime && myDay === ptDay;
+      let html = `<span>${ptDay} ${ptTime} Pacific</span>`;
+      if (same) html += `<span class="sep">/</span><span>Your time</span>`;
+      else html += `<span class="sep">/</span><span>${myDay === ptDay ? '' : myDay + ' '}${myTime} your time</span>`;
+      el.innerHTML = html;
+    } catch (e) { /* keep the static Pacific line */ }
+  }
+
+  async function syncClock() {
+    if (TEST || !/^https?:$/.test(location.protocol)) return;
+    try {
+      const t0 = Date.now();
+      const res = await fetch(`${location.pathname}?clock=${t0}`, { method: 'HEAD', cache: 'no-store' });
+      const t1 = Date.now();
+      const date = Date.parse(res.headers.get('date') || '');
+      if (!Number.isFinite(date)) return;
+      const skew = date + 500 - (t0 + t1) / 2; // Date has 1 s resolution; Fastly stamps it at delivery, so no Age
+      if (Math.abs(skew) > 5000 && Math.abs(skew) < 30 * 86400e3) { offset = skew; tick(); }
+    } catch (e) { /* trust the device clock */ }
+  }
+
+  let wake = null, wakeFailed = false;
+  async function keepAwake() {
+    if (wake || wakeFailed || revealed || document.hidden || !('wakeLock' in navigator)) return;
+    try {
+      wake = await navigator.wakeLock.request('screen');
+      wake.addEventListener('release', () => { wake = null; });
+    } catch (e) { wakeFailed = true; }
+  }
+  function releaseWake() { if (wake) { wake.release().catch(() => {}); wake = null; } }
+
+  const soundBtn = $('#sound');
+  soundBtn.addEventListener('click', () => {
+    const on = Sound.toggle(revealed);
+    soundBtn.setAttribute('aria-pressed', String(on));
+    $('#soundLabel').textContent = on ? 'SOUND ON' : 'SOUND OFF';
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+    wakeFailed = false;
+    if (pendingReveal) { zero(true); return; }
+    tick();
+  });
+
+  buildWindows();
+  addEventListener('resize', () => { clearTimeout(buildWindows.t); buildWindows.t = setTimeout(buildWindows, 200); });
+  buildDepth();
+  whenLine();
+  tick();
+  if (!revealed) { startMotes(); parallax(); syncClock(); }
+  else body.querySelector('.sound').hidden = true;
 })();
 </script>
-
 </body>
 </html>
