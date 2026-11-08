@@ -34,23 +34,30 @@ pip install fonttools
 python3 logo/generate.py
 ```
 
-## Y2K set (`logo/y2k`)
+## Final logo (`logo/final`)
 
-Second round, modelled on 1999 to 2002 logo language: wide Eurostile-style caps,
-chrome bevels, lime and silver, racing-sticker badges, orbit swooshes, blobby rounded type.
+**Chosen:** the Y2K chrome wordmark with the lime orbit ring. SOBOLAK in Michroma with a
+horizon-line chrome fill, dark outline and pale inline, a lime chrome ring orbiting the first O
+(back half behind the letters, front half in front), TECHNOLOGIES letter-spaced in lime below.
 
-- **Y1 — Chrome wordmark.** SOBOLAK in Michroma (Eurostile Extended feel) with a chrome fill,
-  dark outline, and a lime orbit ring swooping through the first O.
-- **Y2 — Sticker.** Skewed racing-sticker badge with triple outline, heavy italic SOBOLAK,
-  recycle-S emblem in a chrome disc, TECHNOLOGIES on a navy bar.
-- **Y3 — Circuit.** SOBOLAK built from PCB traces on a grid, PS2-logo style, with solder pads
-  at the open trace ends. Blue and lime versions. Ties to the custom recycled-chipset motherboard.
-- **Y4 — Chrome emblem.** A 3D extruded S with a chrome face and lime extrusion inside a tilted chrome
-  oval ring, SOBOLAK in wide caps below. Skechers / Xbox lane.
-- **Y5 — Bar.** Heavy italic SOBOLAK, black with white inline, on a slanted black bar with a white
-  border. Toonami lane. TECHNOLOGIES right-aligned under a lime rule.
+Files:
 
-Round 1 blob and lime-chrome concepts were dropped. Y1 and Y2 are the current contenders.
+- `sobolak-logo-dark` — primary, on navy `#0d1620`. Use this one by default.
+- `sobolak-logo-dark-transparent` — same artwork, no background, for dark surfaces.
+- `sobolak-logo-light` / `-light-transparent` — for white or pale surfaces.
+- `sobolak-logo-onecolour-white` / `-black` — flat single colour for embossing, print, laser etching.
+- `sobolak-icon-*` — the orbit O on its own, as app icon and favicon. Same four colour modes.
+- `favicon/icon-{16..512}.png` — rendered from the dark icon.
+
+Each SVG has a matching 2x PNG. Regenerate with `python3 logo/generate_final.py`.
+
+Colours: navy `#0d1620`, lime `#d9ff6a` (text) and `#c6f14a` to `#3a7a0c` (ring),
+chrome `#ffffff` / `#cfd6de` / `#6b7684` / `#e6ebf0`, outline `#000` on dark or `#0b1b3c` on light.
+
+## Y2K set (`logo/y2k`) — earlier rounds
+
+Y1 chrome wordmark (became the final) and Y2 racing sticker are kept here.
+Rounds with the blob, lime chrome, circuit, chrome emblem and bar concepts were dropped.
 
 Extra faces: Michroma, Audiowide, Comfortaa Bold, Exo 2 Black Italic, Syncopate Bold (all SIL OFL).
 Regenerate with `python3 logo/generate_y2k.py` for Y1/Y2 and `python3 logo/generate_round3.py` for Y3 to Y5.
