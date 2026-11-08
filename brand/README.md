@@ -33,3 +33,19 @@ Each SVG has a matching 2x transparent PNG. `contact-sheet.png` shows everything
 pip install fonttools
 python3 logo/generate.py
 ```
+
+## Y2K set (`logo/y2k`)
+
+Second round, modelled on 1999 to 2002 logo language: wide Eurostile-style caps,
+chrome bevels, lime and silver, racing-sticker badges, orbit swooshes, blobby rounded type.
+
+- **Y1 — Chrome wordmark.** SOBOLAK in Michroma (Eurostile Extended feel) with a chrome fill,
+  dark outline, and a lime orbit ring swooping through the first O.
+- **Y2 — Sticker.** Skewed racing-sticker badge with triple outline, heavy italic SOBOLAK,
+  recycle-S emblem in a chrome disc, TECHNOLOGIES on a navy bar.
+- **Y3 — Blob.** The recycle-S as a thick rounded single-colour glyph, with lowercase rounded type.
+  One colour, prints anywhere.
+- **Y4 — Lime chrome.** The recycle-S in bevelled lime chrome with SOBOLAK in outlined lime extended caps.
+
+Extra faces: Michroma, Audiowide, Comfortaa Bold, Exo 2 Black Italic, Syncopate Bold (all SIL OFL).
+Regenerate with `python3 logo/generate_y2k.py` (it imports `generate.py`).
