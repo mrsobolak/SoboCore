@@ -43,9 +43,14 @@ chrome bevels, lime and silver, racing-sticker badges, orbit swooshes, blobby ro
   dark outline, and a lime orbit ring swooping through the first O.
 - **Y2 — Sticker.** Skewed racing-sticker badge with triple outline, heavy italic SOBOLAK,
   recycle-S emblem in a chrome disc, TECHNOLOGIES on a navy bar.
-- **Y3 — Blob.** The recycle-S as a thick rounded single-colour glyph, with lowercase rounded type.
-  One colour, prints anywhere.
-- **Y4 — Lime chrome.** The recycle-S in bevelled lime chrome with SOBOLAK in outlined lime extended caps.
+- **Y3 — Circuit.** SOBOLAK built from PCB traces on a grid, PS2-logo style, with solder pads
+  at the open trace ends. Blue and lime versions. Ties to the custom recycled-chipset motherboard.
+- **Y4 — Chrome emblem.** A 3D extruded S with a chrome face and lime extrusion inside a tilted chrome
+  oval ring, SOBOLAK in wide caps below. Skechers / Xbox lane.
+- **Y5 — Bar.** Heavy italic SOBOLAK, black with white inline, on a slanted black bar with a white
+  border. Toonami lane. TECHNOLOGIES right-aligned under a lime rule.
+
+Round 1 blob and lime-chrome concepts were dropped. Y1 and Y2 are the current contenders.
 
 Extra faces: Michroma, Audiowide, Comfortaa Bold, Exo 2 Black Italic, Syncopate Bold (all SIL OFL).
-Regenerate with `python3 logo/generate_y2k.py` (it imports `generate.py`).
+Regenerate with `python3 logo/generate_y2k.py` for Y1/Y2 and `python3 logo/generate_round3.py` for Y3 to Y5.
