@@ -1,297 +1,214 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sobolak Technologies</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="description" content="Sobolak Technologies, Michigan. A recycled handheld desktop built on a custom motherboard that rescues chipsets from dead laptops. Coming soon.">
-<meta property="og:title" content="Sobolak Technologies">
-<meta property="og:description" content="A recycled handheld desktop built on rescued chipsets. Coming soon.">
-<meta property="og:image" content="https://sobolak.org/assets/icon-512.png">
-<meta name="theme-color" content="#0a246a">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
+<meta name="keywords" content="Sobolak Technologies, recycled computers, handheld desktop, chipset recycling, Michigan, e-waste, custom motherboard">
+<meta name="author" content="Sobolak Technologies">
+<meta name="viewport" content="width=800">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css" type="text/css">
+<script language="JavaScript" type="text/javascript">
+<!--
+// rollovers for the task pane
+var navImgs = new Array('nowplaying','guide','copycd','library','radio','device','skins');
+var pre = new Array();
+for (var i = 0; i < navImgs.length; i++) {
+  pre[i] = new Image(110, 36);
+  pre[i].src = 'images/nav_' + navImgs[i] + '_over.gif';
+}
+function swap(name, state) {
+  if (document.images && document.images[name] && document.images[name].alt != 'current') {
+    document.images[name].src = 'images/nav_' + name + '_' + state + '.gif';
+  }
+}
+function trOver(name) { if (document.images) document.images[name].src = 'images/' + name + '_over.gif'; }
+function trOut(name)  { if (document.images) document.images[name].src = 'images/' + name + '.gif'; }
+// the little clock in the status line
+var t0 = new Date();
+function tick() {
+  var s = Math.floor((new Date() - t0) / 1000);
+  var m = Math.floor(s / 60); s = s % 60;
+  var txt = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  if (document.getElementById) document.getElementById('clock').innerHTML = txt;
+  setTimeout('tick()', 1000);
+}
+//-->
+</script>
 </head>
-<body data-skin="luna">
+<body bgcolor="#2f5f9e" background="images/desktop_bg.gif" text="#ffffff" link="#39e639" vlink="#39e639" alink="#ffffff" onLoad="tick()" topmargin="24" marginheight="24">
 
-<div class="desktop">
-<div class="wmp" id="wmp" role="application" aria-label="Sobolak Technologies">
+<!-- ================= the player window ================= -->
+<table width="780" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#2a52a8" style="border: 1px solid #1d3f8a;">
 
-  <!-- ============ title bar ============ -->
-  <div class="titlebar">
-    <img class="titlebar-icon" src="assets/icon.svg" alt="" width="16" height="16">
-    <span class="titlebar-text">Sobolak Technologies</span>
-    <span class="titlebar-buttons">
-      <button class="tb tb-min" type="button" aria-label="Minimize" title="Minimize"><span></span></button>
-      <button class="tb tb-max" type="button" aria-label="Maximize" title="Maximize"><span></span></button>
-      <button class="tb tb-close" type="button" aria-label="Close" title="Close"><span></span></button>
-    </span>
-  </div>
+<!-- title bar -->
+<tr>
+  <td height="30" background="images/titlebar_bg.gif">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="8"><img src="images/spacer.gif" width="8" height="1" alt=""></td>
+      <td width="16"><img src="images/icon16.gif" width="16" height="16" alt=""></td>
+      <td width="6"><img src="images/spacer.gif" width="6" height="1" alt=""></td>
+      <td class="wintitle">Sobolak Technologies</td>
+      <td align="right" nowrap>
+        <a href="javascript:void(0)" onClick="alert('Minimize? This is a web page. Nice try.')"><img src="images/tb_min.gif" width="21" height="21" border="0" alt="Minimize"></a><img src="images/spacer.gif" width="2" height="1" alt=""><a href="javascript:void(0)" onClick="alert('It is already as big as it gets. 780 pixels.')"><img src="images/tb_max.gif" width="21" height="21" border="0" alt="Maximize"></a><img src="images/spacer.gif" width="2" height="1" alt=""><a href="javascript:window.close()"><img src="images/tb_close.gif" width="21" height="21" border="0" alt="Close"></a>
+      </td>
+      <td width="5"><img src="images/spacer.gif" width="5" height="1" alt=""></td>
+    </tr>
+    </table>
+  </td>
+</tr>
 
-  <!-- ============ menu bar ============ -->
-  <div class="menubar" role="menubar">
-    <div class="menu" role="none">
-      <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"><u>F</u>ile</button>
-      <div class="menu-drop" role="menu">
-        <a href="#now-playing" role="menuitem">Open Sobolak Technologies</a>
-        <a href="#library" role="menuitem">Products…</a>
-        <hr>
-        <a href="https://github.com/mrsobolak" role="menuitem" rel="noopener">GitHub…</a>
-        <hr>
-        <button type="button" role="menuitem" data-action="close">Exit</button>
-      </div>
-    </div>
-    <div class="menu" role="none">
-      <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"><u>V</u>iew</button>
-      <div class="menu-drop" role="menu">
-        <a href="#now-playing" role="menuitem">Now Playing</a>
-        <a href="#guide" role="menuitem">Media Guide</a>
-        <a href="#library" role="menuitem">Media Library</a>
-        <a href="#status" role="menuitem">Radio Tuner</a>
-        <hr>
-        <button type="button" role="menuitem" data-action="toggle-playlist">Show Playlist</button>
-        <button type="button" role="menuitem" data-action="toggle-taskbar">Show Taskbar</button>
-      </div>
-    </div>
-    <div class="menu" role="none">
-      <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"><u>P</u>lay</button>
-      <div class="menu-drop" role="menu">
-        <button type="button" role="menuitem" data-action="playpause">Play/Pause</button>
-        <button type="button" role="menuitem" data-action="stop">Stop</button>
-        <hr>
-        <button type="button" role="menuitem" data-action="prev">Previous</button>
-        <button type="button" role="menuitem" data-action="next">Next</button>
-        <hr>
-        <button type="button" role="menuitem" data-action="mute">Mute</button>
-      </div>
-    </div>
-    <div class="menu" role="none">
-      <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"><u>T</u>ools</button>
-      <div class="menu-drop" role="menu">
-        <a href="#recycle" role="menuitem">Recycling Program…</a>
-        <a href="#skins" role="menuitem">Skin Chooser…</a>
-        <hr>
-        <a href="#contact" role="menuitem">Options…</a>
-      </div>
-    </div>
-    <div class="menu" role="none">
-      <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"><u>H</u>elp</button>
-      <div class="menu-drop" role="menu">
-        <a href="#guide" role="menuitem">About Sobolak Technologies</a>
-        <a href="#contact" role="menuitem">Contact</a>
-      </div>
-    </div>
-  </div>
+<!-- menu bar -->
+<tr>
+  <td height="22" background="images/menubar_bg.gif" class="menubar">
+    <img src="images/spacer.gif" width="6" height="1" alt=""><a href="index.html" class="menu"><u>F</u>ile</a><a href="about.html" class="menu"><u>V</u>iew</a><a href="products.html" class="menu"><u>P</u>lay</a><a href="recycle.html" class="menu"><u>T</u>ools</a><a href="contact.html" class="menu"><u>H</u>elp</a>
+  </td>
+</tr>
 
-  <!-- ============ body ============ -->
-  <div class="body">
+<!-- body: task pane | viewer | playlist -->
+<tr>
+  <td background="images/frame_bg.gif">
+    <table width="100%" border="0" cellpadding="0" cellspacing="6">
+    <tr>
+      <!-- task pane -->
+      <td width="110" valign="top">
+        <img src="images/spacer.gif" width="110" height="4" alt=""><br>
+        <img name="nowplaying" src="images/nav_nowplaying_on.gif" width="110" height="36" alt="current" title="Now Playing"><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="about.html" onMouseOver="swap('guide','over'); window.status='Media Guide'; return true;" onMouseOut="swap('guide','off'); window.status=''; return true;"><img name="guide" src="images/nav_guide_off.gif" width="110" height="36" border="0" alt="Media Guide"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="recycle.html" onMouseOver="swap('copycd','over'); window.status='Copy from CD'; return true;" onMouseOut="swap('copycd','off'); window.status=''; return true;"><img name="copycd" src="images/nav_copycd_off.gif" width="110" height="36" border="0" alt="Copy from CD"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="products.html" onMouseOver="swap('library','over'); window.status='Media Library'; return true;" onMouseOut="swap('library','off'); window.status=''; return true;"><img name="library" src="images/nav_library_off.gif" width="110" height="36" border="0" alt="Media Library"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="status.html" onMouseOver="swap('radio','over'); window.status='Radio Tuner'; return true;" onMouseOut="swap('radio','off'); window.status=''; return true;"><img name="radio" src="images/nav_radio_off.gif" width="110" height="36" border="0" alt="Radio Tuner"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="contact.html" onMouseOver="swap('device','over'); window.status='Copy to CD or Device'; return true;" onMouseOut="swap('device','off'); window.status=''; return true;"><img name="device" src="images/nav_device_off.gif" width="110" height="36" border="0" alt="Copy to CD or Device"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="skins.html" onMouseOver="swap('skins','over'); window.status='Skin Chooser'; return true;" onMouseOut="swap('skins','off'); window.status=''; return true;"><img name="skins" src="images/nav_skins_off.gif" width="110" height="36" border="0" alt="Skin Chooser"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <br><br><br><br><br>
+        <img src="images/pane_logo.gif" width="100" height="62" alt="Sobolak Technologies" style="margin-left: 5px;">
+      </td>
 
-    <!-- task pane -->
-    <nav class="taskpane" id="taskpane" aria-label="Sections">
-      <a class="task" href="#now-playing" data-section="now-playing">Now<br>Playing</a>
-      <a class="task" href="#guide" data-section="guide">Media<br>Guide</a>
-      <a class="task" href="#recycle" data-section="recycle">Copy<br>from CD</a>
-      <a class="task" href="#library" data-section="library">Media<br>Library</a>
-      <a class="task" href="#status" data-section="status">Radio<br>Tuner</a>
-      <a class="task" href="#contact" data-section="contact">Copy to CD<br>or Device</a>
-      <a class="task" href="#skins" data-section="skins">Skin<br>Chooser</a>
-      <div class="task-logo">
-        <img src="assets/icon.svg" alt="" width="34" height="34">
-        <span>Sobolak<br>Technologies</span>
-      </div>
-    </nav>
+      <!-- viewer -->
+      <td valign="top" bgcolor="#000000" style="border: 1px solid #1d3f8a;">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="right" style="padding: 4px 6px 0 0;"><a href="skins.html"><img src="images/vt_prev.gif" width="18" height="18" border="0" alt="Previous"></a> <a href="about.html"><img src="images/vt_next.gif" width="18" height="18" border="0" alt="Next"></a> <a href="#roadmap"><img src="images/vt_list.gif" width="18" height="18" border="0" alt="Roadmap"></a></td>
+        </tr>
+        <tr>
+          <td valign="top" style="padding: 0 14px 12px 14px;">
 
-    <!-- viewer -->
-    <main class="viewer" id="viewer">
-      <div class="viewer-tools">
-        <button type="button" class="vt" data-action="prev" aria-label="Previous section" title="Previous">‹</button>
-        <button type="button" class="vt" data-action="next" aria-label="Next section" title="Next">›</button>
-        <button type="button" class="vt vt-round" data-action="toggle-playlist" aria-label="Toggle playlist" title="Playlist">≡</button>
-      </div>
+            <span class="artist">Sobolak Technologies</span><br>
+            <span class="track">The Recycled Handheld Desktop (coming soon)</span><br>
+            <img src="images/spacer.gif" width="1" height="6" alt=""><br>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #1b2a4a;" bgcolor="#000000">
+            <tr><td align="center"><img src="images/vis.gif" width="420" height="230" alt="Sobolak Technologies"></td></tr>
+            </table>
+            <img src="images/spacer.gif" width="1" height="8" alt=""><br>
+            <table width="100%" border="0" cellpadding="10" cellspacing="0" bgcolor="#060f22" style="border: 1px solid #2c4a8a;">
+            <tr><td class="body">
+              A handheld desktop with a screen. Inside, a motherboard we design ourselves so that chipsets pulled from dead laptops can be used again.<br><br>
+              There is no 3D model yet. There is an idea we are serious about, a room of old hardware in Michigan, and one person working on it.
+            </td></tr>
+            </table>
+            <img src="images/spacer.gif" width="1" height="8" alt=""><br>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td class="visname" valign="bottom">Ambience: <b>Water</b></td>
+              <td align="right"><img src="images/sticker.gif" width="212" height="34" alt="Look into the e-waste"></td>
+            </tr>
+            </table>
 
-      <!-- ---------- Now Playing ---------- -->
-      <section class="screen" id="now-playing" data-title="Now Playing">
-        <div class="np-head">
-          <span class="np-artist">Sobolak Technologies</span>
-          <span class="np-title">The Recycled Handheld Desktop (coming soon)</span>
-        </div>
-        <div class="np-vis">
-          <canvas id="vis" aria-hidden="true"></canvas>
-          <img class="np-logo" src="assets/logo.svg" alt="Sobolak Technologies">
-          <div class="np-copy">
-            <p>A handheld desktop with a screen. Inside, a motherboard we design ourselves so that
-            chipsets pulled from dead laptops can be used again.</p>
-            <p>There is no 3D model yet. There is an idea we are serious about, a room of old
-            hardware in Michigan, and one person working on it.</p>
-          </div>
-        </div>
-        <div class="np-foot">
-          <span class="vis-ctl">
-            <button type="button" class="vc" data-action="vis-prev" aria-label="Previous visualization">◂</button>
-            <button type="button" class="vc" data-action="vis-next" aria-label="Next visualization">▸</button>
-            <span class="vis-name">Ambience: <b id="vis-name">Water</b></span>
-          </span>
-          <span class="np-sticker" aria-hidden="true">SOBOLAK<br><em>LOOK INTO THE E-WASTE</em></span>
-        </div>
-      </section>
-
-      <!-- ---------- Media Guide / About ---------- -->
-      <section class="screen page" id="guide" data-title="Media Guide" hidden>
-        <h1>About Sobolak Technologies</h1>
-        <p class="lead">An independent technology company in Michigan, United States. Founded 2024.
-        Privately held, no investors, one person on staff.</p>
-        <p>We have started over before. This time the work is hardware: computers built from parts
-        the rest of the industry has written off. Earlier projects are retired and not coming back,
-        and the pages about them have come down. This site is about what comes next.</p>
-        <h2>What we care about</h2>
-        <ul class="list">
-          <li><b>Own the hardware.</b> If it runs on someone else's machine, it is on loan.</li>
-          <li><b>Nothing is scrap until it fails a test.</b> A ten-year-old CPU still does what it did on day one.</li>
-          <li><b>Built to last.</b> Repairable, documented, and boring in the good way.</li>
-          <li><b>Say so.</b> If something is an idea, we call it an idea. No fake launch dates.</li>
-        </ul>
-        <table class="props">
-          <tr><th>Location</th><td>Michigan, United States</td></tr>
-          <tr><th>Founded</th><td>2024</td></tr>
-          <tr><th>Type</th><td>Independent, privately held</td></tr>
-          <tr><th>Investors</th><td>None</td></tr>
-          <tr><th>Staff</th><td>One, the founder</td></tr>
-          <tr><th>Current focus</th><td>The recycled handheld desktop and its motherboard</td></tr>
+          </td>
+        </tr>
         </table>
-      </section>
+      </td>
 
-      <!-- ---------- Copy from CD / Recycle ---------- -->
-      <section class="screen page" id="recycle" data-title="Copy from CD" hidden>
-        <h1>Chipset recycling</h1>
-        <p class="lead">Every dead laptop has a CPU, memory and a chipset that still work. The board
-        they are soldered to is what died. We are designing a board they can live on instead.</p>
-        <h2>How it is meant to work</h2>
-        <ol class="list">
-          <li>Old laptops come in. We pull the processor, memory and supporting chips and test them.</li>
-          <li>Working parts go onto the Sobolak motherboard, a design of ours that accepts several
-          generations of chipsets rather than one.</li>
-          <li>The board goes into the handheld desktop: a small box with a screen, a keyboard port,
-          and a desktop operating system. Not a phone. A computer you can hold.</li>
-          <li>The rest is recycled properly, not landfilled.</li>
-        </ol>
-        <h2>Status of the program</h2>
-        <p>Not open. We are not taking machines yet, and we will not ask anyone to ship hardware
-        to us until there is a board to put it on. When the program opens, it opens here first.</p>
-        <div class="xp-note">
-          <b>Note</b> This is a design-stage project. The motherboard is a schematic, not a product.
-        </div>
-      </section>
-
-      <!-- ---------- Media Library / Products ---------- -->
-      <section class="screen page" id="library" data-title="Media Library" hidden>
-        <h1>Media Library</h1>
-        <p class="lead">Everything we are working on, in one list. Nothing on this page can be
-        bought or pre-ordered yet.</p>
-        <table class="lib">
-          <thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Date</th></tr></thead>
-          <tbody>
-            <tr><td>Recycled Handheld Desktop</td><td>Hardware</td><td><span class="chip chip-soon">Coming soon</span></td><td>TBA</td></tr>
-            <tr><td>Sobolak Recycle Motherboard</td><td>Hardware</td><td><span class="chip chip-design">In design</span></td><td>TBA</td></tr>
-            <tr><td>Chipset Recycling Program</td><td>Service</td><td><span class="chip chip-design">Planned</span></td><td>TBA</td></tr>
-            <tr><td>Refurbished Computers</td><td>Store</td><td><span class="chip chip-design">Planned</span></td><td>TBA</td></tr>
-          </tbody>
+      <!-- playlist -->
+      <td width="188" valign="top">
+        <a name="roadmap"></a>
+        <img src="images/pl_header.gif" width="188" height="20" alt="Roadmap"><br>
+        <img src="images/spacer.gif" width="1" height="4" alt=""><br>
+        <table width="188" border="0" cellpadding="6" cellspacing="0" bgcolor="#000000" style="border: 1px solid #1d3f8a;" height="478">
+        <tr>
+          <td valign="top" class="playlist">
+            <span class="plhead">&#9662; The Recycled Handheld Desktop</span><br>
+            <table border="0" cellpadding="1" cellspacing="0" width="100%" style="margin-left: 8px;">
+              <tr bgcolor="#0e2e63"><td class="plcur" nowrap>&#9654; The idea</td><td class="plcur" align="right">now</td></tr>
+              <tr><td class="playlist" nowrap><a href="recycle.html" class="pl">&bull; Chipset recycling</a></td><td class="playlist" align="right">plan</td></tr>
+              <tr><td class="playlist" nowrap><a href="products.html" class="pl">&bull; Motherboard schematic</a></td><td class="playlist" align="right">design</td></tr>
+              <tr><td class="playlist" nowrap><a href="products.html" class="pl">&bull; 3D model</a></td><td class="playlist" align="right">soon</td></tr>
+              <tr><td class="playlist" nowrap><a href="status.html" class="pl">&bull; Prototype</a></td><td class="playlist" align="right">later</td></tr>
+              <tr><td class="playlist" nowrap><a href="contact.html" class="pl">&bull; First units</a></td><td class="playlist" align="right">TBA</td></tr>
+            </table>
+          </td>
+        </tr>
         </table>
-        <p class="small">Retired products are not listed. They are retired.</p>
-      </section>
+        <div align="right" class="playlist" style="padding-top: 4px;">Total Time: TBA</div>
+      </td>
+    </tr>
+    </table>
+  </td>
+</tr>
 
-      <!-- ---------- Radio Tuner / Status ---------- -->
-      <section class="screen page" id="status" data-title="Radio Tuner" hidden>
-        <h1>Status</h1>
-        <p class="lead">The whole board. Short on purpose.</p>
-        <table class="lib">
-          <thead><tr><th>Station</th><th>Signal</th><th>Note</th></tr></thead>
-          <tbody>
-            <tr><td>This website</td><td><span class="led on"></span> Online</td><td>Static files. If you can read this, it works.</td></tr>
-            <tr><td>Servers</td><td><span class="led on"></span> Online</td><td>Our own hardware in Michigan.</td></tr>
-            <tr><td>Handheld desktop</td><td><span class="led amber"></span> Design</td><td>Idea stage. No 3D model yet.</td></tr>
-            <tr><td>Recycle motherboard</td><td><span class="led amber"></span> Design</td><td>Schematic stage.</td></tr>
-            <tr><td>Recycling intake</td><td><span class="led off"></span> Closed</td><td>Opens when there is a board to put parts on.</td></tr>
-            <tr><td>Staff</td><td>1</td><td>The founder. Replies are slow. They do come.</td></tr>
-          </tbody>
+<!-- status line -->
+<tr>
+  <td height="20" bgcolor="#000000" style="border-top: 1px solid #1d3f8a;">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="status" style="padding-left: 14px;"><img src="images/play_green.gif" width="10" height="10" alt="">&nbsp; Album: Sobolak Technologies &middot; Michigan &middot; Est. 2024</td>
+      <td class="status" align="right" style="padding-right: 12px;"><span id="clock">00:00</span></td>
+    </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- transport -->
+<tr>
+  <td height="60" background="images/transport_bg.gif">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="8"><img src="images/spacer.gif" width="8" height="1" alt=""></td>
+      <td width="56"><a href="index.html" onMouseOver="trOver('tr_pause')" onMouseOut="trOut('tr_pause')"><img name="tr_pause" src="images/tr_pause.gif" width="54" height="54" border="0" alt="Pause"></a></td>
+      <td width="34"><a href="index.html" onMouseOver="trOver('tr_stop')" onMouseOut="trOut('tr_stop')"><img name="tr_stop" src="images/tr_stop.gif" width="32" height="32" border="0" alt="Stop"></a></td>
+      <td width="30"><a href="skins.html" onMouseOver="trOver('tr_prev')" onMouseOut="trOut('tr_prev')"><img name="tr_prev" src="images/tr_prev.gif" width="28" height="28" border="0" alt="Previous"></a></td>
+      <td width="30"><a href="about.html" onMouseOver="trOver('tr_next')" onMouseOut="trOut('tr_next')"><img name="tr_next" src="images/tr_next.gif" width="28" height="28" border="0" alt="Next"></a></td>
+      <td width="30"><a href="javascript:void(0)" onClick="alert('There is no sound. It is a web page.')" onMouseOver="trOver('tr_mute')" onMouseOut="trOut('tr_mute')"><img name="tr_mute" src="images/tr_mute.gif" width="28" height="28" border="0" alt="Mute"></a></td>
+      <td width="14"><img src="images/spacer.gif" width="14" height="1" alt=""></td>
+      <td>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="1%" height="6" background="images/seek_fill.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+          <td width="16"><img src="images/seek_knob.gif" width="16" height="16" alt=""></td>
+          <td height="6" background="images/seek_bg.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+        </tr>
         </table>
-        <p class="small">Last checked: November 2026. Updated by hand.</p>
-      </section>
+      </td>
+      <td width="24"><img src="images/spacer.gif" width="24" height="1" alt=""></td>
+      <td width="72">
+        <table width="72" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="44" height="6" background="images/seek_fill.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+          <td width="16"><img src="images/seek_knob.gif" width="16" height="16" alt=""></td>
+          <td height="6" background="images/seek_bg.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+        </tr>
+        </table>
+      </td>
+      <td width="14"><img src="images/spacer.gif" width="14" height="1" alt=""></td>
+    </tr>
+    </table>
+  </td>
+</tr>
+</table>
 
-      <!-- ---------- Copy to CD or Device / Contact ---------- -->
-      <section class="screen page" id="contact" data-title="Copy to CD or Device" hidden>
-        <h1>Contact</h1>
-        <p class="lead">There is no public inbox yet. Setting one up before there is something to
-        say would just mean a slower reply.</p>
-        <ul class="list">
-          <li><b>Code and updates:</b> <a href="https://github.com/mrsobolak" rel="noopener">github.com/mrsobolak</a></li>
-          <li><b>Recycling intake:</b> closed until the motherboard exists. Please do not ship hardware.</li>
-          <li><b>Press, partners, parts:</b> check back. When there is an address, it goes here.</li>
-        </ul>
-        <div class="xp-note">
-          <b>Tip</b> Bookmark this page. Everything new shows up in <a href="#now-playing">Now Playing</a> first.
-        </div>
-      </section>
-
-      <!-- ---------- Skin Chooser ---------- -->
-      <section class="screen page" id="skins" data-title="Skin Chooser" hidden>
-        <h1>Skin Chooser</h1>
-        <p class="lead">Pick a skin. It sticks on this browser.</p>
-        <div class="skins">
-          <button type="button" class="skin" data-skin="luna"><span class="swatch sw-luna"></span>Luna Blue<small>Default</small></button>
-          <button type="button" class="skin" data-skin="olive"><span class="swatch sw-olive"></span>Olive Green<small>The other one</small></button>
-          <button type="button" class="skin" data-skin="silver"><span class="swatch sw-silver"></span>Silver<small>Metallic</small></button>
-          <button type="button" class="skin" data-skin="lime"><span class="swatch sw-lime"></span>Sobolak Lime<small>Brand colours</small></button>
-        </div>
-      </section>
-    </main>
-
-    <!-- playlist -->
-    <aside class="playlist" id="playlist" aria-label="Roadmap">
-      <div class="pl-head">
-        <span class="pl-select">Roadmap <i>▾</i></span>
-      </div>
-      <div class="pl-body">
-        <div class="pl-album">▾ The Recycled Handheld Desktop</div>
-        <ol class="pl-list" id="pl-list">
-          <li><a href="#now-playing" data-section="now-playing"><span>The idea</span><em>now</em></a></li>
-          <li><a href="#recycle" data-section="recycle"><span>Chipset recycling</span><em>plan</em></a></li>
-          <li><a href="#library" data-section="library"><span>Motherboard schematic</span><em>design</em></a></li>
-          <li><a href="#library" data-section="library"><span>3D model</span><em>soon</em></a></li>
-          <li><a href="#status" data-section="status"><span>Prototype</span><em>later</em></a></li>
-          <li><a href="#contact" data-section="contact"><span>First units</span><em>TBA</em></a></li>
-        </ol>
-      </div>
-      <div class="pl-foot">Total Time: TBA</div>
-    </aside>
-  </div>
-
-  <!-- ============ status line ============ -->
-  <div class="statusline">
-    <span class="st-left"><i>▶</i> <span id="st-text">Album: Sobolak Technologies · Michigan · Est. 2024</span></span>
-    <span class="st-right" id="st-time">00:00</span>
-  </div>
-
-  <!-- ============ transport ============ -->
-  <div class="transport">
-    <div class="tr-left">
-      <button type="button" class="big" id="btn-play" data-action="playpause" aria-label="Pause" title="Play/Pause"><span class="ic-pause"></span></button>
-      <button type="button" class="rnd" data-action="stop" aria-label="Stop" title="Stop"><span class="ic-stop"></span></button>
-      <button type="button" class="rnd sm" data-action="prev" aria-label="Previous section" title="Previous"><span class="ic-prev"></span></button>
-      <button type="button" class="rnd sm" data-action="next" aria-label="Next section" title="Next"><span class="ic-next"></span></button>
-      <button type="button" class="rnd sm" id="btn-mute" data-action="mute" aria-label="Mute" title="Mute"><span class="ic-vol"></span></button>
-    </div>
-    <div class="tr-right">
-      <div class="seek" id="seek" aria-hidden="true"><span class="seek-fill" id="seek-fill"></span><span class="seek-knob" id="seek-knob"></span></div>
-      <div class="vol" aria-hidden="true"><span class="vol-fill"></span><span class="vol-knob"></span></div>
-    </div>
-  </div>
-
-</div>
-
-<p class="under">Sobolak Technologies · Michigan, United States · Best viewed at 1024×768 with the speakers on.</p>
-</div>
-
-<script src="app.js"></script>
+<!-- footer -->
+<table width="780" border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+  <td align="center" class="footer" style="padding-top: 14px;">
+    <a href="index.html">Now Playing</a> | <a href="about.html">About</a> | <a href="recycle.html">Recycling</a> | <a href="products.html">Products</a> | <a href="status.html">Status</a> | <a href="contact.html">Contact</a> | <a href="skins.html">Skins</a><br>
+    <img src="images/spacer.gif" width="1" height="6" alt=""><br>
+    Sobolak Technologies &middot; Michigan, United States &middot; Last updated November 8, 2026<br>
+    Best viewed at 1024&times;768 with the speakers on. No cookies, no trackers, no server-side anything.
+  </td>
+</tr>
+</table>
+<br>
 </body>
 </html>

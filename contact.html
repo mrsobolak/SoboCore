@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Contact - Sobolak Technologies</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Sobolak Technologies, Michigan. A recycled handheld desktop built on a custom motherboard that rescues chipsets from dead laptops. Coming soon.">
+<meta name="keywords" content="Sobolak Technologies, recycled computers, handheld desktop, chipset recycling, Michigan, e-waste, custom motherboard">
+<meta name="author" content="Sobolak Technologies">
+<meta name="viewport" content="width=800">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css" type="text/css">
+<script language="JavaScript" type="text/javascript">
+<!--
+// rollovers for the task pane
+var navImgs = new Array('nowplaying','guide','copycd','library','radio','device','skins');
+var pre = new Array();
+for (var i = 0; i < navImgs.length; i++) {
+  pre[i] = new Image(110, 36);
+  pre[i].src = 'images/nav_' + navImgs[i] + '_over.gif';
+}
+function swap(name, state) {
+  if (document.images && document.images[name] && document.images[name].alt != 'current') {
+    document.images[name].src = 'images/nav_' + name + '_' + state + '.gif';
+  }
+}
+function trOver(name) { if (document.images) document.images[name].src = 'images/' + name + '_over.gif'; }
+function trOut(name)  { if (document.images) document.images[name].src = 'images/' + name + '.gif'; }
+// the little clock in the status line
+var t0 = new Date();
+function tick() {
+  var s = Math.floor((new Date() - t0) / 1000);
+  var m = Math.floor(s / 60); s = s % 60;
+  var txt = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  if (document.getElementById) document.getElementById('clock').innerHTML = txt;
+  setTimeout('tick()', 1000);
+}
+//-->
+</script>
+</head>
+<body bgcolor="#2f5f9e" background="images/desktop_bg.gif" text="#ffffff" link="#39e639" vlink="#39e639" alink="#ffffff" onLoad="tick()" topmargin="24" marginheight="24">
+
+<!-- ================= the player window ================= -->
+<table width="780" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#2a52a8" style="border: 1px solid #1d3f8a;">
+
+<!-- title bar -->
+<tr>
+  <td height="30" background="images/titlebar_bg.gif">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="8"><img src="images/spacer.gif" width="8" height="1" alt=""></td>
+      <td width="16"><img src="images/icon16.gif" width="16" height="16" alt=""></td>
+      <td width="6"><img src="images/spacer.gif" width="6" height="1" alt=""></td>
+      <td class="wintitle">Sobolak Technologies</td>
+      <td align="right" nowrap>
+        <a href="javascript:void(0)" onClick="alert('Minimize? This is a web page. Nice try.')"><img src="images/tb_min.gif" width="21" height="21" border="0" alt="Minimize"></a><img src="images/spacer.gif" width="2" height="1" alt=""><a href="javascript:void(0)" onClick="alert('It is already as big as it gets. 780 pixels.')"><img src="images/tb_max.gif" width="21" height="21" border="0" alt="Maximize"></a><img src="images/spacer.gif" width="2" height="1" alt=""><a href="javascript:window.close()"><img src="images/tb_close.gif" width="21" height="21" border="0" alt="Close"></a>
+      </td>
+      <td width="5"><img src="images/spacer.gif" width="5" height="1" alt=""></td>
+    </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- menu bar -->
+<tr>
+  <td height="22" background="images/menubar_bg.gif" class="menubar">
+    <img src="images/spacer.gif" width="6" height="1" alt=""><a href="index.html" class="menu"><u>F</u>ile</a><a href="about.html" class="menu"><u>V</u>iew</a><a href="products.html" class="menu"><u>P</u>lay</a><a href="recycle.html" class="menu"><u>T</u>ools</a><a href="contact.html" class="menu"><u>H</u>elp</a>
+  </td>
+</tr>
+
+<!-- body: task pane | viewer | playlist -->
+<tr>
+  <td background="images/frame_bg.gif">
+    <table width="100%" border="0" cellpadding="0" cellspacing="6">
+    <tr>
+      <!-- task pane -->
+      <td width="110" valign="top">
+        <img src="images/spacer.gif" width="110" height="4" alt=""><br>
+        <a href="index.html" onMouseOver="swap('nowplaying','over'); window.status='Now Playing'; return true;" onMouseOut="swap('nowplaying','off'); window.status=''; return true;"><img name="nowplaying" src="images/nav_nowplaying_off.gif" width="110" height="36" border="0" alt="Now Playing"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="about.html" onMouseOver="swap('guide','over'); window.status='Media Guide'; return true;" onMouseOut="swap('guide','off'); window.status=''; return true;"><img name="guide" src="images/nav_guide_off.gif" width="110" height="36" border="0" alt="Media Guide"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="recycle.html" onMouseOver="swap('copycd','over'); window.status='Copy from CD'; return true;" onMouseOut="swap('copycd','off'); window.status=''; return true;"><img name="copycd" src="images/nav_copycd_off.gif" width="110" height="36" border="0" alt="Copy from CD"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="products.html" onMouseOver="swap('library','over'); window.status='Media Library'; return true;" onMouseOut="swap('library','off'); window.status=''; return true;"><img name="library" src="images/nav_library_off.gif" width="110" height="36" border="0" alt="Media Library"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="status.html" onMouseOver="swap('radio','over'); window.status='Radio Tuner'; return true;" onMouseOut="swap('radio','off'); window.status=''; return true;"><img name="radio" src="images/nav_radio_off.gif" width="110" height="36" border="0" alt="Radio Tuner"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <img name="device" src="images/nav_device_on.gif" width="110" height="36" alt="current" title="Copy to CD or Device"><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <a href="skins.html" onMouseOver="swap('skins','over'); window.status='Skin Chooser'; return true;" onMouseOut="swap('skins','off'); window.status=''; return true;"><img name="skins" src="images/nav_skins_off.gif" width="110" height="36" border="0" alt="Skin Chooser"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
+        <br><br><br><br><br>
+        <img src="images/pane_logo.gif" width="100" height="62" alt="Sobolak Technologies" style="margin-left: 5px;">
+      </td>
+
+      <!-- viewer -->
+      <td valign="top" bgcolor="#000000" style="border: 1px solid #1d3f8a;">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="right" style="padding: 4px 6px 0 0;"><a href="status.html"><img src="images/vt_prev.gif" width="18" height="18" border="0" alt="Previous"></a> <a href="skins.html"><img src="images/vt_next.gif" width="18" height="18" border="0" alt="Next"></a> <a href="#roadmap"><img src="images/vt_list.gif" width="18" height="18" border="0" alt="Roadmap"></a></td>
+        </tr>
+        <tr>
+          <td valign="top" style="padding: 0 14px 12px 14px;">
+
+            <h1>Contact</h1>
+            <p class="lead">There is no public inbox yet. Setting one up before there is something to say would just mean a slower reply.</p>
+            <ul class="body">
+              <li><b>Code and updates:</b> <a href="https://github.com/mrsobolak">github.com/mrsobolak</a></li>
+              <li><b>Recycling intake:</b> closed until the motherboard exists. Please do not ship hardware.</li>
+              <li><b>Press, partners, parts:</b> check back. When there is an address, it goes here.</li>
+            </ul>
+            <table border="0" cellpadding="8" cellspacing="0" bgcolor="#ffffe1" width="100%" style="border: 1px solid #9b9b6d;">
+              <tr><td class="note"><b>Tip</b>&nbsp; Bookmark this page. Everything new shows up in <a href="index.html" style="color: #0a3fb0;">Now Playing</a> first.</td></tr>
+            </table>
+
+          </td>
+        </tr>
+        </table>
+      </td>
+
+      <!-- playlist -->
+      <td width="188" valign="top">
+        <a name="roadmap"></a>
+        <img src="images/pl_header.gif" width="188" height="20" alt="Roadmap"><br>
+        <img src="images/spacer.gif" width="1" height="4" alt=""><br>
+        <table width="188" border="0" cellpadding="6" cellspacing="0" bgcolor="#000000" style="border: 1px solid #1d3f8a;" height="300">
+        <tr>
+          <td valign="top" class="playlist">
+            <span class="plhead">&#9662; The Recycled Handheld Desktop</span><br>
+            <table border="0" cellpadding="1" cellspacing="0" width="100%" style="margin-left: 8px;">
+              <tr><td class="playlist" nowrap><a href="index.html" class="pl">&bull; The idea</a></td><td class="playlist" align="right">now</td></tr>
+              <tr><td class="playlist" nowrap><a href="recycle.html" class="pl">&bull; Chipset recycling</a></td><td class="playlist" align="right">plan</td></tr>
+              <tr><td class="playlist" nowrap><a href="products.html" class="pl">&bull; Motherboard schematic</a></td><td class="playlist" align="right">design</td></tr>
+              <tr><td class="playlist" nowrap><a href="products.html" class="pl">&bull; 3D model</a></td><td class="playlist" align="right">soon</td></tr>
+              <tr><td class="playlist" nowrap><a href="status.html" class="pl">&bull; Prototype</a></td><td class="playlist" align="right">later</td></tr>
+              <tr bgcolor="#0e2e63"><td class="plcur" nowrap>&#9654; First units</td><td class="plcur" align="right">TBA</td></tr>
+            </table>
+          </td>
+        </tr>
+        </table>
+        <div align="right" class="playlist" style="padding-top: 4px;">Total Time: TBA</div>
+      </td>
+    </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- status line -->
+<tr>
+  <td height="20" bgcolor="#000000" style="border-top: 1px solid #1d3f8a;">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="status" style="padding-left: 14px;"><img src="images/play_green.gif" width="10" height="10" alt="">&nbsp; Copy to CD or Device &middot; Contact</td>
+      <td class="status" align="right" style="padding-right: 12px;"><span id="clock">00:00</span></td>
+    </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- transport -->
+<tr>
+  <td height="60" background="images/transport_bg.gif">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="8"><img src="images/spacer.gif" width="8" height="1" alt=""></td>
+      <td width="56"><a href="index.html" onMouseOver="trOver('tr_pause')" onMouseOut="trOut('tr_pause')"><img name="tr_pause" src="images/tr_pause.gif" width="54" height="54" border="0" alt="Pause"></a></td>
+      <td width="34"><a href="index.html" onMouseOver="trOver('tr_stop')" onMouseOut="trOut('tr_stop')"><img name="tr_stop" src="images/tr_stop.gif" width="32" height="32" border="0" alt="Stop"></a></td>
+      <td width="30"><a href="status.html" onMouseOver="trOver('tr_prev')" onMouseOut="trOut('tr_prev')"><img name="tr_prev" src="images/tr_prev.gif" width="28" height="28" border="0" alt="Previous"></a></td>
+      <td width="30"><a href="skins.html" onMouseOver="trOver('tr_next')" onMouseOut="trOut('tr_next')"><img name="tr_next" src="images/tr_next.gif" width="28" height="28" border="0" alt="Next"></a></td>
+      <td width="30"><a href="javascript:void(0)" onClick="alert('There is no sound. It is a web page.')" onMouseOver="trOver('tr_mute')" onMouseOut="trOut('tr_mute')"><img name="tr_mute" src="images/tr_mute.gif" width="28" height="28" border="0" alt="Mute"></a></td>
+      <td width="14"><img src="images/spacer.gif" width="14" height="1" alt=""></td>
+      <td>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="83%" height="6" background="images/seek_fill.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+          <td width="16"><img src="images/seek_knob.gif" width="16" height="16" alt=""></td>
+          <td height="6" background="images/seek_bg.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+        </tr>
+        </table>
+      </td>
+      <td width="24"><img src="images/spacer.gif" width="24" height="1" alt=""></td>
+      <td width="72">
+        <table width="72" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="44" height="6" background="images/seek_fill.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+          <td width="16"><img src="images/seek_knob.gif" width="16" height="16" alt=""></td>
+          <td height="6" background="images/seek_bg.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
+        </tr>
+        </table>
+      </td>
+      <td width="14"><img src="images/spacer.gif" width="14" height="1" alt=""></td>
+    </tr>
+    </table>
+  </td>
+</tr>
+</table>
+
+<!-- footer -->
+<table width="780" border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+  <td align="center" class="footer" style="padding-top: 14px;">
+    <a href="index.html">Now Playing</a> | <a href="about.html">About</a> | <a href="recycle.html">Recycling</a> | <a href="products.html">Products</a> | <a href="status.html">Status</a> | <a href="contact.html">Contact</a> | <a href="skins.html">Skins</a><br>
+    <img src="images/spacer.gif" width="1" height="6" alt=""><br>
+    Sobolak Technologies &middot; Michigan, United States &middot; Last updated November 8, 2026<br>
+    Best viewed at 1024&times;768 with the speakers on. No cookies, no trackers, no server-side anything.
+  </td>
+</tr>
+</table>
+<br>
+</body>
+</html>
