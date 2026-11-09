@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 310" width="280" height="310">
+<defs>
+  <radialGradient id="orbG" cx="50%" cy="38%" r="68%">
+    <stop offset="0" stop-color="#b9f08a"/>
+    <stop offset=".45" stop-color="#5fc23f"/>
+    <stop offset=".8" stop-color="#2a8f2a"/>
+    <stop offset="1" stop-color="#1b6a1e"/>
+  </radialGradient>
+  <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".92"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="rimDark" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2d7a2a"/>
+    <stop offset="1" stop-color="#0f4512"/>
+  </linearGradient>
+  <linearGradient id="arrowW" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffffff"/>
+    <stop offset="1" stop-color="#e3f3dc"/>
+  </linearGradient>
+  <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#000" stop-opacity=".38"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="inkBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2b4f8f"/>
+    <stop offset="1" stop-color="#15305e"/>
+  </linearGradient>
+  <linearGradient id="inkGreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3f9a2e"/>
+    <stop offset="1" stop-color="#1f6a1f"/>
+  </linearGradient>
+  <linearGradient id="glassTile" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#5a7fb8"/>
+    <stop offset=".5" stop-color="#20406f"/>
+    <stop offset="1" stop-color="#0d2246"/>
+  </linearGradient>
+  <linearGradient id="tileGloss" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".06"/>
+  </linearGradient>
+  <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#c8f58f"/>
+    <stop offset=".5" stop-color="#63c73d"/>
+    <stop offset="1" stop-color="#2a8a28"/>
+  </linearGradient>
+  <linearGradient id="chipBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f6f8fb"/>
+    <stop offset="1" stop-color="#c9d3e2"/>
+  </linearGradient>
+</defs>
+
+
+  <ellipse cx="140.0" cy="274.4" rx="120.0" ry="28.799999999999997" fill="url(#shadow)"/>
+  <rect x="20.0" y="20.0" width="240" height="240" rx="43.199999999999996" fill="#0b1b3a"/>
+  <rect x="26.0" y="26.0" width="228.0" height="228.0" rx="38.879999999999995" fill="url(#glassTile)"/>
+  <path d="M34.4,120.8 Q140.0,92.0 245.6,120.8 L245.6,58.4 Q245.6,32.0 221.6,32.0 L58.4,32.0 Q34.4,32.0 34.4,58.4 Z" fill="url(#tileGloss)"/>
+  <g fill="#dfe8f5"><rect x="92.0" y="60.8" width="10.8" height="24.0"/><rect x="92.0" y="195.2" width="10.8" height="24.0"/><rect x="60.8" y="92.0" width="24.0" height="10.8"/><rect x="195.2" y="92.0" width="24.0" height="10.8"/><rect x="116.0" y="60.8" width="10.8" height="24.0"/><rect x="116.0" y="195.2" width="10.8" height="24.0"/><rect x="60.8" y="116.0" width="24.0" height="10.8"/><rect x="195.2" y="116.0" width="24.0" height="10.8"/><rect x="140.0" y="60.8" width="10.8" height="24.0"/><rect x="140.0" y="195.2" width="10.8" height="24.0"/><rect x="60.8" y="140.0" width="24.0" height="10.8"/><rect x="195.2" y="140.0" width="24.0" height="10.8"/><rect x="164.0" y="60.8" width="10.8" height="24.0"/><rect x="164.0" y="195.2" width="10.8" height="24.0"/><rect x="60.8" y="164.0" width="24.0" height="10.8"/><rect x="195.2" y="164.0" width="24.0" height="10.8"/><rect x="188.0" y="60.8" width="10.8" height="24.0"/><rect x="188.0" y="195.2" width="10.8" height="24.0"/><rect x="60.8" y="188.0" width="24.0" height="10.8"/><rect x="195.2" y="188.0" width="24.0" height="10.8"/></g>
+  <rect x="82.4" y="82.4" width="115.19999999999999" height="115.19999999999999" rx="12.0" fill="url(#chipBody)" stroke="#8fa3c2" stroke-width="2.88"/>
+  <rect x="101.60000000000001" y="101.60000000000001" width="76.8" height="76.8" rx="7.199999999999999" fill="none" stroke="#9fb2cf" stroke-width="2.88"/>
+  <circle cx="111.2" cy="168.8" r="6.0" fill="#7f94b5"/>
+  <g transform="translate(173.6,106.4) rotate(-35)">
+      <path d="M0,0 C8.2,-73.4 61.2,-85.7 81.6,-80.0 C80.0,-28.6 49.0,4.1 0,0 Z" fill="url(#leaf)" stroke="#1d5f1c" stroke-width="4.3"/>
+      <path d="M6.5,-3.3 L70.2,-70.2" fill="none" stroke="#1d5f1c" stroke-opacity=".55" stroke-width="3.4"/>
+    </g>
+  <rect x="26.0" y="26.0" width="228.0" height="228.0" rx="38.879999999999995" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3.36"/>
+</svg>
