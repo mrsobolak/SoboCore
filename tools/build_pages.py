@@ -5,23 +5,17 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
 PAGES = [
   # file, nav id, nav label, window title, status text
-  ('index.html',    'nowplaying', 'Now Playing',          'Sobolak Technologies',                         'Album: Sobolak Technologies &middot; Michigan &middot; Est. 2024'),
-  ('about.html',    'guide',      'Media Guide',          'About - Sobolak Technologies',                 'Media Guide &middot; About the company'),
-  ('recycle.html',  'copycd',     'Copy from CD',         'Chipset Recycling - Sobolak Technologies',     'Copy from CD &middot; Chipset recycling'),
-  ('products.html', 'library',    'Media Library',        'Products - Sobolak Technologies',              'Media Library &middot; Products'),
-  ('status.html',   'radio',      'Radio Tuner',          'Status - Sobolak Technologies',                'Radio Tuner &middot; Service status'),
-  ('contact.html',  'device',     'Copy to CD or Device', 'Contact - Sobolak Technologies',               'Copy to CD or Device &middot; Contact'),
-  ('skins.html',    'skins',      'Skin Chooser',         'Skin Chooser - Sobolak Technologies',          'Skin Chooser'),
+  ('index.html', 'nowplaying', 'Now Playing', 'Sobolak Technologies - The Sobolak Laptop, coming 2029', 'Album: The Sobolak Laptop &middot; coming 2029'),
+  ('about.html', 'guide',      'Media Guide', 'Who we are - Sobolak Technologies',                     'Media Guide &middot; Who we are'),
 ]
 NAV_ALT = {'nowplaying':'Now Playing','guide':'Media Guide','copycd':'Copy from CD','library':'Media Library','radio':'Radio Tuner','device':'Copy to CD or Device','skins':'Skin Chooser'}
 
 ROADMAP = [
-  ('The idea', 'now', 'index.html'),
-  ('Chipset recycling', 'plan', 'recycle.html'),
-  ('Motherboard schematic', 'design', 'products.html'),
-  ('3D model', 'soon', 'products.html'),
-  ('Prototype', 'later', 'status.html'),
-  ('First units', 'TBA', 'contact.html'),
+  ('The idea', '2026', 'index.html'),
+  ('Motherboard design', 'next', 'index.html'),
+  ('First prototype', 'then', 'index.html'),
+  ('Beta units', 'later', 'index.html'),
+  ('The Sobolak Laptop', '2029~', 'index.html'),
 ]
 
 HEAD = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,8 +23,8 @@ HEAD = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http:/
 <head>
 <title>{title}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="description" content="Sobolak Technologies, Michigan. A recycled handheld desktop built on a custom motherboard that rescues chipsets from dead laptops. Coming soon.">
-<meta name="keywords" content="Sobolak Technologies, recycled computers, handheld desktop, chipset recycling, Michigan, e-waste, custom motherboard">
+<meta name="description" content="Sobolak Technologies, Michigan. The Sobolak Laptop: a handheld desktop with desktop power, built from recycled parts on our own motherboard. Coming 2029.">
+<meta name="keywords" content="Sobolak Technologies, Sobolak Laptop, handheld desktop, recycled computers, Michigan, custom motherboard, 2029">
 <meta name="author" content="Sobolak Technologies">
 <meta name="viewport" content="width=800">
 <link rel="shortcut icon" href="favicon.ico">
@@ -89,7 +83,7 @@ function tick() {{
 <!-- menu bar -->
 <tr>
   <td height="22" background="images/menubar_bg.gif" class="menubar">
-    <img src="images/spacer.gif" width="6" height="1" alt=""><a href="index.html" class="menu"><u>F</u>ile</a><a href="about.html" class="menu"><u>V</u>iew</a><a href="products.html" class="menu"><u>P</u>lay</a><a href="recycle.html" class="menu"><u>T</u>ools</a><a href="contact.html" class="menu"><u>H</u>elp</a>
+    <img src="images/spacer.gif" width="6" height="1" alt=""><a href="index.html" class="menu"><u>F</u>ile</a><a href="about.html" class="menu"><u>V</u>iew</a><a href="index.html" class="menu"><u>P</u>lay</a><a href="about.html" class="menu"><u>T</u>ools</a><a href="about.html" class="menu"><u>H</u>elp</a>
   </td>
 </tr>
 
@@ -130,14 +124,14 @@ PLAYLIST_AND_REST = '''
         <table width="188" border="0" cellpadding="6" cellspacing="0" bgcolor="#000000" style="border: 1px solid #1d3f8a;" height="{plh}">
         <tr>
           <td valign="top" class="playlist">
-            <span class="plhead">&#9662; The Recycled Handheld Desktop</span><br>
+            <span class="plhead">&#9662; The Sobolak Laptop</span><br>
             <table border="0" cellpadding="1" cellspacing="0" width="100%" style="margin-left: 8px;">
 {roadmap}
             </table>
           </td>
         </tr>
         </table>
-        <div align="right" class="playlist" style="padding-top: 4px;">Total Time: TBA</div>
+        <div align="right" class="playlist" style="padding-top: 4px;">Total Time: 2029~</div>
       </td>
     </tr>
     </table>
@@ -198,10 +192,10 @@ PLAYLIST_AND_REST = '''
 <table width="780" border="0" cellpadding="0" cellspacing="0" align="center">
 <tr>
   <td align="center" class="footer" style="padding-top: 14px;">
-    <a href="index.html">Now Playing</a> | <a href="about.html">About</a> | <a href="recycle.html">Recycling</a> | <a href="products.html">Products</a> | <a href="status.html">Status</a> | <a href="contact.html">Contact</a> | <a href="skins.html">Skins</a><br>
+    <a href="index.html">The Sobolak Laptop</a> | <a href="about.html">Who we are</a> | <a href="https://github.com/mrsobolak">GitHub</a><br>
     <img src="images/spacer.gif" width="1" height="6" alt=""><br>
-    Sobolak Technologies &middot; Michigan, United States &middot; Last updated November 8, 2026<br>
-    Best viewed at 1024&times;768 with the speakers on. No cookies, no trackers, no server-side anything.
+    Sobolak Technologies &middot; Michigan, United States &middot; Last updated November 9, 2026<br>
+    Built in Michigan from recycled parts. Best viewed at 1024&times;768 with the speakers on.
   </td>
 </tr>
 </table>
@@ -213,7 +207,7 @@ PLAYLIST_AND_REST = '''
 # -------------------------------------------------------------- page bodies
 HOME = '''
             <span class="artist">Sobolak Technologies</span><br>
-            <span class="track">The Recycled Handheld Desktop (coming soon)</span><br>
+            <span class="track">The Sobolak Laptop (coming 2029~)</span><br>
             <img src="images/spacer.gif" width="1" height="6" alt=""><br>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #1b2a4a;" bgcolor="#000000">
             <tr><td align="center"><img src="images/vis.gif" width="420" height="230" alt="Sobolak Technologies"></td></tr>
@@ -221,8 +215,10 @@ HOME = '''
             <img src="images/spacer.gif" width="1" height="8" alt=""><br>
             <table width="100%" border="0" cellpadding="10" cellspacing="0" bgcolor="#060f22" style="border: 1px solid #2c4a8a;">
             <tr><td class="body">
-              A handheld desktop with a screen. Inside, a motherboard we design ourselves so that chipsets pulled from dead laptops can be used again.<br><br>
-              There is no 3D model yet. There is an idea we are serious about, a room of old hardware in Michigan, and one person working on it.
+              <span class="lead"><b>Desktop power at your fingertips. Recycled, saving the planet.</b></span><br><br>
+              The Sobolak Laptop is a handheld desktop. It is thick and heavy on purpose. Inside is a full-power desktop processor and memory, pulled from recycled desktop computers and put onto a motherboard we design ourselves, in a case we make ourselves. Expect about three to four hours on the battery, because it runs real desktop chips.<br><br>
+              It is either ours or it is not ours. No rebadged boards, no bought-in modules. It boots to a Sobolak screen, ships with Windows 10, and you can put whatever you like on it after that.<br><br>
+              <b>Where it stands:</b> it is an idea we are serious about. The board design has not started. We are aiming for 2029, give or take, and we will not put a fake date on it to look busy.
             </td></tr>
             </table>
             <img src="images/spacer.gif" width="1" height="8" alt=""><br>
@@ -235,14 +231,15 @@ HOME = '''
 '''
 
 ABOUT = '''
-            <h1>About Sobolak Technologies</h1>
-            <p class="lead">An independent technology company in Michigan, United States. Founded 2024. Privately held, no investors, one person on staff.</p>
-            <p class="body">We have started over before. This time the work is hardware: computers built from parts the rest of the industry has written off. Earlier projects are retired and not coming back, and the pages about them have come down. This site is about what comes next.</p>
-            <h2>What we care about</h2>
+            <h1>Who we are</h1>
+            <p class="lead">Sobolak Technologies is an independent technology company in Michigan, United States, founded in 2024. One person, no investors, no outside money.</p>
+            <p class="body">Today we refurbish and resell computers, build gaming PCs, and fix laptops. That work pays for the thing we actually want to make: the <a href="index.html">Sobolak Laptop</a>, a handheld desktop built from recycled parts on our own motherboard, due around 2029.</p>
+            <h2>What we believe</h2>
             <ul class="body">
-              <li><b>Own the hardware.</b> If it runs on someone else's machine, it is on loan.</li>
-              <li><b>Nothing is scrap until it fails a test.</b> A ten-year-old CPU still does what it did on day one.</li>
-              <li><b>Built to last.</b> Repairable, documented, and boring in the good way.</li>
+              <li><b>It is either ours or it is not ours.</b> We design the board and make the case. Nothing rebadged.</li>
+              <li><b>Nothing is scrap until it fails a test.</b> A ten-year-old desktop CPU still does what it did on day one. We put it back to work.</li>
+              <li><b>Big and heavy is fine.</b> Power first. The battery is sized to match, not the other way round.</li>
+              <li><b>Screws, not glue.</b> Ribbon cables, replaceable parts, and a machine you can open.</li>
               <li><b>Say so.</b> If something is an idea, we call it an idea. No fake launch dates.</li>
             </ul>
             <table border="0" cellpadding="4" cellspacing="0" class="props" width="90%">
@@ -251,83 +248,13 @@ ABOUT = '''
               <tr><td class="key">Type</td><td class="body">Independent, privately held</td></tr>
               <tr><td class="key">Investors</td><td class="body">None</td></tr>
               <tr><td class="key">Staff</td><td class="body">One, the founder</td></tr>
-              <tr><td class="key">Current focus</td><td class="body">The recycled handheld desktop and its motherboard</td></tr>
+              <tr><td class="key">Doing now</td><td class="body">Refurbishing, resale, repair, gaming PC builds</td></tr>
+              <tr><td class="key">Building next</td><td class="body">The Sobolak Laptop, coming 2029~</td></tr>
+              <tr><td class="key">Code</td><td class="body"><a href="https://github.com/mrsobolak">github.com/mrsobolak</a></td></tr>
             </table>
 '''
 
-RECYCLE = '''
-            <h1>Chipset recycling</h1>
-            <p class="lead">Every dead laptop has a CPU, memory and a chipset that still work. The board they are soldered to is what died. We are designing a board they can live on instead.</p>
-            <h2>How it is meant to work</h2>
-            <ol class="body">
-              <li>Old laptops come in. We pull the processor, memory and supporting chips and test them.</li>
-              <li>Working parts go onto the Sobolak motherboard, a design of ours that accepts several generations of chipsets rather than one.</li>
-              <li>The board goes into the handheld desktop: a small box with a screen, a keyboard port, and a desktop operating system. Not a phone. A computer you can hold.</li>
-              <li>The rest is recycled properly, not landfilled.</li>
-            </ol>
-            <h2>Status of the program</h2>
-            <p class="body">Not open. We are not taking machines yet, and we will not ask anyone to ship hardware to us until there is a board to put it on. When the program opens, it opens here first.</p>
-            <table border="0" cellpadding="8" cellspacing="0" bgcolor="#ffffe1" width="100%" style="border: 1px solid #9b9b6d;">
-              <tr><td class="note"><b>Note</b>&nbsp; This is a design-stage project. The motherboard is a schematic, not a product.</td></tr>
-            </table>
-'''
-
-PRODUCTS = '''
-            <h1>Media Library</h1>
-            <p class="lead">Everything we are working on, in one list. Nothing on this page can be bought or pre-ordered yet.</p>
-            <table border="0" cellpadding="5" cellspacing="1" width="100%" bgcolor="#27385c">
-              <tr bgcolor="#1a2744"><th align="left" class="th">Title</th><th align="left" class="th">Type</th><th align="left" class="th">Status</th><th align="left" class="th">Date</th></tr>
-              <tr bgcolor="#0d1626"><td class="body">Recycled Handheld Desktop</td><td class="body">Hardware</td><td class="body"><font color="#d9ff6a"><b>Coming soon</b></font></td><td class="body">TBA</td></tr>
-              <tr bgcolor="#101b2e"><td class="body">Sobolak Recycle Motherboard</td><td class="body">Hardware</td><td class="body">In design</td><td class="body">TBA</td></tr>
-              <tr bgcolor="#0d1626"><td class="body">Chipset Recycling Program</td><td class="body">Service</td><td class="body">Planned</td><td class="body">TBA</td></tr>
-              <tr bgcolor="#101b2e"><td class="body">Refurbished Computers</td><td class="body">Store</td><td class="body">Planned</td><td class="body">TBA</td></tr>
-            </table>
-            <p class="small">Retired products are not listed. They are retired.</p>
-'''
-
-STATUS = '''
-            <h1>Status</h1>
-            <p class="lead">The whole board. Short on purpose.</p>
-            <table border="0" cellpadding="5" cellspacing="1" width="100%" bgcolor="#27385c">
-              <tr bgcolor="#1a2744"><th align="left" class="th">Station</th><th align="left" class="th">Signal</th><th align="left" class="th">Note</th></tr>
-              <tr bgcolor="#0d1626"><td class="body">This website</td><td class="body"><font color="#39e639">&#9679;</font> Online</td><td class="body">Static files. If you can read this, it works.</td></tr>
-              <tr bgcolor="#101b2e"><td class="body">Servers</td><td class="body"><font color="#39e639">&#9679;</font> Online</td><td class="body">Our own hardware in Michigan.</td></tr>
-              <tr bgcolor="#0d1626"><td class="body">Handheld desktop</td><td class="body"><font color="#f0b019">&#9679;</font> Design</td><td class="body">Idea stage. No 3D model yet.</td></tr>
-              <tr bgcolor="#101b2e"><td class="body">Recycle motherboard</td><td class="body"><font color="#f0b019">&#9679;</font> Design</td><td class="body">Schematic stage.</td></tr>
-              <tr bgcolor="#0d1626"><td class="body">Recycling intake</td><td class="body"><font color="#777777">&#9679;</font> Closed</td><td class="body">Opens when there is a board to put parts on.</td></tr>
-              <tr bgcolor="#101b2e"><td class="body">Staff</td><td class="body">1</td><td class="body">The founder. Replies are slow. They do come.</td></tr>
-            </table>
-            <p class="small">Last checked: November 2026. Updated by hand.</p>
-'''
-
-CONTACT = '''
-            <h1>Contact</h1>
-            <p class="lead">There is no public inbox yet. Setting one up before there is something to say would just mean a slower reply.</p>
-            <ul class="body">
-              <li><b>Code and updates:</b> <a href="https://github.com/mrsobolak">github.com/mrsobolak</a></li>
-              <li><b>Recycling intake:</b> closed until the motherboard exists. Please do not ship hardware.</li>
-              <li><b>Press, partners, parts:</b> check back. When there is an address, it goes here.</li>
-            </ul>
-            <table border="0" cellpadding="8" cellspacing="0" bgcolor="#ffffe1" width="100%" style="border: 1px solid #9b9b6d;">
-              <tr><td class="note"><b>Tip</b>&nbsp; Bookmark this page. Everything new shows up in <a href="index.html" style="color: #0a3fb0;">Now Playing</a> first.</td></tr>
-            </table>
-'''
-
-SKINS = '''
-            <h1>Skin Chooser</h1>
-            <p class="lead">One skin is installed: Luna Blue. It is the good one.</p>
-            <p class="body">Olive Green and Silver were considered and rejected. A Sobolak Lime skin in the logo colours may show up later. There is no button here because there is nothing for it to do yet, and we would rather not put a button on a page that does nothing.</p>
-            <table border="0" cellpadding="6" cellspacing="6">
-              <tr>
-                <td bgcolor="#0a5fe8" width="120" height="44" align="center" class="body" style="border: 1px solid #ffffff;"><b>Luna Blue</b><br><font size="1">installed</font></td>
-                <td bgcolor="#333333" width="120" height="44" align="center" class="small" style="border: 1px solid #555555;">Olive Green<br>not installed</td>
-                <td bgcolor="#333333" width="120" height="44" align="center" class="small" style="border: 1px solid #555555;">Silver<br>not installed</td>
-                <td bgcolor="#333333" width="120" height="44" align="center" class="small" style="border: 1px solid #555555;">Sobolak Lime<br>someday</td>
-              </tr>
-            </table>
-'''
-
-BODIES = {'index.html': HOME, 'about.html': ABOUT, 'recycle.html': RECYCLE, 'products.html': PRODUCTS, 'status.html': STATUS, 'contact.html': CONTACT, 'skins.html': SKINS}
+BODIES = {'index.html': HOME, 'about.html': ABOUT}
 
 def nav_html(active):
     out = []
@@ -356,7 +283,7 @@ for i, (fname, nid, label, title, status) in enumerate(PAGES):
     seek = int(i / (len(PAGES) - 1) * 100)
     html = HEAD.format(title=title, nav=nav_html(nid), prev=prev, next=nxt)
     html += BODIES[fname]
-    html += PLAYLIST_AND_REST.format(roadmap=roadmap_html(fname), status=status, prev=prev, next=nxt, seekpct=max(seek, 1), plh=478 if fname == 'index.html' else 300)
+    html += PLAYLIST_AND_REST.format(roadmap=roadmap_html(fname), status=status, prev=prev, next=nxt, seekpct=max(seek, 1), plh=520 if fname == 'index.html' else 420)
     with open(os.path.join(ROOT, fname), 'w') as fh:
         fh.write(html)
     print('wrote', fname)
