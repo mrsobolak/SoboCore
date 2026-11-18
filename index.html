@@ -19,9 +19,9 @@
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
-<a class="skip" href="#shop">Skip to the shop</a>
+<a class="skip" href="#what">Skip to what we do</a>
 
-<!-- drawings used by the product cards and the hero -->
+<!-- drawings used by the hero and the "what we sell" cards -->
 <svg class="sprite" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="g-wall" x1="0" y1="0" x2="1" y2="1">
@@ -45,11 +45,6 @@
       <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
       <stop offset=".85" stop-color="#fff" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="g-burst" cx=".38" cy=".3" r=".8">
-      <stop offset="0" stop-color="#f6ffcf"/>
-      <stop offset=".45" stop-color="#bdec41"/>
-      <stop offset="1" stop-color="#7cc318"/>
-    </radialGradient>
     <mask id="m-fade" maskUnits="userSpaceOnUse" x="0" y="142" width="240" height="50">
       <rect x="0" y="142" width="240" height="50" fill="url(#g-fade)"/>
     </mask>
@@ -133,7 +128,7 @@
     <a class="brand" href="index.html"><img src="assets/logo.svg" width="1275" height="350" alt="Sobolak Technologies"></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav"><i></i>Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="#shop">Shop</a>
+      <a href="#what">What we sell</a>
       <a href="#why">Why it costs less</a>
       <a href="#process">How we refurbish</a>
       <a href="about.html">About</a>
@@ -150,8 +145,8 @@
       <h1>Refurbished laptops and desktops. <span>Cheaper than eBay.</span></h1>
       <p class="hero-lede">Business-grade machines, tested and cleaned by hand in Michigan. We sell direct, so no marketplace takes a cut. You pay less for the same computer.</p>
       <div class="hero-cta">
-        <a class="btn btn-gel" href="#shop" data-filter="laptop">Shop laptops</a>
-        <a class="btn btn-glass" href="#shop" data-filter="desktop">Shop desktops</a>
+        <a class="btn btn-gel" href="#what">What we sell</a>
+        <a class="btn btn-glass" href="#contact">Get in touch</a>
       </div>
     </div>
 
@@ -187,65 +182,68 @@
 <div class="facts">
   <div class="wrap">
     <ul>
-      <li><span class="led"></span>Tested before it is listed</li>
+      <li><span class="led"></span>Tested before it is sold</li>
       <li><span class="led"></span>Sold direct, no marketplace cut</li>
       <li><span class="led"></span>One workbench in Michigan, not a warehouse</li>
     </ul>
   </div>
 </div>
 
-<section class="section" id="shop">
+<section class="section" id="what">
   <div class="wrap">
-    <h2>In stock now</h2>
-    <p class="section-lede">Every price sits next to what the same spec was going for on eBay when we listed it.</p>
-    <p class="demo-note" id="demo-note" hidden>Preview: these are sample listings. Real stock replaces them before launch.</p>
-
-    <div class="shopbar">
-      <div class="tabs" role="group" aria-label="Filter stock">
-        <button class="tab" type="button" data-filter="all" aria-pressed="true">All <b></b></button>
-        <button class="tab" type="button" data-filter="laptop" aria-pressed="false">Laptops <b></b></button>
-        <button class="tab" type="button" data-filter="desktop" aria-pressed="false">Desktops <b></b></button>
-      </div>
-      <label class="sort">Sort
-        <select id="sort">
-          <option value="featured">Newest listed</option>
-          <option value="low">Price, low to high</option>
-          <option value="save">Biggest saving</option>
-        </select>
-      </label>
+    <h2>What we sell</h2>
+    <p class="section-lede">Used business computers with years left in them, put right and sold for less than the same machine goes for on eBay.</p>
+    <div class="offers">
+      <article class="offer">
+        <div class="stage c-black">
+          <svg class="art" viewBox="0 0 240 192" role="img" aria-label="A refurbished laptop">
+            <use href="#art-laptop" width="240" height="150"/>
+            <g mask="url(#m-fade)"><use href="#art-laptop" width="240" height="150" transform="translate(0 284) scale(1 -1)"/></g>
+          </svg>
+        </div>
+        <div class="offer-body">
+          <h3>Refurbished laptops</h3>
+          <p>The tough business models that offices retire early. Tested, cleaned, wiped, and ready to use the day you get it.</p>
+          <a class="btn btn-gel" href="#contact">Ask what is on the bench</a>
+        </div>
+      </article>
+      <article class="offer">
+        <div class="stage c-black">
+          <svg class="art" viewBox="0 0 240 192" role="img" aria-label="A refurbished desktop computer">
+            <use href="#art-sff" width="240" height="150"/>
+            <g mask="url(#m-fade)"><use href="#art-sff" width="240" height="150" transform="translate(0 284) scale(1 -1)"/></g>
+          </svg>
+        </div>
+        <div class="offer-body">
+          <h3>Refurbished desktops</h3>
+          <p>Office desktops that still have plenty to give. Quiet, quick, and a lot of computer for the money.</p>
+          <a class="btn btn-gel" href="#contact">Ask what is on the bench</a>
+        </div>
+      </article>
     </div>
-
-    <div class="grid" id="grid">
-      <noscript><p class="empty">The stock list needs JavaScript switched on.</p></noscript>
-    </div>
-
-    <p class="smallprint">eBay prices are what comparable refurbished listings were asking on the day we listed each machine. They move, so check for yourself. We would.</p>
   </div>
 </section>
 
 <section class="section" id="why" style="padding-top:0">
   <div class="wrap">
     <h2>Why it costs less here</h2>
-    <div class="why">
-      <ul class="reasons">
-        <li><b>No marketplace cut.</b><span>eBay charges sellers a fee on every sale, and sellers build that into the price. We sell direct, so it comes off yours.</span></li>
-        <li><b>No warehouse.</b><span>One person, one workbench. There is not much overhead to pay for.</span></li>
-        <li><b>Nothing is scrap until it fails a test.</b><span>Most retired office computers are fine. If it passes, it gets sold instead of shredded, and you get the saving.</span></li>
-      </ul>
-      <figure class="compare" id="compare" hidden></figure>
-    </div>
+    <ul class="reasons">
+      <li><b>No marketplace cut.</b><span>eBay charges sellers a fee on every sale, and sellers build that into the price. We sell direct, so it comes off yours.</span></li>
+      <li><b>No warehouse.</b><span>One person, one workbench. There is not much overhead to pay for.</span></li>
+      <li><b>Nothing is scrap until it fails a test.</b><span>Most retired office computers are fine. If it passes, it gets sold instead of shredded, and you get the saving.</span></li>
+    </ul>
   </div>
 </section>
 
 <section class="section dark" id="process">
   <div class="wrap">
-    <h2>Before a machine gets listed</h2>
-    <p class="section-lede">Four things happen to every computer on this page.</p>
+    <h2>Before a machine gets sold</h2>
+    <p class="section-lede">Four things happen to every computer that leaves the bench.</p>
     <ol class="steps">
-      <li class="glass"><b>Tested</b><span>Processor, memory, drive, screen, keyboard, ports, battery. If something fails, it gets fixed or the machine does not get listed.</span></li>
+      <li class="glass"><b>Tested</b><span>Processor, memory, drive, screen, keyboard, ports, battery. If something fails, it gets fixed or the machine does not get sold.</span></li>
       <li class="glass"><b>Opened and cleaned</b><span>Dust out, case wiped down. Screws, not glue.</span></li>
       <li class="glass"><b>Wiped and reinstalled</b><span>The last owner's data is erased and Windows goes back on fresh.</span></li>
-      <li class="glass"><b>Graded honestly</b><span>Wear gets written on the listing. If it is a scuff, we call it a scuff.</span></li>
+      <li class="glass"><b>Graded honestly</b><span>You hear about the wear before you pay. If it is a scuff, we call it a scuff.</span></li>
     </ol>
     <ul class="grades">
       <li><b>Grade A</b><span>Light wear. You have to look for it.</span></li>
@@ -282,7 +280,7 @@
   <div class="wrap contact-in">
     <div>
       <h2>Want one?</h2>
-      <p class="section-lede">Tell us which machine. We will tell you if it is still here, then sort out payment and getting it to you.</p>
+      <p class="section-lede">Tell us what you need and what you can spend. We will tell you what is on the bench right now.</p>
     </div>
     <div class="contact-actions" id="contact-actions"></div>
   </div>
@@ -293,7 +291,7 @@
 <footer class="foot">
   <div class="wrap foot-in">
     <nav aria-label="Footer">
-      <a href="#shop">Shop</a>
+      <a href="#what">What we sell</a>
       <a href="about.html">Who we are</a>
       <a href="about.html#laptop">The Sobolak Laptop</a>
       <a href="https://github.com/mrsobolak">GitHub</a>
@@ -303,7 +301,6 @@
   </div>
 </footer>
 
-<script src="products.js"></script>
 <script src="site.js"></script>
 </body>
 </html>
