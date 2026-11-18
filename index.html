@@ -1,210 +1,309 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Sobolak Technologies - The Sobolak Laptop, coming 2029</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="description" content="Sobolak Technologies, Michigan. The Sobolak Laptop: a handheld desktop with desktop power, built from recycled parts on our own motherboard. Coming 2029.">
-<meta name="keywords" content="Sobolak Technologies, Sobolak Laptop, handheld desktop, recycled computers, Michigan, custom motherboard, 2029">
-<meta name="author" content="Sobolak Technologies">
-<meta name="viewport" content="width=800">
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" href="style.css" type="text/css">
-<script language="JavaScript" type="text/javascript">
-<!--
-// rollovers for the task pane
-var navImgs = new Array('nowplaying','guide','copycd','library','radio','device','skins');
-var pre = new Array();
-for (var i = 0; i < navImgs.length; i++) {
-  pre[i] = new Image(110, 36);
-  pre[i].src = 'images/nav_' + navImgs[i] + '_over.gif';
-}
-function swap(name, state) {
-  if (document.images && document.images[name] && document.images[name].alt != 'current') {
-    document.images[name].src = 'images/nav_' + name + '_' + state + '.gif';
-  }
-}
-function trOver(name) { if (document.images) document.images[name].src = 'images/' + name + '_over.gif'; }
-function trOut(name)  { if (document.images) document.images[name].src = 'images/' + name + '.gif'; }
-// the little clock in the status line
-var t0 = new Date();
-function tick() {
-  var s = Math.floor((new Date() - t0) / 1000);
-  var m = Math.floor(s / 60); s = s % 60;
-  var txt = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-  if (document.getElementById) document.getElementById('clock').innerHTML = txt;
-  setTimeout('tick()', 1000);
-}
-//-->
-</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sobolak Technologies | Refurbished laptops and desktops, cheaper than eBay</title>
+<meta name="description" content="Refurbished laptops and desktops, tested and cleaned by hand in Michigan and sold direct for less than eBay prices.">
+<meta name="theme-color" content="#0a1322">
+<meta property="og:title" content="Sobolak Technologies">
+<meta property="og:description" content="Refurbished laptops and desktops, sold direct for less than eBay prices.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sobolak.org/">
+<meta property="og:image" content="https://sobolak.org/assets/icon-512.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/michroma.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
 </head>
-<body bgcolor="#2f5f9e" background="images/desktop_bg.gif" text="#ffffff" link="#39e639" vlink="#39e639" alink="#ffffff" onLoad="tick()" topmargin="24" marginheight="24">
+<body>
+<a class="skip" href="#shop">Skip to the shop</a>
 
-<!-- ================= the player window ================= -->
-<table width="780" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#2a52a8" style="border: 1px solid #1d3f8a;">
+<!-- drawings used by the product cards and the hero -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-wall" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a8bf0"/>
+      <stop offset=".55" stop-color="#12305c"/>
+      <stop offset="1" stop-color="#0a1626"/>
+    </linearGradient>
+    <linearGradient id="g-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6ffd6"/>
+      <stop offset=".35" stop-color="#c6f14a"/>
+      <stop offset=".65" stop-color="#7fc41a"/>
+      <stop offset="1" stop-color="#3a7a0c"/>
+    </linearGradient>
+    <linearGradient id="g-side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".42"/>
+      <stop offset=".3" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".32"/>
+    </linearGradient>
+    <linearGradient id="g-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+      <stop offset=".85" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="g-burst" cx=".38" cy=".3" r=".8">
+      <stop offset="0" stop-color="#f6ffcf"/>
+      <stop offset=".45" stop-color="#bdec41"/>
+      <stop offset="1" stop-color="#7cc318"/>
+    </radialGradient>
+    <mask id="m-fade" maskUnits="userSpaceOnUse" x="0" y="142" width="240" height="50">
+      <rect x="0" y="142" width="240" height="50" fill="url(#g-fade)"/>
+    </mask>
+  </defs>
 
-<!-- title bar -->
-<tr>
-  <td height="30" background="images/titlebar_bg.gif">
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="8"><img src="images/spacer.gif" width="8" height="1" alt=""></td>
-      <td width="16"><img src="images/icon16.gif" width="16" height="16" alt=""></td>
-      <td width="6"><img src="images/spacer.gif" width="6" height="1" alt=""></td>
-      <td class="wintitle">Sobolak Technologies</td>
-      <td align="right" nowrap>
-        <a href="javascript:void(0)" onClick="alert('Minimize? This is a web page. Nice try.')"><img src="images/tb_min.gif" width="21" height="21" border="0" alt="Minimize"></a><img src="images/spacer.gif" width="2" height="1" alt=""><a href="javascript:void(0)" onClick="alert('It is already as big as it gets. 780 pixels.')"><img src="images/tb_max.gif" width="21" height="21" border="0" alt="Maximize"></a><img src="images/spacer.gif" width="2" height="1" alt=""><a href="javascript:window.close()"><img src="images/tb_close.gif" width="21" height="21" border="0" alt="Close"></a>
-      </td>
-      <td width="5"><img src="images/spacer.gif" width="5" height="1" alt=""></td>
-    </tr>
-    </table>
-  </td>
-</tr>
+  <symbol id="art-laptop" viewBox="0 0 240 150">
+    <rect x="42" y="9" width="156" height="102" rx="7" fill="var(--shell, #262a32)"/>
+    <rect x="42" y="9" width="156" height="102" rx="7" fill="url(#g-side)" opacity=".6"/>
+    <rect x="49" y="16" width="142" height="86" rx="2" fill="url(#g-wall)"/>
+    <g transform="translate(120 59)">
+      <ellipse rx="44" ry="11" transform="rotate(-22)" fill="none" stroke="url(#g-ring)" stroke-width="3"/>
+      <rect x="-13" y="-11" width="26" height="22" rx="7.5" fill="none" stroke="#eef2f6" stroke-width="4.5"/>
+    </g>
+    <path d="M49 16h142v26C146 46 96 60 49 84z" fill="#fff" opacity=".11"/>
+    <circle cx="120" cy="12.5" r="1" fill="#000" opacity=".5"/>
+    <path d="M42 111h156l26 23H16z" fill="var(--deck, #343943)"/>
+    <path d="M52.5 114h135l13.5 12H39z" fill="#000" opacity=".3"/>
+    <path d="M48 118h144M43.5 122h153" stroke="#fff" stroke-opacity=".14" stroke-width=".8" fill="none"/>
+    <path d="M103 128h34l2 4h-38z" fill="#000" opacity=".16"/>
+    <path d="M16 134h208v2.5a4.5 4.5 0 0 1-4.5 4.5h-199a4.5 4.5 0 0 1-4.5-4.5z" fill="var(--shell, #262a32)"/>
+    <path d="M16 134h208v1.2H16z" fill="#fff" opacity=".25"/>
+    <rect x="104" y="134" width="32" height="2.4" rx="1.2" fill="#000" opacity=".3"/>
+  </symbol>
 
-<!-- menu bar -->
-<tr>
-  <td height="22" background="images/menubar_bg.gif" class="menubar">
-    <img src="images/spacer.gif" width="6" height="1" alt=""><a href="index.html" class="menu"><u>F</u>ile</a><a href="about.html" class="menu"><u>V</u>iew</a><a href="index.html" class="menu"><u>P</u>lay</a><a href="about.html" class="menu"><u>T</u>ools</a><a href="about.html" class="menu"><u>H</u>elp</a>
-  </td>
-</tr>
+  <symbol id="art-sff" viewBox="0 0 240 150">
+    <rect x="86" y="12" width="68" height="126" rx="5" fill="var(--shell, #262a32)"/>
+    <rect x="86" y="12" width="68" height="126" rx="5" fill="url(#g-side)"/>
+    <rect x="94" y="22" width="52" height="6" rx="1.5" fill="#000" opacity=".5"/>
+    <rect x="94" y="32" width="52" height="1" fill="#fff" opacity=".14"/>
+    <circle cx="104" cy="46" r="6.5" fill="#0a1220"/>
+    <circle cx="104" cy="46" r="3" fill="#a8e61d"/>
+    <rect x="118" y="41" width="10" height="4.5" rx="1" fill="#0a1220"/>
+    <rect x="132" y="41" width="10" height="4.5" rx="1" fill="#1f62c4"/>
+    <circle cx="121" cy="53" r="2" fill="#0a1220"/>
+    <circle cx="129" cy="53" r="2" fill="#0a1220"/>
+    <g fill="#000" opacity=".38">
+      <rect x="96" y="68" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="74" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="80" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="86" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="92" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="98" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="104" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="110" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="116" width="48" height="2.6" rx="1.3"/>
+      <rect x="96" y="122" width="48" height="2.6" rx="1.3"/>
+    </g>
+    <rect x="92" y="138" width="14" height="3" rx="1" fill="#0a1220"/>
+    <rect x="134" y="138" width="14" height="3" rx="1" fill="#0a1220"/>
+  </symbol>
 
-<!-- body: task pane | viewer | playlist -->
-<tr>
-  <td background="images/frame_bg.gif">
-    <table width="100%" border="0" cellpadding="0" cellspacing="6">
-    <tr>
-      <!-- task pane -->
-      <td width="110" valign="top">
-        <img src="images/spacer.gif" width="110" height="4" alt=""><br>
-        <img name="nowplaying" src="images/nav_nowplaying_on.gif" width="110" height="36" alt="current" title="Now Playing"><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
-        <a href="about.html" onMouseOver="swap('guide','over'); window.status='Media Guide'; return true;" onMouseOut="swap('guide','off'); window.status=''; return true;"><img name="guide" src="images/nav_guide_off.gif" width="110" height="36" border="0" alt="Media Guide"></a><br><img src="images/spacer.gif" width="1" height="3" alt=""><br>
-        <br><br><br><br><br>
-        <img src="images/pane_logo.gif" width="100" height="62" alt="Sobolak Technologies" style="margin-left: 5px;">
-      </td>
+  <symbol id="art-tower" viewBox="0 0 240 150">
+    <rect x="76" y="8" width="88" height="130" rx="6" fill="var(--shell, #4b525e)"/>
+    <rect x="76" y="8" width="88" height="130" rx="6" fill="url(#g-side)"/>
+    <rect x="84" y="16" width="72" height="104" rx="4" fill="#0a1220"/>
+    <g transform="translate(120 36)">
+      <circle r="13.5" fill="#111d33" stroke="url(#g-ring)" stroke-width="2.4"/>
+      <path d="M0-10V10M-10 0H10M-7-7L7 7M-7 7L7-7" stroke="#31425f" stroke-width="2.5"/>
+      <circle r="4" fill="#4a5f85"/>
+    </g>
+    <g transform="translate(120 68)">
+      <circle r="13.5" fill="#111d33" stroke="url(#g-ring)" stroke-width="2.4"/>
+      <path d="M0-10V10M-10 0H10M-7-7L7 7M-7 7L7-7" stroke="#31425f" stroke-width="2.5"/>
+      <circle r="4" fill="#4a5f85"/>
+    </g>
+    <g transform="translate(120 100)">
+      <circle r="13.5" fill="#111d33" stroke="url(#g-ring)" stroke-width="2.4"/>
+      <path d="M0-10V10M-10 0H10M-7-7L7 7M-7 7L7-7" stroke="#31425f" stroke-width="2.5"/>
+      <circle r="4" fill="#4a5f85"/>
+    </g>
+    <path d="M84 16h72v36C132 58 104 72 84 92z" fill="#fff" opacity=".08"/>
+    <rect x="84" y="125" width="52" height="5" rx="2.5" fill="#000" opacity=".35"/>
+    <circle cx="150" cy="127.5" r="2.5" fill="#a8e61d"/>
+    <rect x="82" y="138" width="16" height="3" rx="1" fill="#0a1220"/>
+    <rect x="142" y="138" width="16" height="3" rx="1" fill="#0a1220"/>
+  </symbol>
+</svg>
 
-      <!-- viewer -->
-      <td valign="top" bgcolor="#000000" style="border: 1px solid #1d3f8a;">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td align="right" style="padding: 4px 6px 0 0;"><a href="about.html"><img src="images/vt_prev.gif" width="18" height="18" border="0" alt="Previous"></a> <a href="about.html"><img src="images/vt_next.gif" width="18" height="18" border="0" alt="Next"></a> <a href="#roadmap"><img src="images/vt_list.gif" width="18" height="18" border="0" alt="Roadmap"></a></td>
-        </tr>
-        <tr>
-          <td valign="top" style="padding: 0 14px 12px 14px;">
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" width="1275" height="350" alt="Sobolak Technologies"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav"><i></i>Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#why">Why it costs less</a>
+      <a href="#process">How we refurbish</a>
+      <a href="about.html">About</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-            <span class="artist">Sobolak Technologies</span><br>
-            <span class="track">The Sobolak Laptop (coming 2029~)</span><br>
-            <img src="images/spacer.gif" width="1" height="6" alt=""><br>
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #1b2a4a;" bgcolor="#000000">
-            <tr><td align="center"><img src="images/vis.gif" width="420" height="230" alt="Sobolak Technologies"></td></tr>
-            </table>
-            <img src="images/spacer.gif" width="1" height="8" alt=""><br>
-            <table width="100%" border="0" cellpadding="10" cellspacing="0" bgcolor="#060f22" style="border: 1px solid #2c4a8a;">
-            <tr><td class="body">
-              <span class="lead"><b>Desktop power at your fingertips. Recycled, saving the planet.</b></span><br><br>
-              The Sobolak Laptop is a handheld desktop. It is thick and heavy on purpose. Inside is a full-power desktop processor and memory, pulled from recycled desktop computers and put onto a motherboard we design ourselves, in a case we make ourselves. Expect about three to four hours on the battery, because it runs real desktop chips.<br><br>
-              It is either ours or it is not ours. No rebadged boards, no bought-in modules. It boots to a Sobolak screen, ships with Windows 10, and you can put whatever you like on it after that.<br><br>
-              <b>Where it stands:</b> it is an idea we are serious about. The board design has not started. We are aiming for 2029, give or take, and we will not put a fake date on it to look busy.
-            </td></tr>
-            </table>
-            <img src="images/spacer.gif" width="1" height="8" alt=""><br>
-            <table width="100%" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-              <td class="visname" valign="bottom">Ambience: <b>Water</b></td>
-              <td align="right"><img src="images/sticker.gif" width="212" height="34" alt="Look into the e-waste"></td>
-            </tr>
-            </table>
+<main>
 
-          </td>
-        </tr>
-        </table>
-      </td>
+<section class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <h1>Refurbished laptops and desktops. <span>Cheaper than eBay.</span></h1>
+      <p class="hero-lede">Business-grade machines, tested and cleaned by hand in Michigan. We sell direct, so no marketplace takes a cut. You pay less for the same computer.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gel" href="#shop" data-filter="laptop">Shop laptops</a>
+        <a class="btn btn-glass" href="#shop" data-filter="desktop">Shop desktops</a>
+      </div>
+    </div>
 
-      <!-- playlist -->
-      <td width="188" valign="top">
-        <a name="roadmap"></a>
-        <img src="images/pl_header.gif" width="188" height="20" alt="Roadmap"><br>
-        <img src="images/spacer.gif" width="1" height="4" alt=""><br>
-        <table width="188" border="0" cellpadding="6" cellspacing="0" bgcolor="#000000" style="border: 1px solid #1d3f8a;" height="520">
-        <tr>
-          <td valign="top" class="playlist">
-            <span class="plhead">&#9662; The Sobolak Laptop</span><br>
-            <table border="0" cellpadding="1" cellspacing="0" width="100%" style="margin-left: 8px;">
-              <tr bgcolor="#0e2e63"><td class="plcur" nowrap>&#9654; The idea</td><td class="plcur" align="right">2026</td></tr>
-              <tr><td class="playlist" nowrap><a href="index.html" class="pl">&bull; Motherboard design</a></td><td class="playlist" align="right">next</td></tr>
-              <tr><td class="playlist" nowrap><a href="index.html" class="pl">&bull; First prototype</a></td><td class="playlist" align="right">then</td></tr>
-              <tr><td class="playlist" nowrap><a href="index.html" class="pl">&bull; Beta units</a></td><td class="playlist" align="right">later</td></tr>
-              <tr><td class="playlist" nowrap><a href="index.html" class="pl">&bull; The Sobolak Laptop</a></td><td class="playlist" align="right">2029~</td></tr>
-            </table>
-          </td>
-        </tr>
-        </table>
-        <div align="right" class="playlist" style="padding-top: 4px;">Total Time: 2029~</div>
-      </td>
-    </tr>
-    </table>
-  </td>
-</tr>
+    <svg class="hero-art" viewBox="0 0 560 430" role="img" aria-label="A laptop and a desktop tower circled by the green Sobolak orbit ring">
+      <defs>
+        <clipPath id="c-front"><rect x="-300" y="0" width="600" height="120"/></clipPath>
+        <filter id="f-glow" x="-20%" y="-80%" width="140%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+        <radialGradient id="g-floor">
+          <stop offset="0" stop-color="#a8e61d" stop-opacity=".4"/>
+          <stop offset="1" stop-color="#a8e61d" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="270" cy="332" rx="260" ry="36" fill="url(#g-floor)"/>
+      <g transform="translate(275 215) rotate(-16)">
+        <ellipse class="hero-ring" rx="265" ry="78" fill="none" stroke="#a8e61d" stroke-width="14" filter="url(#f-glow)"/>
+        <ellipse rx="265" ry="78" fill="none" stroke="url(#g-ring)" stroke-width="7"/>
+      </g>
+      <g class="c-graphite" transform="translate(198 30) scale(2)">
+        <use href="#art-tower" width="240" height="150"/>
+      </g>
+      <g class="c-silver" transform="translate(10 60) scale(1.9)">
+        <use href="#art-laptop" width="240" height="150"/>
+        <g mask="url(#m-fade)"><use href="#art-laptop" width="240" height="150" transform="translate(0 284) scale(1 -1)"/></g>
+      </g>
+      <g transform="translate(275 215) rotate(-16)" clip-path="url(#c-front)">
+        <ellipse rx="265" ry="78" fill="none" stroke="url(#g-ring)" stroke-width="7"/>
+        <ellipse rx="265" ry="76" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>
+      </g>
+    </svg>
+  </div>
+</section>
 
-<!-- status line -->
-<tr>
-  <td height="20" bgcolor="#000000" style="border-top: 1px solid #1d3f8a;">
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td class="status" style="padding-left: 14px;"><img src="images/play_green.gif" width="10" height="10" alt="">&nbsp; Album: The Sobolak Laptop &middot; coming 2029</td>
-      <td class="status" align="right" style="padding-right: 12px;"><span id="clock">00:00</span></td>
-    </tr>
-    </table>
-  </td>
-</tr>
+<div class="facts">
+  <div class="wrap">
+    <ul>
+      <li><span class="led"></span>Tested before it is listed</li>
+      <li><span class="led"></span>Sold direct, no marketplace cut</li>
+      <li><span class="led"></span>One workbench in Michigan, not a warehouse</li>
+    </ul>
+  </div>
+</div>
 
-<!-- transport -->
-<tr>
-  <td height="60" background="images/transport_bg.gif">
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="8"><img src="images/spacer.gif" width="8" height="1" alt=""></td>
-      <td width="56"><a href="index.html" onMouseOver="trOver('tr_pause')" onMouseOut="trOut('tr_pause')"><img name="tr_pause" src="images/tr_pause.gif" width="54" height="54" border="0" alt="Pause"></a></td>
-      <td width="34"><a href="index.html" onMouseOver="trOver('tr_stop')" onMouseOut="trOut('tr_stop')"><img name="tr_stop" src="images/tr_stop.gif" width="32" height="32" border="0" alt="Stop"></a></td>
-      <td width="30"><a href="about.html" onMouseOver="trOver('tr_prev')" onMouseOut="trOut('tr_prev')"><img name="tr_prev" src="images/tr_prev.gif" width="28" height="28" border="0" alt="Previous"></a></td>
-      <td width="30"><a href="about.html" onMouseOver="trOver('tr_next')" onMouseOut="trOut('tr_next')"><img name="tr_next" src="images/tr_next.gif" width="28" height="28" border="0" alt="Next"></a></td>
-      <td width="30"><a href="javascript:void(0)" onClick="alert('There is no sound. It is a web page.')" onMouseOver="trOver('tr_mute')" onMouseOut="trOut('tr_mute')"><img name="tr_mute" src="images/tr_mute.gif" width="28" height="28" border="0" alt="Mute"></a></td>
-      <td width="14"><img src="images/spacer.gif" width="14" height="1" alt=""></td>
-      <td>
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td width="1%" height="6" background="images/seek_fill.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
-          <td width="16"><img src="images/seek_knob.gif" width="16" height="16" alt=""></td>
-          <td height="6" background="images/seek_bg.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
-        </tr>
-        </table>
-      </td>
-      <td width="24"><img src="images/spacer.gif" width="24" height="1" alt=""></td>
-      <td width="72">
-        <table width="72" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td width="44" height="6" background="images/seek_fill.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
-          <td width="16"><img src="images/seek_knob.gif" width="16" height="16" alt=""></td>
-          <td height="6" background="images/seek_bg.gif"><img src="images/spacer.gif" width="1" height="6" alt=""></td>
-        </tr>
-        </table>
-      </td>
-      <td width="14"><img src="images/spacer.gif" width="14" height="1" alt=""></td>
-    </tr>
-    </table>
-  </td>
-</tr>
-</table>
+<section class="section" id="shop">
+  <div class="wrap">
+    <h2>In stock now</h2>
+    <p class="section-lede">Every price sits next to what the same spec was going for on eBay when we listed it.</p>
+    <p class="demo-note" id="demo-note" hidden>Preview: these are sample listings. Real stock replaces them before launch.</p>
 
-<!-- footer -->
-<table width="780" border="0" cellpadding="0" cellspacing="0" align="center">
-<tr>
-  <td align="center" class="footer" style="padding-top: 14px;">
-    <a href="index.html">The Sobolak Laptop</a> | <a href="about.html">Who we are</a> | <a href="https://github.com/mrsobolak">GitHub</a><br>
-    <img src="images/spacer.gif" width="1" height="6" alt=""><br>
-    Sobolak Technologies &middot; Michigan, United States &middot; Last updated November 9, 2026<br>
-    Built in Michigan from recycled parts. Best viewed at 1024&times;768 with the speakers on.
-  </td>
-</tr>
-</table>
-<br>
+    <div class="shopbar">
+      <div class="tabs" role="group" aria-label="Filter stock">
+        <button class="tab" type="button" data-filter="all" aria-pressed="true">All <b></b></button>
+        <button class="tab" type="button" data-filter="laptop" aria-pressed="false">Laptops <b></b></button>
+        <button class="tab" type="button" data-filter="desktop" aria-pressed="false">Desktops <b></b></button>
+      </div>
+      <label class="sort">Sort
+        <select id="sort">
+          <option value="featured">Newest listed</option>
+          <option value="low">Price, low to high</option>
+          <option value="save">Biggest saving</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="grid" id="grid">
+      <noscript><p class="empty">The stock list needs JavaScript switched on.</p></noscript>
+    </div>
+
+    <p class="smallprint">eBay prices are what comparable refurbished listings were asking on the day we listed each machine. They move, so check for yourself. We would.</p>
+  </div>
+</section>
+
+<section class="section" id="why" style="padding-top:0">
+  <div class="wrap">
+    <h2>Why it costs less here</h2>
+    <div class="why">
+      <ul class="reasons">
+        <li><b>No marketplace cut.</b><span>eBay charges sellers a fee on every sale, and sellers build that into the price. We sell direct, so it comes off yours.</span></li>
+        <li><b>No warehouse.</b><span>One person, one workbench. There is not much overhead to pay for.</span></li>
+        <li><b>Nothing is scrap until it fails a test.</b><span>Most retired office computers are fine. If it passes, it gets sold instead of shredded, and you get the saving.</span></li>
+      </ul>
+      <figure class="compare" id="compare" hidden></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="process">
+  <div class="wrap">
+    <h2>Before a machine gets listed</h2>
+    <p class="section-lede">Four things happen to every computer on this page.</p>
+    <ol class="steps">
+      <li class="glass"><b>Tested</b><span>Processor, memory, drive, screen, keyboard, ports, battery. If something fails, it gets fixed or the machine does not get listed.</span></li>
+      <li class="glass"><b>Opened and cleaned</b><span>Dust out, case wiped down. Screws, not glue.</span></li>
+      <li class="glass"><b>Wiped and reinstalled</b><span>The last owner's data is erased and Windows goes back on fresh.</span></li>
+      <li class="glass"><b>Graded honestly</b><span>Wear gets written on the listing. If it is a scuff, we call it a scuff.</span></li>
+    </ol>
+    <ul class="grades">
+      <li><b>Grade A</b><span>Light wear. You have to look for it.</span></li>
+      <li><b>Grade B</b><span>Visible wear. Works exactly the same.</span></li>
+      <li><b>Grade C</b><span>Rough outside. Cheap, and it runs.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="more">
+  <div class="wrap">
+    <h2>Also on the bench</h2>
+    <div class="services">
+      <div class="service">
+        <h3>Repairs</h3>
+        <p>Laptop will not charge, screen is cracked, or it has just got slow. Tell us what it is doing.</p>
+        <a href="#contact">Ask about a repair</a>
+      </div>
+      <div class="service">
+        <h3>Gaming PC builds</h3>
+        <p>Built to order around your budget and what you actually play.</p>
+        <a href="#contact">Ask about a build</a>
+      </div>
+      <div class="service">
+        <h3>The Sobolak Laptop</h3>
+        <p>A handheld desktop on our own motherboard, made from recycled parts. Coming 2029~.</p>
+        <a href="about.html#laptop">Read about it</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="contact">
+  <div class="wrap contact-in">
+    <div>
+      <h2>Want one?</h2>
+      <p class="section-lede">Tell us which machine. We will tell you if it is still here, then sort out payment and getting it to you.</p>
+    </div>
+    <div class="contact-actions" id="contact-actions"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <nav aria-label="Footer">
+      <a href="#shop">Shop</a>
+      <a href="about.html">Who we are</a>
+      <a href="about.html#laptop">The Sobolak Laptop</a>
+      <a href="https://github.com/mrsobolak">GitHub</a>
+    </nav>
+    <p>Sobolak Technologies. Michigan, United States. Founded 2024. Last updated <span id="updated">November 2026</span>.</p>
+    <p>eBay is a trademark of eBay Inc. We are not affiliated with eBay. Best viewed on whatever you have.</p>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="site.js"></script>
 </body>
 </html>
