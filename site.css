@@ -393,7 +393,7 @@ ul, ol { padding: 0; list-style: none; }
 .dark > .wrap { position: relative; }
 .dark h2 { color: #fff; }
 .dark .section-lede { color: #c5d0df; }
-.dark a { color: var(--lime); }
+.dark a:not(.btn) { color: var(--lime); }
 
 /* ---------- what we sell ---------- */
 
@@ -556,7 +556,6 @@ ul, ol { padding: 0; list-style: none; }
 }
 .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .contact-actions .btn { flex: 1 1 200px; min-height: 52px; }
-.contact-pending { color: #c5d0df; }
 
 .foot {
   background: #070d18;
