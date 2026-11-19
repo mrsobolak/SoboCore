@@ -118,7 +118,7 @@ ${sprite}
       <h2>Why it costs less</h2>
       <ul class="reasons">
         <li><b>No marketplace cut.</b> <span>eBay charges sellers a fee on every sale, and sellers build that into the price. We sell direct, so it comes off yours.</span></li>
-        <li><b>No warehouse.</b> <span>2 men and a van. There is not much overhead to pay for.</span></li>
+        <li><b>Small crew.</b> <span>2 men and a van. There is not much overhead to pay for.</span></li>
         <li><b>Nothing is scrap until it fails a test.</b> <span>Most retired office computers are fine. If it passes, it gets sold instead of shredded.</span></li>
       </ul>
     </div>
