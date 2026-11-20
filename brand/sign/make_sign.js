@@ -15,6 +15,7 @@ const OUT = __dirname;
 // name, width and height in inches, theme
 const SIZES = [
   ['sobolak-sign-banner-5x3ft-60x36in', 60, 36, 'dark'],
+  ['sobolak-sign-banner-3x1.6ft-36x19.2in', 36, 19.2, 'dark'],
   ['sobolak-sign-banner-48x24in', 48, 24, 'dark'],
   ['sobolak-sign-poster-36x24in', 36, 24, 'dark'],
   ['sobolak-sign-letter-11x8.5in', 11, 8.5, 'light'],
